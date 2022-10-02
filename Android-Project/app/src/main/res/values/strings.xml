@@ -1,0 +1,10 @@
+<resources>
+
+    <string name="app_name">Secured Garbage Management</string>
+
+    <string name="menu_home">e-Garbage</string>
+    <string name="menu_feedback">Feedback</string>
+    <string name="title_activity_drawer">drawer</string>
+    <string name="title_activity_maps">Map</string>
+
+</resources>

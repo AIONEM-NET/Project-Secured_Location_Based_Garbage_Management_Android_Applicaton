@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.google.firebase:firebase-auth:21.0.5@aar">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../../../../../Android/Gradle/caches/transforms-3/26da6f1feb3920bc24ab407f7328cf00/transformed/jetified-firebase-auth-21.0.5/res" />
+      <root url="file://$PROJECT_DIR$/../../../../../Android/Gradle/caches/transforms-3/807943308e67a713f8600cb893e822bd/transformed/jetified-firebase-auth-21.0.5/res" />
+      <root url="file://$PROJECT_DIR$/../../../../../Android/Gradle/caches/transforms-3/65fa6ab4c4299ccdcfc4d524b9c8fe78/transformed/jetified-firebase-auth-21.0.5/AndroidManifest.xml" />
+      <root url="jar://$PROJECT_DIR$/../../../../../Android/Gradle/caches/transforms-3/65fa6ab4c4299ccdcfc4d524b9c8fe78/transformed/jetified-firebase-auth-21.0.5/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../../../../Android/Gradle/caches/transforms-3/65fa6ab4c4299ccdcfc4d524b9c8fe78/transformed/jetified-firebase-auth-21.0.5/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../../../../../Android/Gradle/caches/modules-2/files-2.1/com.google.firebase/firebase-auth/21.0.5/c530923c208041a98018ca2009fc57caef9d5fa8/firebase-auth-21.0.5-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>

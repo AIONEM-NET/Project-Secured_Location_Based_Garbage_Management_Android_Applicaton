@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="Gradle: me.biubiubiu.justifytext:library:1.1@aar">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../../../../../Android/Gradle/caches/transforms-3/cd57e228bee7b680c536a2bba60fb4a0/transformed/jetified-library-1.1/res" />
+      <root url="file://$PROJECT_DIR$/../../../../../Android/Gradle/caches/transforms-3/6d6849686a93f159b9d259dbc9b73219/transformed/jetified-library-1.1/res" />
+      <root url="jar://$PROJECT_DIR$/../../../../../Android/Gradle/caches/transforms-3/b2b9d3cf0b2b21ff26f835f60fe6043e/transformed/jetified-library-1.1/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../../../../Android/Gradle/caches/transforms-3/b2b9d3cf0b2b21ff26f835f60fe6043e/transformed/jetified-library-1.1/res" />
+      <root url="file://$PROJECT_DIR$/../../../../../Android/Gradle/caches/transforms-3/b2b9d3cf0b2b21ff26f835f60fe6043e/transformed/jetified-library-1.1/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../../../../../Android/Gradle/caches/modules-2/files-2.1/me.biubiubiu.justifytext/library/1.1/ff97291115dabdb35635e5d342d8f5fe6bdf2254/library-1.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../../../../Android/Gradle/caches/modules-2/files-2.1/me.biubiubiu.justifytext/library/1.1/ff97291115dabdb35635e5d342d8f5fe6bdf2254/library-1.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

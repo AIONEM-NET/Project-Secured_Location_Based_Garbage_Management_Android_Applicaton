@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="Gradle: com.google.firebase:firebase-database:20.0.5@aar">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../../../../../Android/Gradle/caches/transforms-3/95bc3c38a488b90fbcd3357e9f435797/transformed/jetified-firebase-database-20.0.5/res" />
+      <root url="file://$PROJECT_DIR$/../../../../../Android/Gradle/caches/transforms-3/aec0f28c194a42a0fe51309c89fa3924/transformed/jetified-firebase-database-20.0.5/res" />
+      <root url="file://$PROJECT_DIR$/../../../../../Android/Gradle/caches/transforms-3/46e6d3e8270cfc00c965e86937df942b/transformed/jetified-firebase-database-20.0.5/AndroidManifest.xml" />
+      <root url="file://$PROJECT_DIR$/../../../../../Android/Gradle/caches/transforms-3/46e6d3e8270cfc00c965e86937df942b/transformed/jetified-firebase-database-20.0.5/res" />
+      <root url="jar://$PROJECT_DIR$/../../../../../Android/Gradle/caches/transforms-3/46e6d3e8270cfc00c965e86937df942b/transformed/jetified-firebase-database-20.0.5/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../../../../../Android/Gradle/caches/modules-2/files-2.1/com.google.firebase/firebase-database/20.0.5/dcbd1f8dbf3b2189dcbaf41f4de866719956e20c/firebase-database-20.0.5-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../../../../Android/Gradle/caches/modules-2/files-2.1/com.google.firebase/firebase-database/20.0.5/517cf4d05ba03b6aeacf8a5f4decf02e54d8b0fb/firebase-database-20.0.5-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

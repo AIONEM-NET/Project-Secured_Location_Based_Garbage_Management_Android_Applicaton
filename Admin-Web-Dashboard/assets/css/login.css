@@ -1,0 +1,24 @@
+
+.login-form-bg {
+    background: url("../images/bg_garbage.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.login-wrapper {
+    height: 100%;
+    background-color: #0096589e;
+}
+
+.login-form__btn.submit {
+    background: #009688;
+}
+
+.login-input .form-group {
+    padding: 2px;
+    border: solid 2px #009688;
+}
+
+.login-input .form-group .form-control {
+    padding: 5px;
+    border: solid 2px #009688;
+}

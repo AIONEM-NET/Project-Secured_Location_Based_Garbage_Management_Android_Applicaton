@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="0dp"
+    android:background="#FFFFFF">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.UserSignupActivity">
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="415dp"
+        android:layout_height="174dp"
+        android:layout_marginStart="2dp"
+        android:background="@drawable/side_nav_bar"
+        android:transitionName="layout_trans"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginLeft="2dp">
+
+        <TextView
+            android:id="@+id/welcomeid"
+            android:layout_width="175dp"
+            android:layout_height="68dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="Welcome!"
+            android:textColor="#FAFAFA"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:transitionName="welcome_trans"
+            app:fontFamily="@font/capriola"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.787"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/propic"
+            android:layout_width="147dp"
+            android:layout_height="120dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
+            android:transitionName="logo_trans"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/welcomeid"
+            app:layout_constraintHorizontal_bias="0.409"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.507"
+            app:srcCompat="@drawable/logo" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/emailid"
+        android:layout_width="212dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="32dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:transitionName="email_trans"
+        app:fontFamily="@font/capriola"
+        app:layout_constraintBottom_toTopOf="@+id/wardid"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.939"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Mobile No."
+            android:inputType="phone" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Spinner
+        android:id="@+id/wardid"
+        android:layout_width="181dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="40dp"
+        android:transitionName="ward_trans"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.813"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailid" />
+
+    <Spinner
+        android:id="@+id/houseid"
+        android:layout_width="181dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="88dp"
+        android:transitionName="house_trans"
+        app:layout_constraintBottom_toTopOf="@+id/password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.813"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailid"
+        app:layout_constraintVertical_bias="0.4" />
+
+        <TextView
+            android:id="@+id/wardNo"
+            android:layout_width="107dp"
+            android:layout_height="26dp"
+            android:layout_marginTop="48dp"
+            android:text="Ward No."
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:transitionName="wardNO_trans"
+            app:fontFamily="@font/capriola"
+            app:layout_constraintEnd_toStartOf="@+id/wardid"
+            app:layout_constraintHorizontal_bias="0.571"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/emailid" />
+
+        <TextView
+            android:layout_width="107dp"
+            android:layout_height="26dp"
+            android:text="House No."
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:transitionName="houseNO_trans"
+            app:fontFamily="@font/capriola"
+            app:layout_constraintBottom_toTopOf="@+id/password"
+            app:layout_constraintEnd_toStartOf="@+id/houseid"
+            app:layout_constraintHorizontal_bias="0.575"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/wardNo"
+            app:layout_constraintVertical_bias="0.7" />
+
+        <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/password"
+        android:layout_width="255dp"
+        android:layout_height="57dp"
+        android:layout_marginBottom="34dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:transitionName="pw_trans"
+        app:fontFamily="@font/capriola"
+        app:layout_constraintBottom_toTopOf="@+id/doneButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:passwordToggleEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Password"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/doneButton"
+        android:layout_width="315dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="108dp"
+        android:background="@drawable/oval"
+        android:text="Register"
+        android:transitionName="But_trans"
+        app:fontFamily="@font/capriola"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/nameid"
+        android:layout_width="212dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="28dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:transitionName="name_trans"
+        app:fontFamily="@font/capriola"
+        app:layout_constraintBottom_toTopOf="@+id/emailid"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.936"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintVertical_bias="0.0">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Full Name"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/loginButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="60dp"
+            android:background="#00000000"
+            android:text="Already have an account? Log in"
+            android:textColor="#000000"
+            android:transitionName="But2_trans"
+            app:fontFamily="@font/capriola"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/profilepic"
+        android:layout_width="107dp"
+        android:layout_height="88dp"
+        android:background="@drawable/propic"
+        app:layout_constraintBottom_toTopOf="@+id/upload"
+        app:layout_constraintEnd_toStartOf="@+id/nameid"
+        app:layout_constraintHorizontal_bias="0.475"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintVertical_bias="0.513" />
+
+    <Button
+        android:id="@+id/upload"
+        android:layout_width="107dp"
+        android:layout_height="29dp"
+        android:layout_marginBottom="48dp"
+        android:background="@drawable/oval"
+        android:text="Upload"
+        android:textColor="#FFFFFF"
+        android:textSize="12dp"
+        android:textStyle="bold"
+        app:fontFamily="@font/capriola"
+        app:layout_constraintBottom_toTopOf="@+id/wardNo"
+        app:layout_constraintEnd_toStartOf="@+id/emailid"
+        app:layout_constraintHorizontal_bias="0.475"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
