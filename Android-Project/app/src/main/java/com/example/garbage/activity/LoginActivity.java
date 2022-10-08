@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         image = findViewById(R.id.propic);
         welcome = findViewById(R.id.welcomeid);
         email = findViewById(R.id.nameid);
-        password = findViewById(R.id.password);
+        password = findViewById(R.id.edtPassword);
         user_login = findViewById(R.id.loginButton);
         register_user = findViewById(R.id.doneButton);
         progressBar = findViewById(R.id.progress);
@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         user_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Mobile = email.getEditText().getText().toString().trim()+"@xyz.com";
+                Mobile = email.getEditText().getText().toString().trim();
                 Password = password.getEditText().getText().toString().trim();
 
                 if (TextUtils.isEmpty(Mobile)) {
@@ -66,10 +66,12 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
+                String email = Mobile + "@tel.phone";
+
                 user_login.setEnabled(false);
                 progressBar.setVisibility(View.VISIBLE);
 
-                firebaseAuth.signInWithEmailAndPassword(Mobile, Password)
+                firebaseAuth.signInWithEmailAndPassword(email, Password)
                         .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -82,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 } else {
                                     user_login.setEnabled(true);
-                                    Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(LoginActivity.this, "Login Failed, please try again", Toast.LENGTH_LONG).show();
                                 }
                                 progressBar.setVisibility(View.GONE);
                             }
@@ -94,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
         register_user.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, UserSignupActivity.class);
+                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
                 Pair[] pairs = new Pair[6];
                 pairs[0] = new Pair<View, String>(image, "logo_trans");
                 pairs[1] = new Pair<View, String>(welcome, "welcome_trans");

@@ -3,6 +3,7 @@ package com.example.garbage.storage;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+
 public class UserSharedPreferences {
 
     SharedPreferences sharedPreferences;
@@ -16,11 +17,11 @@ public class UserSharedPreferences {
 
     public void setFilename(String filename) {
         this.filename = filename;
-        sharedPreferences.edit().putString("userData", filename).commit();
+        sharedPreferences.edit().putString("userData", filename).apply();
     }
 
     public void removeUser(){
-        sharedPreferences.edit().clear().commit();
+        sharedPreferences.edit().clear().apply();
     }
 
 

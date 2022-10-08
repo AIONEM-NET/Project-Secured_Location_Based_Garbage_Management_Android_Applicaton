@@ -26,14 +26,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.example.garbage.R;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 
 public class ProfileActivity extends AppCompatActivity {
-    EditText name, email, houseNo, wardNo, password;
+    EditText name, edtPhone, houseNo, edtAddress, edtEmail;
     ImageButton edit, choose;
     ImageView profile;
     Button done, upload;
@@ -48,11 +51,11 @@ public class ProfileActivity extends AppCompatActivity {
         edit = findViewById(R.id.edit);
         done = findViewById(R.id.doneButton);
         name = findViewById(R.id.nameid);
-        email = findViewById(R.id.phone);
+        edtPhone = findViewById(R.id.phone);
         houseNo = findViewById(R.id.houseid);
-        wardNo = findViewById(R.id.wardid);
-            password = findViewById(R.id.password);
-            profile = findViewById(R.id.propic);
+        edtAddress = findViewById(R.id.spinnerAddress);
+        edtEmail = findViewById(R.id.edtEmail);
+        profile = findViewById(R.id.propic);
         upload = findViewById(R.id.upload);
         choose = findViewById(R.id.choose);
         progressBar = findViewById(R.id.progress);
@@ -71,47 +74,52 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-
         edit.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
 
-                wardNo.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.grey));
+                edtAddress.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.grey));
                 houseNo.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.grey));
 
                 name.setEnabled(true);
-                wardNo.setEnabled(true);
+                edtAddress.setEnabled(true);
                 houseNo.setEnabled(true);
+                edtEmail.setEnabled(true);
 
                 done.setVisibility(View.VISIBLE);
                 edit.setVisibility(View.INVISIBLE);
                 choose.setVisibility(View.VISIBLE);
                 upload.setVisibility(View.VISIBLE);
+
                 DrawerActivity.flag = 0;
             }
         });
 
-        email.setText(DrawerActivity.Email);
+        edtPhone.setText(DrawerActivity.phone);
         name.setText(DrawerActivity.fullName);
         houseNo.setText(DrawerActivity.houseNO);
-        wardNo.setText(DrawerActivity.WardNo);
-        password.setText(DrawerActivity.pw);
-        Bitmap bitmap = BitmapFactory.decodeFile(DrawerActivity.localFile.getAbsolutePath());
-        if(bitmap!=null)
-            profile.setImageBitmap(bitmap);
+        edtAddress.setText(DrawerActivity.district);
+        edtEmail.setText(DrawerActivity.email);
 
+        Bitmap bitmap = BitmapFactory.decodeFile(DrawerActivity.localFile.getAbsolutePath());
+        if(bitmap!=null) {
+            profile.setImageBitmap(bitmap);
+        }
 
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
+
                 databaseReference1.child("name").setValue(name.getText().toString().trim());
                 databaseReference1.child("houseNo").setValue(houseNo.getText().toString().trim());
-                databaseReference1.child("email").setValue(email.getText().toString().trim());
-                databaseReference1.child("password").setValue(password.getText().toString().trim());
-                databaseReference1.child("wardNo").setValue(wardNo.getText().toString().trim());
+                databaseReference1.child("phone").setValue(edtPhone.getText().toString().trim());
+                databaseReference1.child("email").setValue(edtEmail.getText().toString().trim());
+                databaseReference1.child("district").setValue(edtAddress.getText().toString().trim());
+
                 progressBar.setVisibility(View.GONE);
+
                 Toast.makeText(ProfileActivity.this, "Profile Updated", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getApplicationContext(), DrawerActivity.class));
                 finish();
@@ -132,9 +140,7 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == 1 && resultCode == RESULT_OK
-                && data != null && data.getData() != null){
-
+        if(requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null){
             filepath = data.getData();
             Bitmap bitmap;
             try {
@@ -152,6 +158,7 @@ public class ProfileActivity extends AppCompatActivity {
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
+
             storageReference.putFile(filepath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -162,9 +169,23 @@ public class ProfileActivity extends AppCompatActivity {
                 @Override
                 public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
                     double progress = (100.0 * taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
-                    progressDialog.setMessage("Uploaded "+ (int)progress+"%");
+                    progressDialog.setMessage("Uploaded "+ (int) progress + "%");
+                }
+            }).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    return storageReference.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        Uri downloadUri = task.getResult();
+                        databaseReference1.child("photo").setValue(downloadUri.toString());
+                    }
                 }
             });
+
         }
     }
 }

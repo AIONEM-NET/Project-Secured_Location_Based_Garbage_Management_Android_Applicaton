@@ -3,7 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Software/SERVER/htdocs/Projects/NPC - Secured Location Based Garbage Management Android Applicaton/Android-Project/app/src/main/res/drawable/side_nav_bar.xml" value="0.121" />
+        <entry key="..\:/Software/SERVER/htdocs/Projects/NPC - Secured Location Based Garbage Management Android Applicaton/Android-Project/app/src/main/res/layout/activity_drawer.xml" value="0.1814814814814815" />
+        <entry key="..\:/Software/SERVER/htdocs/Projects/NPC - Secured Location Based Garbage Management Android Applicaton/Android-Project/app/src/main/res/layout/activity_login.xml" value="0.1814814814814815" />
+        <entry key="..\:/Software/SERVER/htdocs/Projects/NPC - Secured Location Based Garbage Management Android Applicaton/Android-Project/app/src/main/res/layout/activity_profile.xml" value="0.14635416666666667" />
+        <entry key="..\:/Software/SERVER/htdocs/Projects/NPC - Secured Location Based Garbage Management Android Applicaton/Android-Project/app/src/main/res/layout/activity_signup.xml" value="0.22604166666666667" />
+        <entry key="..\:/Software/SERVER/htdocs/Projects/NPC - Secured Location Based Garbage Management Android Applicaton/Android-Project/app/src/main/res/layout/app_bar_drawer.xml" value="0.1814814814814815" />
+        <entry key="..\:/Software/SERVER/htdocs/Projects/NPC - Secured Location Based Garbage Management Android Applicaton/Android-Project/app/src/main/res/layout/content_drawer.xml" value="0.1814814814814815" />
         <entry key="..\:/Software/SERVER/htdocs/Projects/NPC - Secured Location Based Garbage Management Android Applicaton/Android-Project/app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="..\:/Software/SERVER/htdocs/Projects/NPC - Secured Location Based Garbage Management Android Applicaton/Android-Project/app/src/main/res/menu/activity_drawer_drawer.xml" value="0.22256410256410256" />
+        <entry key="..\:/Software/SERVER/htdocs/Projects/NPC - Secured Location Based Garbage Management Android Applicaton/Android-Project/app/src/main/res/menu/drawer.xml" value="0.1814814814814815" />
+        <entry key="..\:/Software/SERVER/htdocs/Projects/NPC - Secured Location Based Garbage Management Android Applicaton/Android-Project/app/src/main/res/menu/menu_drawer.xml" value="0.22256410256410256" />
+        <entry key="..\:/Software/SERVER/htdocs/Projects/NPC - Secured Location Based Garbage Management Android Applicaton/Android-Project/app/src/main/res/menu/menu_toolbar.xml" value="0.14635416666666667" />
       </map>
     </option>
   </component>

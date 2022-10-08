@@ -10,7 +10,6 @@
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
-
     <fragment
         android:id="@+id/nav_complaint"
         android:name="com.example.garbage.fragment.ComplaintFragment"
@@ -23,11 +22,10 @@
         android:name="com.example.garbage.fragment.FeedbackFragment"
         tools:layout="@layout/fragment_feedback"/>
 
-
-
     <fragment
         android:id="@+id/nav_closure"
         android:name="com.example.garbage.fragment.ClosureFragment"
         android:label="Notify Closure"
         tools:layout="@layout/fragment_notify_closure" />
+
 </navigation>

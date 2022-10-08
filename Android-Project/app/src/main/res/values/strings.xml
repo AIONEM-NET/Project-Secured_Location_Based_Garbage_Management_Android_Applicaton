@@ -7,4 +7,16 @@
     <string name="title_activity_drawer">drawer</string>
     <string name="title_activity_maps">Map</string>
 
+    <array name="array_districts">
+        <item>Nyarugenge</item>
+        <item>Gasabo</item>
+        <item>Kicukiro</item>
+    </array>
+
+    <array name="array_districts_abbreviation">
+        <item>KN</item>
+        <item>KG</item>
+        <item>KK</item>
+    </array>
+
 </resources>

@@ -1,14 +1,17 @@
-apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
+plugins {
+    id 'com.android.application'
+    id 'com.google.gms.google-services'
+}
 
 android {
     compileSdkVersion 32
+    buildToolsVersion "32.0.0"
     defaultConfig {
-        applicationId "com.example.garbage"
+        applicationId "location.garbage.management"
         minSdkVersion 19
         targetSdkVersion 32
-        versionCode 3
-        versionName "3.0"
+        versionCode 100
+        versionName "1.0.0"
         resConfigs 'en'
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -59,4 +62,3 @@ dependencies {
     implementation 'me.biubiubiu.justifytext:library:1.1'
 
 }
-apply plugin: 'com.google.gms.google-services'

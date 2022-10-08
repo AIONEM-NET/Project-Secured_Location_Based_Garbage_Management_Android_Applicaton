@@ -43,6 +43,7 @@
         android:background="#00000000"
         android:paddingStart="80dp"
         android:paddingEnd="80dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -59,11 +60,12 @@
         android:background="@drawable/round"
         android:layout_marginHorizontal="15sp"
         android:gravity="center"
-        android:text="COVID-19 Updates (Click Here)"
+        android:text=""
         android:textColor="#076830"
         android:textSize="15sp"
         android:textStyle="bold"
         android:layout_marginTop="20dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/pages" />
@@ -124,6 +126,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="15dp"
+        android:visibility="gone"
         app:layout_constraintDimensionRatio="16:9"
         app:autoPlay="false"
         app:layout_constraintEnd_toEndOf="parent"
@@ -143,6 +146,7 @@
         <ImageView
             android:layout_width="67dp"
             android:layout_height="50dp"
+            android:visibility="gone"
             app:backgroundTint="#F04444"
             app:srcCompat="@drawable/logo" />
 
@@ -156,6 +160,7 @@
             android:textSize="14sp"
             android:textStyle="bold"
             android:transitionName="But2_trans"
+            android:visibility="gone"
             app:fontFamily="@font/capriola" />
     </LinearLayout>
 

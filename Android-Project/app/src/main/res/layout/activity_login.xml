@@ -19,10 +19,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="418dp"
-        android:layout_height="174dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginBottom="399dp"
+        android:layout_height="154dp"
         android:background="@drawable/side_nav_bar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -73,10 +70,10 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/password"
+        android:id="@+id/edtPassword"
         android:layout_width="255dp"
         android:layout_height="57dp"
-        android:layout_marginTop="136dp"
+        android:layout_marginTop="96dp"
         android:focusable="true"
         android:transitionName="pw_trans"
         android:focusableInTouchMode="true"
@@ -95,8 +92,6 @@
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
-
-
     <Button
         android:id="@+id/loginButton"
         android:layout_width="268dp"
@@ -112,11 +107,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="1.0"
-        />
-
-
+        app:layout_constraintTop_toBottomOf="@+id/edtPassword"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/doneButton"
@@ -152,7 +144,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Mobile No."
+            android:hint="Phone No."
             android:inputType="phone" />
     </com.google.android.material.textfield.TextInputLayout>
 

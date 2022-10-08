@@ -54,7 +54,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         name = findViewById(R.id.nameid);
         phone = findViewById(R.id.phone);
         profile = findViewById(R.id.propic);
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Location").child(DrawerActivity.WardNo);
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Location").child(DrawerActivity.district);
 
     }
 
@@ -103,7 +103,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     //Toast.makeText(MapsActivity.this, "Yes YEs ", Toast.LENGTH_SHORT).show();
                         try {
                             name.setText(dataSnapshot.child("Name").getValue().toString());
-                            phone.setText(dataSnapshot.child("Mobile").getValue().toString());
+                            phone.setText(dataSnapshot.child("phone").getValue().toString());
                             id = dataSnapshot.child("ID").getValue().toString();
                             getPic(id);
 

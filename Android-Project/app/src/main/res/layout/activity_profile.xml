@@ -134,7 +134,7 @@
         android:ems="10"
         android:enabled="false"
         android:gravity="center_horizontal"
-        android:inputType="textEmailAddress"
+        android:inputType="phone"
         android:text="Please Wait..."
         android:textColor="#000000"
         app:fontFamily="@font/capriola"
@@ -144,7 +144,7 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
     <EditText
-        android:id="@+id/wardid"
+        android:id="@+id/spinnerAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="27dp"
@@ -180,7 +180,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.655"
         app:layout_constraintStart_toEndOf="@+id/house"
-        app:layout_constraintTop_toBottomOf="@+id/wardid" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerAddress" />
 
     <TextView
         android:id="@+id/Ward"
@@ -188,7 +188,7 @@
         android:layout_height="26dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="48dp"
-        android:text="Ward No. :"
+        android:text="District :"
         android:textColor="#000000"
         android:textSize="18sp"
         app:fontFamily="@font/capriola"
@@ -210,17 +210,16 @@
         app:layout_constraintTop_toBottomOf="@+id/Ward" />
 
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/edtEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="26dp"
-        android:backgroundTint="@android:color/transparent"
         android:ems="10"
-        android:enabled="false"
         android:gravity="center_horizontal"
-        android:inputType="text"
+        android:inputType="textEmailAddress"
         android:text="Please Wait..."
         android:textColor="#000000"
+        android:enabled="false"
         app:fontFamily="@font/capriola"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.717"
@@ -243,7 +242,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
+        app:layout_constraintTop_toBottomOf="@+id/edtPassword"
         app:layout_constraintVertical_bias="0.434" />
 
     <TextView
@@ -252,7 +251,7 @@
         android:layout_height="27dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="40dp"
-        android:text="Mobile No :"
+        android:text="Phone No :"
         android:textColor="#000000"
         android:textSize="18sp"
         app:fontFamily="@font/capriola"
@@ -265,7 +264,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="48dp"
-        android:text="Password :"
+        android:text="Email :"
         android:textColor="#000000"
         android:textSize="18sp"
         app:fontFamily="@font/capriola"

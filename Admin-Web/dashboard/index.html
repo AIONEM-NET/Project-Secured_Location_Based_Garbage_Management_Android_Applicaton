@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Secured Location Based Garbage Management</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/logo_garbage.jpg">
+    <link href="assets/plugins/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/plugins/chartist/css/chartist.min.css">
+    <link rel="stylesheet" href="assets/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
+    <link href="assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="preloader">
+        <div class="loader hidden">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <div id="main-wrapper">
+        <div class="nav-header">
+            <div class="brand-logo">
+                <a href="">
+                    <b class="logo-abbr"><img src="../assets/images/logo_truck.jpg" alt=""> </b>
+                    <span class="logo-compact"><img src="../assets/images/logo_garbage.jpg" alt=""></span>
+                    <span class="brand-title">
+                        <img src="../assets/images/logo_garbage.jpg" alt="">
+                    </span>
+                </a>
+            </div>
+        </div>
+        <div class="header">    
+            <div class="header-content clearfix">
+                
+                <div class="nav-control">
+                    <div class="hamburger">
+                        <span class="toggle-icon"><i class="icon-menu"></i></span>
+                    </div>
+                </div>
+                <div class="garbage-title">
+                    <h3>Secured Location Based Garbage Management</h3>
+                </div>
+                <div class="header-right">
+                    <ul class="clearfix">
+                        <li class="icons dropdown">
+                            <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
+                                <span class="activity active"></span>
+                                <img src="assets/images/user.png" height="40" width="40" alt="">
+                            </div>
+                            <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
+                                <div class="dropdown-content-body">
+                                    <ul>
+                                        <hr class="my-2 hidden">
+                                        <li><a href="../login/"><i class="icon-key"></i> <span>Logout</span></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="nk-sidebar">           
+            <div class="nk-nav-scroll">
+                <ul class="metismenu" id="menu">
+                    <li class="nav-label text-center">Admin Controll Room</li>
+                    <li class="active">
+                        <a href="">
+                            <i class="icon-speedometer menu-icon"></i>
+                            <span class="nav-text">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="drivers/">
+                            <i class="fa fa-car menu-icon"></i>
+                            <span class="nav-text">Drivers</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="users/">
+                            <i class="fa fa-users menu-icon"></i>
+                            <span class="nav-text">Users</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="trashes/">
+                            <i class="fa fa-trash menu-icon"></i>
+                            <span class="nav-text">Trashes</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="payments/">
+                            <i class="icon-credit-card menu-icon"></i>
+                            <span class="nav-text">Payments</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="reports/">
+                            <i class="icon-chart menu-icon"></i>
+                            <span class="nav-text">Reports</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="analytics/">
+                            <i class="icon-graph menu-icon"></i>
+                            <span class="nav-text">Analytics</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="content-body">
+
+            <div class="container-fluid mt-3 dashboard">
+                <div class="row">
+
+                    <h2 class="col-12 card-title-1 text-black" style="margin-top: 20px; margin-bottom: 10px;">System Summary</h2>
+
+                    <div class="col-lg-3 col-sm-6">
+                        <a href="users/" class="card gradient-1">
+                            <div class="card-body">
+                                <h3 class="card-title text-white">Users</h3>
+                                <div class="d-inline-block">
+                                    <h2 class="text-white count-users">-</h2>
+                                    <p class="text-white mb-0"></p>
+                                </div>
+                                <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <a href="drivers/" class="card gradient-2">
+                            <div class="card-body">
+                                <h3 class="card-title text-white">Drivers</h3>
+                                <div class="d-inline-block">
+                                    <h2 class="text-white count-drivers">-</h2>
+                                    <p class="text-white mb-0"></p>
+                                </div>
+                                <span class="float-right display-5 opacity-5"><i class="fa fa-car"></i></span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <a href="trashes/" class="card gradient-3">
+                            <div class="card-body">
+                                <h3 class="card-title text-white">Trashes</h3>
+                                <div class="d-inline-block">
+                                    <h2 class="text-white count-trashes">-</h2>
+                                    <p class="text-white mb-0"></p>
+                                </div>
+                                <span class="float-right display-5 opacity-5"><i class="fa fa-trash"></i></span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <a href="payments/" class="card gradient-4">
+                            <div class="card-body">
+                                <h3 class="card-title text-white">Payments</h3>
+                                <div class="d-inline-block">
+                                    <h2 class="text-white count-payments">-</h2>
+                                    <p class="text-white mb-0"></p>
+                                </div>
+                                <div class="" style="margin-top: 0px; font-size: 18px; text-align: right;">Rwf</div>
+                                <span class="float-right display-5 opacity-5 hidden"><i class="fa fa-money"></i></span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+
+                <div class="row">
+
+                    <h2 class="col-12 card-title-1 text-black" style="margin-top: 20px; margin-bottom: 10px;">Data per Location</h2>
+
+                    <div class="col-lg-4 col-sm-6 count-districts" data-district="Nyarugenge">
+                        <div class="card">
+                            <div class="social-graph-wrapper widget-linkedin">
+                                <span class="s-icon">
+                                    <i class="fa fa-map-marker"></i>
+                                    Nyarugenge
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-1">-</h4>
+                                        <p class="m-0">Users</p>
+                                    </div>
+                                </div>
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-2">-</h4>
+                                        <p class="m-0">Drivers</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-3">-</h4>
+                                        <p class="m-0">Trashes</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 count-districts" data-district="Gasabo">
+                        <div class="card">
+                            <div class="social-graph-wrapper widget-linkedin">
+                                <span class="s-icon">
+                                    <i class="fa fa-map-marker"></i>
+                                    Gasabo
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-1">-</h4>
+                                        <p class="m-0">Users</p>
+                                    </div>
+                                </div>
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-2">-</h4>
+                                        <p class="m-0">Drivers</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-3">-</h4>
+                                        <p class="m-0">Trashes</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 count-districts" data-district="Kicukiro">
+                        <div class="card">
+                            <div class="social-graph-wrapper widget-linkedin">
+                                <span class="s-icon">
+                                    <i class="fa fa-map-marker"></i>
+                                    Kicukiro
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-1">-</h4>
+                                        <p class="m-0">Users</p>
+                                    </div>
+                                </div>
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-2">-</h4>
+                                        <p class="m-0">Drivers</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-3">-</h4>
+                                        <p class="m-0">Trashes</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+
+                <div class="row hidden">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Summary</h4>
+                                    <div id="morris-bar-chart"></div>
+                                </div>
+                            </div>
+                        </div>   
+                    </div>
+
+                <div class="row hidden">
+                    <div class="col-xl-6 col-lg-12 col-sm-12 col-xxl-12">
+                        <div class="card">
+                            <div class="card-body">
+                                    <h4 class="card-title mb-0">Trash Location</h4>
+                                <div id="world-map" style="height: 470px;"></div>
+                            </div>        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="copyright">
+                <p>Copyright &copy; 2022-23 & Developed by <b>GROUP 3</b> | <a href="https://ur.ac.rw">University of Rwanda</a> | <a href="https://www.police.gov.rw">NPC College</a> | Information Security</p>
+            </div>
+        </div>
+    </div>
+    <script src="assets/plugins/common/common.min.js"></script>
+    <script src="assets/js/custom.min.js"></script>
+    <script src="assets/js/settings.js"></script>
+    <script src="assets/js/gleek.js"></script>
+    <script src="assets/js/styleSwitcher.js"></script>
+    <script src="assets/plugins/chart.js/Chart.bundle.min.js"></script>
+    <script src="assets/plugins/circle-progress/circle-progress.min.js"></script>
+    <script src="assets/plugins/d3v3/index.js"></script>
+    <script src="assets/plugins/topojson/topojson.min.js"></script>
+    <script src="assets/plugins/datamaps/datamaps.world.min.js"></script>
+    <script src="assets/plugins/raphael/raphael.min.js"></script>
+    <script src="assets/plugins/morris/morris.min.js"></script>
+    <script src="assets/plugins/moment/moment.min.js"></script>
+    <script src="assets/plugins/pg-calendar/js/pignose.calendar.min.js"></script>
+    <script src="assets/plugins/chartist/js/chartist.min.js"></script>
+    <script src="assets/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.0/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.0/firebase-analytics.js"></script>
+    <script src="../database/database-config.js"></script>
+    <script src="dashboard.js"></script>
+    <script src="security.js"></script>
+</body>
+</html>

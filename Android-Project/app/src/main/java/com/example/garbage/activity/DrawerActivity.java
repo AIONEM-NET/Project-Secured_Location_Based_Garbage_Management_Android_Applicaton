@@ -37,7 +37,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -65,7 +64,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     TextView name, wait;
     View bblanks;
     static File localFile;
-    public static String Email, houseNO, WardNo, pw, fullName;
+    public static String phone, houseNO, district, email, fullName;
     String Notification;
     private NotificationManagerCompat notificationManager;
     private static final String CHANNEL_ID = "INC";
@@ -91,18 +90,13 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = findViewById(R.id.fab);
+
         share = new UserSharedPreferences(DrawerActivity.this);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                share.removeUser();
-                firebaseAuth.signOut();
-                Intent intent = new Intent(DrawerActivity.this, LoginActivity.class);
-
-                Snackbar.make(view, "Nothing here", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                startActivity(intent);
-                finish();
+                logout();
             }
         });
 
@@ -122,15 +116,14 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
         drawer = findViewById(R.id.drawer_layout);
 
-
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_complaint, R.id.nav_closure,
-                 R.id.nav_feedback)
+                R.id.nav_home, R.id.nav_complaint, R.id.nav_closure, R.id.nav_feedback)
                 .setDrawerLayout(drawer)
                 .build();
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
@@ -195,16 +188,18 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         databaseReference1.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Email = dataSnapshot.child("mobile").getValue().toString();
-                Email = Email.substring(0,10);
-                fullName = dataSnapshot.child("name").getValue().toString();
-                name.setText(fullName);
-                houseNO = dataSnapshot.child("houseNo").getValue().toString();
 
-                if (note == 0)
+                phone = String.valueOf(dataSnapshot.child("phone").getValue());
+                fullName = String.valueOf(dataSnapshot.child("name").getValue());
+                district = String.valueOf(dataSnapshot.child("district").getValue());
+                email = String.valueOf(dataSnapshot.child("email").getValue());
+                houseNO = String.valueOf(dataSnapshot.child("houseNo").getValue());
+
+                name.setText(fullName);
+
+                if (note == 0) {
                     sendNoti();
-                WardNo = dataSnapshot.child("wardNo").getValue().toString();
-                pw = dataSnapshot.child("password").getValue().toString();
+                }
             }
 
             @Override
@@ -213,9 +208,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
             }
         });
 
-
-
-        storageReference = FirebaseStorage.getInstance().getReference().child("User dps/"+ currentUser);
+        storageReference = FirebaseStorage.getInstance().getReference().child("Users/"+ currentUser);
         try {
             localFile = File.createTempFile("images", "jpg");
             storageReference.getFile(localFile)
@@ -228,7 +221,6 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                             wait.setVisibility(View.INVISIBLE);
                             Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
                             propic.setImageBitmap(bitmap);
-
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -237,7 +229,6 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                     bblanks.setVisibility(View.INVISIBLE);
                     bblanks.setAnimation(fade);
                     wait.setVisibility(View.INVISIBLE);
-                    //Toast.makeText(drawer.this, "Failed to load image", Toast.LENGTH_SHORT).show();
                 }
             });
         } catch (IOException e) {
@@ -258,42 +249,44 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.drawer, menu);
+        getMenuInflater().inflate(R.menu.menu_toolbar, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.action_scan:
-                startActivity(new Intent(DrawerActivity.this, MapsActivity.class));
-                return false;
-            case R.id.action_share:
-                shareIt();
-                return false;
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_scan) {
+            startActivity(new Intent(DrawerActivity.this, MapsActivity.class));
+            return false;
+        }else if (itemId == R.id.action_profile) {
+            startActivity(new Intent(DrawerActivity.this, ProfileActivity.class));
+            return false;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void shareIt() {
-        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-        sharingIntent.setType("text/plain");
-        String shareBody = "\ne-TRASH:  Simplify garbage Collection\n\nGoogle drive link:\nhttps://drive.google.com/open?id=1G6nzSCyE6Mb1jPLfFgB4iWnwqFP4xmvd\n\nOne drive link:\nhttps://1drv.ms/u/s!Ap1arhakXq-OaoxAkWUsLRaTi2M?e=gxh9zm";
-        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
-        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-        startActivity(Intent.createChooser(sharingIntent, "Share via"));
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.nav_logout) {
+            logout();
+        }
         return false;
     }
+
+    public void logout() {
+        share.removeUser();
+        firebaseAuth.signOut();
+        Intent intent = new Intent(DrawerActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
 }
