@@ -330,6 +330,8 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                         FirebaseDatabase.getInstance().getReference("Payments").push().setValue(mapDataPayment);
 
                         edtPackages.setText("");
+                        checkBoxMoMo.setChecked(false);
+                        checkBoxCard.setChecked(false);
 
                         progressBar.setVisibility(View.GONE);
 
