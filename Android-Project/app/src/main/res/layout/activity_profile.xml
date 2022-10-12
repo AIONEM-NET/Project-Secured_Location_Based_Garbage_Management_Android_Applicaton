@@ -32,7 +32,6 @@
             android:id="@+id/nameid"
             android:layout_width="230dp"
             android:layout_height="62dp"
-            android:background="#00000000"
             android:enabled="false"
             android:gravity="center_horizontal|center_vertical"
             android:inputType="text"
@@ -70,12 +69,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/profile" />
+                android:src="@drawable/user_icon" />
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:srcCompat="@drawable/circular_crop" />
+                android:layout_height="match_parent"/>
 
         </FrameLayout>
 
@@ -191,6 +189,8 @@
         android:text="District :"
         android:textColor="#000000"
         android:textSize="18sp"
+        android:textStyle="bold"
+        android:inputType="textCapCharacters"
         app:fontFamily="@font/capriola"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
@@ -205,6 +205,8 @@
         android:text="House No. :"
         android:textColor="#000000"
         android:textSize="18sp"
+        android:textStyle="bold"
+        android:inputType="textCapCharacters"
         app:fontFamily="@font/capriola"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Ward" />
@@ -242,8 +244,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtPassword"
-        app:layout_constraintVertical_bias="0.434" />
+        app:layout_constraintTop_toBottomOf="@+id/edtEmail"
+        app:layout_constraintVertical_bias="0.434"
+        tools:visibility="visible"/>
 
     <TextView
         android:id="@+id/textView6"
@@ -254,6 +257,8 @@
         android:text="Phone No :"
         android:textColor="#000000"
         android:textSize="18sp"
+        android:textStyle="bold"
+        android:inputType="textCapCharacters"
         app:fontFamily="@font/capriola"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
@@ -267,6 +272,8 @@
         android:text="Email :"
         android:textColor="#000000"
         android:textSize="18sp"
+        android:textStyle="bold"
+        android:inputType="textCapCharacters"
         app:fontFamily="@font/capriola"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/house" />

@@ -11,12 +11,34 @@
         <item>Nyarugenge</item>
         <item>Gasabo</item>
         <item>Kicukiro</item>
+
+        <item>Musanze</item>
+
     </array>
 
     <array name="array_districts_abbreviation">
         <item>KN</item>
         <item>KG</item>
         <item>KK</item>
+
+        <item>MU</item>
+
     </array>
+
+
+    <string name="smart_lock">Fingerprint Security Authentication</string>
+    <string name="fingerprint">Fingerprint</string>
+    <string name="fingerprint_info_default">Touch the fingerprint sensor.</string>
+    <string name="fingerprint_info_success">Fingerprint matched</string>
+    <string name="fingerprint_info_error">Fingerprint mismatched!</string>
+    <string name="fingerprint_info_failed">Could\'nt process fingerprint. Please try again.</string>
+    <string name="fingerprint_initialization_success">FingerPrint Initialized.</string>
+    <string name="fingerprint_initialization_failed">Failed to setup your Fingerprint.</string>
+    <string name="fingerprint_initialization_failed_hardware">Fingerprint Hardware Not Detected.</string>
+    <string name="fingerprint_initialization_failed_permission">Fingerprint Permission Not Granted.</string>
+    <string name="fingerprint_initialization_failed_service">Fingerprint Service Not Active.</string>
+    <string name="fingerprint_initialization_failed_enrol">No Fingerprint Enrolled.</string>
+    <string name="fingerprint_initialization_failed_setup">Setup your Fingerprint first.</string>
+    <string name="fingerprint_initialization_failed_unsupported">Your Phone does\'nt support Fingerprint.</string>
 
 </resources>

@@ -7,7 +7,7 @@ document.querySelector("tbody").innerHTML = "";
 document.querySelector(".card-list").classList.add("loader");
 
 let isDataTable = true;
-fDatabase.ref('Users').once('value', (list) => {
+fDatabase.ref('Garbage').on('value', (list) => {
 
     let html = "";
     let i = 0;
@@ -28,11 +28,17 @@ fDatabase.ref('Users').once('value', (list) => {
                 <td class="text-center">
                     ${data.phone ?? '-'}
                 </td>
-                <td>
-                    ${data.message ?? '-'}
+                <td class="text-center">
+                    ${data.garbage ?? '-'}
                 </td>
                 <td class="text-center">
-                    ${new Date().toString().replace("GMT+0200 (Eastern European Standard Time)", "")}
+                    ${data.packages ?? '-'}
+                </td>
+                <td class="text-center">
+                    ${data.amount ?? '-'} Rwf
+                </td>
+                <td class="text-center">
+                    ${new Date().toString().substring(0, 24)}
                 </td>
             </tr>
         `;

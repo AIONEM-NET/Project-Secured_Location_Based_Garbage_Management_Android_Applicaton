@@ -393,7 +393,7 @@ h6, .h6 {
   line-height: 1.2; }
 
 .display-4 {
-  font-size: 3.5rem;
+  font-size: 7.11rem;
   font-weight: 300;
   line-height: 1.2; }
 
@@ -2673,7 +2673,7 @@ input[type="button"].btn-block {
   background-color: #7571f9; }
 
 .custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E"); }
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%23fff' d='M6.564.75l-7.119 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E"); }
 
 .custom-checkbox .custom-control-input:indeterminate ~ .custom-control-label::before {
   background-color: #7571f9; }
@@ -7475,7 +7475,7 @@ sub {
   background: rgba(0, 0, 0, 0.9); }
 
 .section-heading {
-  margin-bottom: 3.5rem; }
+  margin-bottom: 7.11rem; }
 
 .ofhidden {
   overflow: hidden; }
@@ -9052,7 +9052,7 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
     height: 3.125rem;
     width: 3.125rem;
     text-align: center;
-    line-height: 3.5rem;
+    line-height: 7.11rem;
     font-size: 1.3125rem;
     border-radius: 50px; }
     .sidebar-right .sidebar-right-trigger span {
@@ -11488,7 +11488,7 @@ table.dataTable thead .sorting::after {
     stroke-dashoffset: 0; }
   50% {
     stroke-dasharray: 89, 200;
-    stroke-dashoffset: -3.5rem; }
+    stroke-dashoffset: -7.11rem; }
   100% {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -12.4rem; } }
@@ -11837,7 +11837,7 @@ table.dataTable thead .sorting::after {
       margin-bottom: 3rem; } }
 
 .comming-soon__footer h2 {
-  font-size: 3.5rem;
+  font-size: 7.11rem;
   color: #464a53; }
 
 .comming-soon__form .input-group {
@@ -14745,20 +14745,20 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
 }
 .loader:after{
 	position:absolute;
-	top:calc(50% - 3.5rem/2);
-	left:calc(50% - 3.5rem/2);
+	top:calc(50% - 7.11rem/2);
+	left:calc(50% - 7.11rem/2);
 	content:''
 }
 .loader:after{
-	border: 3px solid #b31308; animation: loader-anim-circle 1s linear infinite; background: #FFFFFF00; display:block; width:3.5rem; height:3.5rem; border-radius: 50%; border-bottom-color: transparent;
-	border: 3px solid #b31308; animation: loader-anim-circle 1s linear infinite; background: #FFFFFF00; display:block; width:3.5rem; height:3.5rem; border-radius: 50%; border-bottom-color: transparent;
-	border: 3px solid #b31308; animation: loader-anim-circle 1s linear infinite; background: #FFFFFF00; display:block; width:3.5rem; height:3.5rem; border-radius: 50%; border-bottom-color: transparent;
+	border: 3px solid #009688; animation: loader-anim-circle 1s linear infinite; background: #FFFFFF00; display:block; width:7.11rem; height:7.11rem; border-radius: 50%; border-bottom-color: transparent;
+	border: 3px solid #009688; animation: loader-anim-circle 1s linear infinite; background: #FFFFFF00; display:block; width:7.11rem; height:7.11rem; border-radius: 50%; border-bottom-color: transparent;
+	border: 3px solid #009688; animation: loader-anim-circle 1s linear infinite; background: #FFFFFF00; display:block; width:7.11rem; height:7.11rem; border-radius: 50%; border-bottom-color: transparent;
 }
 @keyframes loader-anim-circle {
 	0% {
 		-webkit-transform: rotate(0deg);
 				transform: rotate(0deg);
-		border: 3px solid #b31308;
+		border: 3px solid #009688;
 		border-left-color: transparent;
 	}
 	50% {
@@ -14770,14 +14770,14 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
 	100% {
 		-webkit-transform: rotate(360deg);
 				transform: rotate(360deg);
-		border: 3px solid #b31308;
+		border: 3px solid #009688;
 		border-left-color: transparent;
 	}
 }
 @-webkit-keyframes loader-anim-circle {
 	0% {
 		-webkit-transform: rotate(0deg);
-		border: 3px solid #b31308;
+		border: 3px solid #009688;
 		border-left-color: transparent;
 	}
 	50% {
@@ -14787,7 +14787,7 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
 	}
 	100% {
 		-webkit-transform: rotate(360deg);
-		border: 3px solid #b31308;
+		border: 3px solid #009688;
 		border-left-color: transparent;
 	}
 }

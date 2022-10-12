@@ -7,7 +7,7 @@ document.querySelector("tbody").innerHTML = "";
 document.querySelector(".card-list").classList.add("loader");
 
 let isDataTable = true;
-fDatabase.ref('Payments').once('value', (list) => {
+fDatabase.ref('Payments').on('value', (list) => {
 
     let html = "";
     let i = 0;
@@ -29,19 +29,19 @@ fDatabase.ref('Payments').once('value', (list) => {
                     ${data.garbage ?? '-'}
                 </td>
                 <td class="text-center">
+                    ${data.price ?? '-'} Rwf
+                </td>
+                <td class="text-center">
                     <span class="label gradient-4 btn-rounded">
                         ${data.packages ?? '1'}
                     </span>
                 </td>
                 <td class="text-center">
-                    ${data.amount ?? '-'}
+                    ${data.amount ?? '-'} Rwf
                 </td>
                 <td class="text-center">
-                    ${new Date().toString().replace("GMT+0200 (Eastern European Standard Time)", "")}
-                </td>
-                <td class="text-center">
-                    <i class="fa fa-circle-o text-success mr-2"></i>
-                    Paid
+                    <i class="fa fa-circle-o mr-2 ${data.isPaid ? 'text-success' : 'text-danger'}"></i>
+                    ${data.isPaid ? 'Paid' : 'Not Paid'}
                 </td>
             </tr>
         `;

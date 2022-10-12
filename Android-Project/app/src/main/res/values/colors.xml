@@ -5,4 +5,26 @@
     <color name="colorAccent">#00BCD4</color>
     <color name="black">#000000</color>
     <color name="grey">#515050</color>
+
+    <color name="AlnGreyPageBackground">#E0E0E0</color>
+    <color name="AlnGreyPageBackground1">#F0EEEE</color>
+    <color name="AlnChatBackground">#f0e0e0e0</color>
+    <color name="AlnCoreAdsBackground">#f94b4b4b</color>
+
+    <color name="AlnBackgroundRowDividerGrey">#ebebeb</color>
+    <color name="AlnBackgroundRowGrey">#fafafa</color>
+
+    <color name="AlnTransparent">#00FFFFFF</color>
+    <color name="AlnTransparentBlack">#81000000</color>
+    <color name="AlnTransparentGrey">#80ededed</color>
+    <color name="AlnTransparentGreyVideoPlayer">#80ededed</color>
+    <color name="AlnTransparentGreyVideoPlayerToolbar">#80868686</color>
+    <color name="AlnWhite">#FFFFFF</color>
+    <color name="AlnBlack">#000000</color>
+    <color name="AlnDark">#000000</color>
+    <color name="AlnRed">#B10202</color>
+    <color name="AlnYellow">#FFEB3B</color>
+    <color name="AlnGreen">#4CAF50</color>
+    <color name="AlnGrey">#797575</color>
+
 </resources>
