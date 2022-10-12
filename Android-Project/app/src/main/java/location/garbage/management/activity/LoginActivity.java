@@ -56,11 +56,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 phone = edtPhone.getEditText().getText().toString().trim();
                 Password = edtPassword.getEditText().getText().toString().trim();
-
-                if (TextUtils.isEmpty(phone)) {
-                    Toast.makeText(LoginActivity.this, "Enter Mobile", Toast.LENGTH_LONG).show();
-                    return;
-                }
+                
                 if(TextUtils.isEmpty(phone)){
                     Toast.makeText(LoginActivity.this,"Enter Mobile",Toast.LENGTH_LONG).show();
                     edtPhone.setError("Phone is required");
