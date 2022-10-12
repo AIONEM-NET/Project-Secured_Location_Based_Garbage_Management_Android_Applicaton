@@ -26,9 +26,9 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LoginActivity extends AppCompatActivity {
     ImageView image;
     TextView welcome;
-    String Mobile, Password;
+    String phone, Password;
     Button user_login, register_user;
-    TextInputLayout email, password;
+    TextInputLayout edtPhone, edtPassword;
     private FirebaseAuth firebaseAuth;
     private ProgressBar progressBar;
 
@@ -44,8 +44,8 @@ public class LoginActivity extends AppCompatActivity {
 
         image = findViewById(R.id.propic);
         welcome = findViewById(R.id.welcomeid);
-        email = findViewById(R.id.nameid);
-        password = findViewById(R.id.edtPassword);
+        edtPhone = findViewById(R.id.nameid);
+        edtPassword = findViewById(R.id.edtPassword);
         user_login = findViewById(R.id.loginButton);
         register_user = findViewById(R.id.doneButton);
         progressBar = findViewById(R.id.progress);
@@ -54,19 +54,31 @@ public class LoginActivity extends AppCompatActivity {
         user_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Mobile = email.getEditText().getText().toString().trim();
-                Password = password.getEditText().getText().toString().trim();
+                phone = edtPhone.getEditText().getText().toString().trim();
+                Password = edtPassword.getEditText().getText().toString().trim();
 
-                if (TextUtils.isEmpty(Mobile)) {
+                if (TextUtils.isEmpty(phone)) {
                     Toast.makeText(LoginActivity.this, "Enter Mobile", Toast.LENGTH_LONG).show();
                     return;
                 }
+                if(TextUtils.isEmpty(phone)){
+                    Toast.makeText(LoginActivity.this,"Enter Mobile",Toast.LENGTH_LONG).show();
+                    edtPhone.setError("Phone is required");
+                    return;
+                }
+                if((phone.length() != 10 && (!phone.startsWith("078") && !phone.startsWith("079") && !phone.startsWith("072") && !phone.startsWith("073")))) {
+                    Toast.makeText(getApplicationContext(), "Phone number is invalid", Toast.LENGTH_SHORT).show();
+                    edtPhone.setError("Phone number is invalid");
+                    return;
+                }
+                edtPhone.setError(null);
+
                 if (TextUtils.isEmpty(Password)) {
                     Toast.makeText(LoginActivity.this, "Enter Password", Toast.LENGTH_LONG).show();
                     return;
                 }
 
-                String email = Mobile + "@tel.phone";
+                String email = phone + "@tel.phone";
 
                 user_login.setEnabled(false);
                 progressBar.setVisibility(View.VISIBLE);
@@ -78,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
 
                                     UserSharedPreferences share = new UserSharedPreferences(LoginActivity.this);
-                                    share.setFilename(Mobile);
+                                    share.setFilename(phone);
                                     startActivity(new Intent(getApplicationContext(), DrawerActivity.class));
                                     finish();
 
@@ -100,8 +112,8 @@ public class LoginActivity extends AppCompatActivity {
                 Pair[] pairs = new Pair[6];
                 pairs[0] = new Pair<View, String>(image, "logo_trans");
                 pairs[1] = new Pair<View, String>(welcome, "welcome_trans");
-                pairs[2] = new Pair<View, String>(email, "email_trans");
-                pairs[3] = new Pair<View, String>(password, "pw_trans");
+                pairs[2] = new Pair<View, String>(edtPhone, "email_trans");
+                pairs[3] = new Pair<View, String>(edtPassword, "pw_trans");
                 pairs[4] = new Pair<View, String>(user_login, "But_trans");
                 pairs[5] = new Pair<View, String>(register_user, "But2_trans");
 

@@ -45,8 +45,8 @@ import java.util.ArrayList;
 public class SignupActivity extends AppCompatActivity {
 
     Spinner spinner1, spinner2;
-    String textDistrict, textHouse, fullName, houseNumber, address, Mobile, Password;
-    TextInputLayout mobileNumber, password, name;
+    String textDistrict, textHouse, name, houseNumber, address, phone, password;
+    TextInputLayout edtPhone, edtPassword, edtName;
     Button register, login, file_upload;
     ImageButton select;
     ImageView image;
@@ -78,9 +78,9 @@ public class SignupActivity extends AppCompatActivity {
         welcome = findViewById(R.id.welcomeid);
         spinner1 = findViewById(R.id.spinnerAddress);
         spinner2 = findViewById(R.id.houseid);
-        name = findViewById(R.id.nameid);
-        mobileNumber = findViewById(R.id.emailid);
-        password = findViewById(R.id.edtPassword);
+        edtName = findViewById(R.id.nameid);
+        edtPhone = findViewById(R.id.emailid);
+        edtPassword = findViewById(R.id.edtPassword);
         file_upload = findViewById(R.id.upload);
         select = findViewById(R.id.profilepic);
         register = findViewById(R.id.doneButton);
@@ -122,29 +122,47 @@ public class SignupActivity extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                fullName = name.getEditText().getText().toString().trim();
+                name = edtName.getEditText().getText().toString().trim();
                 houseNumber = spinner2.getSelectedItem().toString().trim();
                 address = spinner1.getSelectedItem().toString().trim();
-                Mobile = mobileNumber.getEditText().getText().toString().trim();
-                Password = password.getEditText().getText().toString().trim();
+                phone = edtPhone.getEditText().getText().toString().trim();
+                password = edtPassword.getEditText().getText().toString().trim();
 
-                if(TextUtils.isEmpty(fullName)){
+                if(TextUtils.isEmpty(name)){
                     Toast.makeText(SignupActivity.this,"Enter Name",Toast.LENGTH_LONG).show();
+                    edtName.setError("Name is required");
                     return;
                 }
-                if(TextUtils.isEmpty(Mobile)){
-                    Toast.makeText(SignupActivity.this,"Enter Mobile",Toast.LENGTH_LONG).show();
-                    return;
-                }
-                if(TextUtils.isEmpty(Password)){
-                    Toast.makeText(SignupActivity.this,"Enter Password",Toast.LENGTH_LONG).show();
-                    return;
-                }
+                edtName.setError(null);
 
-                String email = Mobile + "@tel.phone";
+                if(TextUtils.isEmpty(phone)){
+                    Toast.makeText(SignupActivity.this,"Enter Mobile",Toast.LENGTH_LONG).show();
+                    edtPhone.setError("Phone is required");
+                    return;
+                }
+                if((phone.length() != 10 && (!phone.startsWith("078") && !phone.startsWith("079") && !phone.startsWith("072") && !phone.startsWith("073")))) {
+                    Toast.makeText(getApplicationContext(), "Phone number is invalid", Toast.LENGTH_SHORT).show();
+                    edtPhone.setError("Phone number is invalid");
+                    return;
+                }
+                edtPhone.setError(null);
+
+                if(TextUtils.isEmpty(password)){
+                    Toast.makeText(SignupActivity.this,"Enter Password",Toast.LENGTH_LONG).show();
+                    edtPassword.setError("Password is required");
+                    return;
+                }
+                if(password.length() < 6){
+                    Toast.makeText(SignupActivity.this,"Password must have 6 characters minimum",Toast.LENGTH_LONG).show();
+                    edtPassword.setError("Password is too short");
+                    return;
+                }
+                edtPassword.setError(null);
+
+                String email = phone + "@tel.phone";
 
                 progress.setVisibility(View.VISIBLE);
-                firebaseAuth.createUserWithEmailAndPassword(email, Password)
+                firebaseAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -153,10 +171,10 @@ public class SignupActivity extends AppCompatActivity {
 
                                     FirebaseUser firebaseUser = task.getResult().getUser();
 
-                                    databaseReference.child(firebaseUser.getUid()).child("name").setValue(fullName);
+                                    databaseReference.child(firebaseUser.getUid()).child("name").setValue(name);
                                     databaseReference.child(firebaseUser.getUid()).child("houseNo").setValue(houseNumber);
-                                    databaseReference.child(firebaseUser.getUid()).child("phone").setValue(Mobile);
-                                    databaseReference.child(firebaseUser.getUid()).child("password").setValue(Password);
+                                    databaseReference.child(firebaseUser.getUid()).child("phone").setValue(phone);
+                                    databaseReference.child(firebaseUser.getUid()).child("password").setValue(password);
                                     databaseReference.child(firebaseUser.getUid()).child("district").setValue(address);
                                     databaseReference.child(firebaseUser.getUid()).child("email").setValue("");
                                     databaseReference.child(firebaseUser.getUid()).child("isApproved").setValue(false);
@@ -183,8 +201,8 @@ public class SignupActivity extends AppCompatActivity {
                 Pair[] pairs = new Pair[6];
                 pairs[0] = new Pair<View, String>(image, "logo_trans");
                 pairs[1] = new Pair<View, String>(welcome, "welcome_trans");
-                pairs[2] = new Pair<View, String>(mobileNumber, "email_trans");
-                pairs[3] = new Pair<View, String>(password, "pw_trans");
+                pairs[2] = new Pair<View, String>(edtPhone, "email_trans");
+                pairs[3] = new Pair<View, String>(edtPassword, "pw_trans");
                 pairs[4] = new Pair<View, String>(login, "But_trans");
                 pairs[5] = new Pair<View, String>(register, "But2_trans");
 
