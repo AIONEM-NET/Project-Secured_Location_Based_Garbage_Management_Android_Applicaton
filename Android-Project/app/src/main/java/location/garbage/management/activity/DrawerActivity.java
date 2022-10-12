@@ -21,6 +21,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -100,6 +102,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
     double selectedPrice = 0;
     String selectedGarbage = "";
+    String selectedPayment = "";
     List<String> listTrashes = new ArrayList<>();;
     List<Double> listTrashesPrice = new ArrayList<>();
     EditText edtGarbage;
@@ -109,6 +112,8 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     Spinner spinnerGarbage;
     Button btnSubmit;
     ProgressBar progressBar;
+    CheckBox checkBoxMoMo;
+    CheckBox checkBoxCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -185,6 +190,8 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         spinnerGarbage = (Spinner) findViewById(R.id.spinnerGarbage);
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        checkBoxMoMo = (CheckBox) findViewById(R.id.checkBoxMoMo);
+        checkBoxCard = (CheckBox) findViewById(R.id.checkBoxVisa);
 
         spinnerGarbage.setAdapter(new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, listTrashes));
 
@@ -272,6 +279,11 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 }
                 edtPhone.setError(null);
 
+                if(TextUtils.isEmpty(selectedPayment)) {
+                    Toast.makeText(getApplicationContext(), "Payment method is required", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
 
                 if(!FingerprintLock.isVerified) {
                     startActivity(new Intent(getApplicationContext(), FingerprintLock.class));
@@ -310,6 +322,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                         mapDataPayment.put("packages", packages);
                         mapDataPayment.put("price", selectedPrice);
                         mapDataPayment.put("amount", amountNo);
+                        mapDataPayment.put("method", selectedPayment);
                         mapDataPayment.put("phone", phone);
                         mapDataPayment.put("name", myName);
                         mapDataPayment.put("district", myDistrict);
@@ -326,6 +339,34 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
                     }
                 });
+
+            }
+        });
+
+        checkBoxMoMo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+
+                if(isChecked) {
+                    selectedPayment = "Mobile Money";
+                    checkBoxCard.setChecked(false);
+                }else {
+                    selectedPayment = "";
+                }
+
+            }
+        });
+
+        checkBoxCard.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+
+                if(isChecked) {
+                    selectedPayment = "Credit Card";
+                    checkBoxMoMo.setChecked(false);
+                }else {
+                    selectedPayment = "";
+                }
 
             }
         });

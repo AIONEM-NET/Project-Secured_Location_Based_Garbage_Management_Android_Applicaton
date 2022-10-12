@@ -9,7 +9,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp"
-        android:layout_centerInParent="true">
+        android:layout_centerInParent="true"
+        android:layout_marginTop="82dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -19,7 +20,7 @@
             android:textColor="#000000"
             android:textSize="25sp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="40dp"/>
+            android:layout_marginBottom="20dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -88,6 +89,58 @@
             android:gravity="center"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/momo_mtn"/>
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/momo_airtel_tigo"/>
+
+                <CheckBox
+                    android:id="@+id/checkBoxMoMo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:text="MTN, Airtel-Tigo Mobile Money"
+                    android:layout_marginLeft="30dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/visa_master_card"/>
+
+                <CheckBox
+                    android:id="@+id/checkBoxVisa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:text="Visa, Credit, Master Card"
+                    android:layout_marginLeft="30dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/btnSubmit"

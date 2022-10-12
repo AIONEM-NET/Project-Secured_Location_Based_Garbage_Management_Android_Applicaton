@@ -14764,7 +14764,7 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
 	50% {
 		-webkit-transform: rotate(180deg);
 				transform: rotate(180deg);
-		border: 3px solid #d78206;
+		border: 3px solid #FFFFFF00;
 		border-left-color: transparent;
 	}
 	100% {
@@ -14782,7 +14782,7 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
 	}
 	50% {
 		-webkit-transform: rotate(180deg);
-		border: 3px solid #d78206;
+		border: 3px solid #FFFFFF00;
 		border-left-color: transparent;
 	}
 	100% {
