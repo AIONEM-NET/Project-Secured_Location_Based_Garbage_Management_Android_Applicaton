@@ -3,6 +3,7 @@ package location.garbage.management.activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.view.View;
@@ -51,6 +52,14 @@ public class LoginActivity extends AppCompatActivity {
         register_user = findViewById(R.id.doneButton);
         progressBar = findViewById(R.id.progress);
 
+        if(getPackageName().equals("location.garbage.management.driver")) {
+            ((TextView) findViewById(R.id.welcomeid)).setText("Driver Login");
+            findViewById(R.id.doneButton).setVisibility(View.GONE);
+
+            edtPhone.setHint("Email");
+            edtPhone.getEditText().setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        }
+
         firebaseAuth = FirebaseAuth.getInstance();
         user_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,24 +67,41 @@ public class LoginActivity extends AppCompatActivity {
                 phone = edtPhone.getEditText().getText().toString().trim();
                 Password = edtPassword.getEditText().getText().toString().trim();
 
-                if(TextUtils.isEmpty(phone)){
-                    Toast.makeText(LoginActivity.this,"Enter Mobile",Toast.LENGTH_LONG).show();
-                    edtPhone.setError("Phone is required");
-                    return;
+                if(getPackageName().equals("location.garbage.management.driver")) {
+
+                    if(TextUtils.isEmpty(phone)){
+                        Toast.makeText(LoginActivity.this,"Enter Email address",Toast.LENGTH_LONG).show();
+                        edtPhone.setError("Email is required");
+                        return;
+                    }
+                    edtPhone.setError(null);
+
+                }else {
+
+                    if(TextUtils.isEmpty(phone)){
+                        Toast.makeText(LoginActivity.this,"Enter Phone number",Toast.LENGTH_LONG).show();
+                        edtPhone.setError("Phone is required");
+                        return;
+                    }
+                    if((phone.length() != 10 && (!phone.startsWith("078") && !phone.startsWith("079") && !phone.startsWith("072") && !phone.startsWith("073")))) {
+                        Toast.makeText(getApplicationContext(), "Phone number is invalid", Toast.LENGTH_SHORT).show();
+                        edtPhone.setError("Phone number is invalid");
+                        return;
+                    }
+                    edtPhone.setError(null);
                 }
-                if((phone.length() != 10 && (!phone.startsWith("078") && !phone.startsWith("079") && !phone.startsWith("072") && !phone.startsWith("073")))) {
-                    Toast.makeText(getApplicationContext(), "Phone number is invalid", Toast.LENGTH_SHORT).show();
-                    edtPhone.setError("Phone number is invalid");
-                    return;
-                }
-                edtPhone.setError(null);
 
                 if (TextUtils.isEmpty(Password)) {
                     Toast.makeText(LoginActivity.this, "Enter Password", Toast.LENGTH_LONG).show();
                     return;
                 }
 
-                String email = phone + "@tel.phone";
+                String email;
+                if(getPackageName().equals("location.garbage.management.driver")) {
+                    email = phone;
+                }else {
+                    email = phone + "@tel.phone";
+                }
 
                 user_login.setEnabled(false);
                 progressBar.setVisibility(View.VISIBLE);
@@ -91,12 +117,18 @@ public class LoginActivity extends AppCompatActivity {
                             UserSharedPreferences share = new UserSharedPreferences(LoginActivity.this);
                             share.setFilename(phone);
 
-                            if("Driver".equalsIgnoreCase(firebaseUser.getDisplayName())) {
+                            if(getPackageName().equals("location.garbage.management.driver")) {
 
-                                startActivity(new Intent(getApplicationContext(), DrawerActivity.class));
+                                if(true || "Driver".equalsIgnoreCase(firebaseUser.getDisplayName())) {
+
+                                    startActivity(new Intent(getApplicationContext(), DriverActivity.class));
+
+                                }else {
+
+                                    Toast.makeText(LoginActivity.this, "You don't have driver's Access !!", Toast.LENGTH_LONG).show();
+                                }
 
                             }else {
-
                                 startActivity(new Intent(getApplicationContext(), DrawerActivity.class));
 
                             }

@@ -621,6 +621,9 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         }else if (itemId == R.id.action_profile) {
             startActivity(new Intent(DrawerActivity.this, ProfileActivity.class));
             return false;
+        }else if (itemId == R.id.action_driver) {
+            startActivity(new Intent(DrawerActivity.this, DriverActivity.class));
+            return false;
         }else if (itemId == R.id.action_logout) {
             logout();
             return false;

@@ -30,6 +30,10 @@
             android:label="@string/title_activity_drawer"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name="location.garbage.management.activity.DriverActivity"
+            android:label="Driver App"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
+        <activity
             android:name="location.garbage.management.activity.FingerprintLock"
             android:label="Fingerprint Authentication"
             android:theme="@style/AppTheme.NoActionBar" />

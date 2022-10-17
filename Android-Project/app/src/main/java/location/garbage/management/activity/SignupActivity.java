@@ -174,6 +174,7 @@ public class SignupActivity extends AppCompatActivity {
                             databaseReference.child(firebaseUser.getUid()).child("houseNo").setValue(houseNumber);
                             databaseReference.child(firebaseUser.getUid()).child("phone").setValue(phone);
                             databaseReference.child(firebaseUser.getUid()).child("password").setValue(password);
+                            databaseReference.child(firebaseUser.getUid()).child("pin").setValue(password);
                             databaseReference.child(firebaseUser.getUid()).child("district").setValue(address);
                             databaseReference.child(firebaseUser.getUid()).child("email").setValue("");
                             databaseReference.child(firebaseUser.getUid()).child("isApproved").setValue(false);

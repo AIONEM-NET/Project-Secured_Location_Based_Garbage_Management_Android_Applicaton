@@ -40,6 +40,11 @@ fDatabase.ref('Garbage').on('value', (list) => {
                 <td class="text-center">
                     ${new Date().toString().substring(0, 24)}
                 </td>
+                <td class="text-center">
+                    <a class="text-white ${data.isPicked ? 'btn-success' : 'btn-warning'}" style="padding: 5px 10px; border-radius: 10px;">
+                        ${data.isPicked ? 'Picked' : 'Pending'}
+                    </a>
+                </td>
             </tr>
         `;
 

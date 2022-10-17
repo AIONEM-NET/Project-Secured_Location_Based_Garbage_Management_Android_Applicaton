@@ -80,8 +80,19 @@ public class SplashActivity<Imageview> extends AppCompatActivity {
                     }
                 }
                 else{
-                    startActivity(new Intent(getApplicationContext(), DrawerActivity.class));
-                    finish();
+
+                    if(getPackageName().equals("location.garbage.management.driver")) {
+
+                        startActivity(new Intent(getApplicationContext(), DriverActivity.class));
+                        finish();
+
+                    }else {
+
+                        startActivity(new Intent(getApplicationContext(), DrawerActivity.class));
+                        finish();
+
+                    }
+
                 }
 
             }

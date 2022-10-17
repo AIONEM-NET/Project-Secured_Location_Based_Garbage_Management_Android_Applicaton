@@ -42,10 +42,10 @@ public class GarbageAdapter extends RecyclerView.Adapter<GarbageViewHolder> {
         viewHolder.txtName.setText(garbage.name);
         viewHolder.txtDescription.setText(
                 ""+
-                        garbage.houseNo +" | "+
-                        garbage.packages +" | "+
-                        garbage.phone +" | "+
-                        new Date(garbage.time).toLocaleString()
+                        "Location: "+ garbage.houseNO +", "+ garbage.district
+                        +"\nPackages: "+ garbage.packages
+                        +"\nPhone: "+ garbage.phone
+                        +"\n"+ new Date(garbage.time).toLocaleString()
         );
 
         if(garbage.isPicked) {
@@ -62,7 +62,7 @@ public class GarbageAdapter extends RecyclerView.Adapter<GarbageViewHolder> {
                 @Override
                 public void onClick(View view) {
 
-                    FirebaseDatabase.getInstance().getReference("Drivers").child(garbage.uid).child("isPicked").setValue(true);
+                    FirebaseDatabase.getInstance().getReference("Garbage").child(garbage.uid).child("isPicked").setValue(true);
 
                 }
             });

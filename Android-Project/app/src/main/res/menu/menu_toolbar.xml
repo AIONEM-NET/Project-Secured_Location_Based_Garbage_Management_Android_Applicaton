@@ -9,6 +9,11 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         android:visible="false"
         app:showAsAction="always" />
     <item
+        android:id="@+id/action_driver"
+        android:icon="@drawable/ic_close_black_24dp"
+        android:title="Driver"
+        android:visible="false" />
+    <item
         android:id="@+id/action_profile"
         android:orderInCategory="100"
         android:icon="@drawable/user_icon"
