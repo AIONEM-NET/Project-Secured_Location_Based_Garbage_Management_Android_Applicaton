@@ -11,16 +11,12 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -61,7 +57,7 @@ public class DriverActivity extends Activity {
             return;
         }
 
-        TextView DriverInfo = (TextView) findViewById(R.id.DriverInfo);
+        TextView txtDriverInfo = (TextView) findViewById(R.id.txtDriverInfo);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
         GarbageAdapter garbageAdapter = new GarbageAdapter(this, listGarbage);
@@ -135,12 +131,12 @@ public class DriverActivity extends Activity {
                 if(driver.isApproved) {
                     databaseReference.addValueEventListener(valueEventListener);
 
-                    DriverInfo.setText(driver.district);
-                    DriverInfo.setBackgroundColor(Color.parseColor("#00574B"));
+                    txtDriverInfo.setText(driver.district);
+                    txtDriverInfo.setBackgroundColor(Color.parseColor("#00574B"));
 
                 }else {
-                    DriverInfo.setText("Not Approved");
-                    DriverInfo.setBackgroundColor(Color.parseColor("#B10202"));
+                    txtDriverInfo.setText("Not Approved");
+                    txtDriverInfo.setBackgroundColor(Color.parseColor("#B10202"));
                 }
 
             }

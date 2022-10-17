@@ -10,12 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/colorPrimaryDark"
-        android:text="Driver App | e-Garbage"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        android:textSize="24sp"
         android:gravity="center_vertical"
-        android:paddingStart="70dp"/>
+        android:paddingStart="70dp"
+        android:text="Driver App | e-Garbage"
+        android:lines="1"
+        android:maxLines="1"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <ImageView
         android:layout_width="50dp"
@@ -34,16 +36,19 @@
         android:background="#EDEDED"/>
 
     <TextView
-        android:id="@+id/DriverInfo"
+        android:id="@+id/txtDriverInfo"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
         android:background="@color/colorPrimaryDark"
+        android:gravity="center_vertical"
+        android:lines="2"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:padding="8dp"
         android:text=""
         android:textColor="#FFFFFF"
-        android:textStyle="bold"
         android:textSize="16sp"
-        android:padding="8dp"
-        android:gravity="center_vertical"
-        android:layout_alignParentBottom="true"/>
+        android:textStyle="bold" />
 
 </RelativeLayout>
