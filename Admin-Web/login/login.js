@@ -11,40 +11,60 @@ form.addEventListener("submit", async function(e) {
     form.classList.add("loader");
 
     await fAuth.signInWithEmailAndPassword(email, password)
-    .then((userCredential) => {
+    .then(async (userCredential) => {
 
         const user = userCredential.user;
-        
-        window.localStorage.setItem("userID", user.uid);
-        window.localStorage.setItem("userEmail", user.email);
-        window.localStorage.setItem("userName", user.displayName);
-        window.localStorage.setItem("userAccount", user.displayName);
 
-        if(false) {
-            user.updateProfile({
-                displayName: "SuperAdmin"
-            }).then(() => {
-                window.localStorage.setItem("userName", "SuperAdmin");
-                window.localStorage.setItem("userAccount", "SuperAdmin");
+        if(true || user.emailVerified) {
+        
+            window.localStorage.setItem("userID", user.uid);
+            window.localStorage.setItem("userEmail", user.email);
+            window.localStorage.setItem("userName", user.displayName);
+            window.localStorage.setItem("userAccount", user.displayName);
+
+            if(false) {
+                await user.updateProfile({
+                    displayName: "SuperAdmin"
+                }).then(() => {
+                    window.localStorage.setItem("userName", "SuperAdmin");
+                    window.localStorage.setItem("userAccount", "SuperAdmin");
+                    alert("Login Successfully");
+                    window.location.replace("../dashboard/");
+                }).catch((error) => {
+                    const errorCode = error.code;
+                    let errorMessage = error.message;
+                    if(errorMessage) {
+                        alert(errorMessage);
+                    }
+                }); 
+            }else {
+
+                if(user.displayName != "Admin" && user.displayName != "SuperAdmin") {
+                    alert("You don't have Administrator Previledges !!!");
+                    return;
+                }
+        
                 alert("Login Successfully");
+
                 window.location.replace("../dashboard/");
-            }).catch((error) => {
+            }
+
+        }else {
+
+            await user.sendEmailVerification()
+            .then(() => {
+
+                alert("Check your email to verifiy your account first");
+
+            })
+            .catch((error) => {
                 const errorCode = error.code;
                 let errorMessage = error.message;
                 if(errorMessage) {
                     alert(errorMessage);
                 }
-            }); 
-        }else {
-
-            if(user.displayName != "Admin" && user.displayName != "SuperAdmin") {
-                alert("You don't have Administrator Previledges !!!");
-                return;
-            }
-    
-            alert("Login Successfully");
-
-            window.location.replace("../dashboard/");
+            });
+            
         }
 
     })

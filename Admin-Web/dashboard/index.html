@@ -114,11 +114,16 @@
         <div class="content-body">
 
             <div class="container-fluid mt-3 dashboard">
-                <div class="row">
+                <style>
+                    .dashboard .card .card-body {
+                        padding: 10px 10px;
+                    }
+                </style>
+                <div class="row dashboard-loader">
 
                     <h2 class="col-12 card-title-1 text-black" style="margin-top: 20px; margin-bottom: 10px;">System Summary</h2>
 
-                    <div class="col-lg-3 col-sm-6">
+                    <div class="col-lg-2 col-sm-6">
                         <a href="users/" class="card gradient-1">
                             <div class="card-body">
                                 <h3 class="card-title text-white">Users</h3>
@@ -130,7 +135,7 @@
                             </div>
                         </a>
                     </div>
-                    <div class="col-lg-3 col-sm-6">
+                    <div class="col-lg-2 col-sm-6">
                         <a href="drivers/" class="card gradient-2">
                             <div class="card-body">
                                 <h3 class="card-title text-white">Drivers</h3>
@@ -142,7 +147,7 @@
                             </div>
                         </a>
                     </div>
-                    <div class="col-lg-3 col-sm-6">
+                    <div class="col-lg-2 col-sm-6">
                         <a href="trashes/" class="card gradient-3">
                             <div class="card-body">
                                 <h3 class="card-title text-white">Trashes</h3>
@@ -151,6 +156,18 @@
                                     <p class="text-white mb-0"></p>
                                 </div>
                                 <span class="float-right display-5 opacity-5"><i class="fa fa-trash"></i></span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <a href="reports/" class="card gradient-7">
+                            <div class="card-body">
+                                <h3 class="card-title text-white">Packages</h3>
+                                <div class="d-inline-block">
+                                    <h2 class="text-white count-packages">-</h2>
+                                    <p class="text-white mb-0"></p>
+                                </div>
+                                <span class="float-right display-5 opacity-5"><i class="fa fa-ban"></i></span>
                             </div>
                         </a>
                     </div>
@@ -174,36 +191,6 @@
 
                     <h2 class="col-12 card-title-1 text-black" style="margin-top: 20px; margin-bottom: 10px;">Data per Location</h2>
 
-                    <div class="col-lg-4 col-sm-6 count-districts" data-district="Nyarugenge">
-                        <div class="card">
-                            <div class="social-graph-wrapper widget-linkedin">
-                                <span class="s-icon">
-                                    <i class="fa fa-map-marker"></i>
-                                    Nyarugenge
-                                </span>
-                            </div>
-                            <div class="row">
-                                <div class="col-4 border-right">
-                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
-                                        <h4 class="m-1 count-1">-</h4>
-                                        <p class="m-0">Users</p>
-                                    </div>
-                                </div>
-                                <div class="col-4 border-right">
-                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
-                                        <h4 class="m-1 count-2">-</h4>
-                                        <p class="m-0">Drivers</p>
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
-                                        <h4 class="m-1 count-3">-</h4>
-                                        <p class="m-0">Trashes</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="col-lg-4 col-sm-6 count-districts" data-district="Gasabo">
                         <div class="card">
                             <div class="social-graph-wrapper widget-linkedin">
@@ -228,7 +215,7 @@
                                 <div class="col-4">
                                     <div class="pt-3 pb-3 pl-0 pr-0 text-center">
                                         <h4 class="m-1 count-3">-</h4>
-                                        <p class="m-0">Trashes</p>
+                                        <p class="m-0">Packages</p>
                                     </div>
                                 </div>
                             </div>
@@ -258,7 +245,847 @@
                                 <div class="col-4">
                                     <div class="pt-3 pb-3 pl-0 pr-0 text-center">
                                         <h4 class="m-1 count-3">-</h4>
-                                        <p class="m-0">Trashes</p>
+                                        <p class="m-0">Packages</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 count-districts" data-district="Nyarugenge">
+                        <div class="card">
+                            <div class="social-graph-wrapper widget-linkedin">
+                                <span class="s-icon">
+                                    <i class="fa fa-map-marker"></i>
+                                    Nyarugenge
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-1">-</h4>
+                                        <p class="m-0">Users</p>
+                                    </div>
+                                </div>
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-2">-</h4>
+                                        <p class="m-0">Drivers</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-3">-</h4>
+                                        <p class="m-0">Packages</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 count-districts" data-district="Burera">
+                        <div class="card">
+                            <div class="social-graph-wrapper widget-linkedin">
+                                <span class="s-icon">
+                                    <i class="fa fa-map-marker"></i>
+                                    Burera
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-1">-</h4>
+                                        <p class="m-0">Users</p>
+                                    </div>
+                                </div>
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-2">-</h4>
+                                        <p class="m-0">Drivers</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-3">-</h4>
+                                        <p class="m-0">Packages</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 count-districts" data-district="Gakenke">
+                        <div class="card">
+                            <div class="social-graph-wrapper widget-linkedin">
+                                <span class="s-icon">
+                                    <i class="fa fa-map-marker"></i>
+                                    Gakenke
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-1">-</h4>
+                                        <p class="m-0">Users</p>
+                                    </div>
+                                </div>
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-2">-</h4>
+                                        <p class="m-0">Drivers</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-3">-</h4>
+                                        <p class="m-0">Packages</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 count-districts" data-district="Gicumbi">
+                        <div class="card">
+                            <div class="social-graph-wrapper widget-linkedin">
+                                <span class="s-icon">
+                                    <i class="fa fa-map-marker"></i>
+                                    Gicumbi
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-1">-</h4>
+                                        <p class="m-0">Users</p>
+                                    </div>
+                                </div>
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-2">-</h4>
+                                        <p class="m-0">Drivers</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-3">-</h4>
+                                        <p class="m-0">Packages</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 count-districts" data-district="Musanze">
+                        <div class="card">
+                            <div class="social-graph-wrapper widget-linkedin">
+                                <span class="s-icon">
+                                    <i class="fa fa-map-marker"></i>
+                                    Musanze
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-1">-</h4>
+                                        <p class="m-0">Users</p>
+                                    </div>
+                                </div>
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-2">-</h4>
+                                        <p class="m-0">Drivers</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-3">-</h4>
+                                        <p class="m-0">Packages</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 count-districts" data-district="Rulindo">
+                        <div class="card">
+                            <div class="social-graph-wrapper widget-linkedin">
+                                <span class="s-icon">
+                                    <i class="fa fa-map-marker"></i>
+                                    Rulindo
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-1">-</h4>
+                                        <p class="m-0">Users</p>
+                                    </div>
+                                </div>
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-2">-</h4>
+                                        <p class="m-0">Drivers</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-3">-</h4>
+                                        <p class="m-0">Packages</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 count-districts" data-district="Gisagara">
+                        <div class="card">
+                            <div class="social-graph-wrapper widget-linkedin">
+                                <span class="s-icon">
+                                    <i class="fa fa-map-marker"></i>
+                                    Gisagara
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-1">-</h4>
+                                        <p class="m-0">Users</p>
+                                    </div>
+                                </div>
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-2">-</h4>
+                                        <p class="m-0">Drivers</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-3">-</h4>
+                                        <p class="m-0">Packages</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 count-districts" data-district="Huye">
+                        <div class="card">
+                            <div class="social-graph-wrapper widget-linkedin">
+                                <span class="s-icon">
+                                    <i class="fa fa-map-marker"></i>
+                                    Huye
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-1">-</h4>
+                                        <p class="m-0">Users</p>
+                                    </div>
+                                </div>
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-2">-</h4>
+                                        <p class="m-0">Drivers</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-3">-</h4>
+                                        <p class="m-0">Packages</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 count-districts" data-district="Kamonyi">
+                        <div class="card">
+                            <div class="social-graph-wrapper widget-linkedin">
+                                <span class="s-icon">
+                                    <i class="fa fa-map-marker"></i>
+                                    Kamonyi
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-1">-</h4>
+                                        <p class="m-0">Users</p>
+                                    </div>
+                                </div>
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-2">-</h4>
+                                        <p class="m-0">Drivers</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-3">-</h4>
+                                        <p class="m-0">Packages</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 count-districts" data-district="Muhanga">
+                        <div class="card">
+                            <div class="social-graph-wrapper widget-linkedin">
+                                <span class="s-icon">
+                                    <i class="fa fa-map-marker"></i>
+                                    Muhanga
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-1">-</h4>
+                                        <p class="m-0">Users</p>
+                                    </div>
+                                </div>
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-2">-</h4>
+                                        <p class="m-0">Drivers</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-3">-</h4>
+                                        <p class="m-0">Packages</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 count-districts" data-district="Nyamagabe">
+                        <div class="card">
+                            <div class="social-graph-wrapper widget-linkedin">
+                                <span class="s-icon">
+                                    <i class="fa fa-map-marker"></i>
+                                    Nyamagabe
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-1">-</h4>
+                                        <p class="m-0">Users</p>
+                                    </div>
+                                </div>
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-2">-</h4>
+                                        <p class="m-0">Drivers</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-3">-</h4>
+                                        <p class="m-0">Packages</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 count-districts" data-district="Nyanza">
+                        <div class="card">
+                            <div class="social-graph-wrapper widget-linkedin">
+                                <span class="s-icon">
+                                    <i class="fa fa-map-marker"></i>
+                                    Nyanza
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-1">-</h4>
+                                        <p class="m-0">Users</p>
+                                    </div>
+                                </div>
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-2">-</h4>
+                                        <p class="m-0">Drivers</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-3">-</h4>
+                                        <p class="m-0">Packages</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 count-districts" data-district="Nyaruguru">
+                        <div class="card">
+                            <div class="social-graph-wrapper widget-linkedin">
+                                <span class="s-icon">
+                                    <i class="fa fa-map-marker"></i>
+                                    Nyaruguru
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-1">-</h4>
+                                        <p class="m-0">Users</p>
+                                    </div>
+                                </div>
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-2">-</h4>
+                                        <p class="m-0">Drivers</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-3">-</h4>
+                                        <p class="m-0">Packages</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 count-districts" data-district="Ruhango">
+                        <div class="card">
+                            <div class="social-graph-wrapper widget-linkedin">
+                                <span class="s-icon">
+                                    <i class="fa fa-map-marker"></i>
+                                    Ruhango
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-1">-</h4>
+                                        <p class="m-0">Users</p>
+                                    </div>
+                                </div>
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-2">-</h4>
+                                        <p class="m-0">Drivers</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-3">-</h4>
+                                        <p class="m-0">Packages</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 count-districts" data-district="Bugesera">
+                        <div class="card">
+                            <div class="social-graph-wrapper widget-linkedin">
+                                <span class="s-icon">
+                                    <i class="fa fa-map-marker"></i>
+                                    Bugesera
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-1">-</h4>
+                                        <p class="m-0">Users</p>
+                                    </div>
+                                </div>
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-2">-</h4>
+                                        <p class="m-0">Drivers</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-3">-</h4>
+                                        <p class="m-0">Packages</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 count-districts" data-district="Gatsibo">
+                        <div class="card">
+                            <div class="social-graph-wrapper widget-linkedin">
+                                <span class="s-icon">
+                                    <i class="fa fa-map-marker"></i>
+                                    Gatsibo
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-1">-</h4>
+                                        <p class="m-0">Users</p>
+                                    </div>
+                                </div>
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-2">-</h4>
+                                        <p class="m-0">Drivers</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-3">-</h4>
+                                        <p class="m-0">Packages</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 count-districts" data-district="Kayonza">
+                        <div class="card">
+                            <div class="social-graph-wrapper widget-linkedin">
+                                <span class="s-icon">
+                                    <i class="fa fa-map-marker"></i>
+                                    Kayonza
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-1">-</h4>
+                                        <p class="m-0">Users</p>
+                                    </div>
+                                </div>
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-2">-</h4>
+                                        <p class="m-0">Drivers</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-3">-</h4>
+                                        <p class="m-0">Packages</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 count-districts" data-district="Kirehe">
+                        <div class="card">
+                            <div class="social-graph-wrapper widget-linkedin">
+                                <span class="s-icon">
+                                    <i class="fa fa-map-marker"></i>
+                                    Kirehe
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-1">-</h4>
+                                        <p class="m-0">Users</p>
+                                    </div>
+                                </div>
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-2">-</h4>
+                                        <p class="m-0">Drivers</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-3">-</h4>
+                                        <p class="m-0">Packages</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 count-districts" data-district="Ngoma">
+                        <div class="card">
+                            <div class="social-graph-wrapper widget-linkedin">
+                                <span class="s-icon">
+                                    <i class="fa fa-map-marker"></i>
+                                    Ngoma
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-1">-</h4>
+                                        <p class="m-0">Users</p>
+                                    </div>
+                                </div>
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-2">-</h4>
+                                        <p class="m-0">Drivers</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-3">-</h4>
+                                        <p class="m-0">Packages</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 count-districts" data-district="Nyagatare">
+                        <div class="card">
+                            <div class="social-graph-wrapper widget-linkedin">
+                                <span class="s-icon">
+                                    <i class="fa fa-map-marker"></i>
+                                    Nyagatare
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-1">-</h4>
+                                        <p class="m-0">Users</p>
+                                    </div>
+                                </div>
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-2">-</h4>
+                                        <p class="m-0">Drivers</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-3">-</h4>
+                                        <p class="m-0">Packages</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 count-districts" data-district="Rwamagana">
+                        <div class="card">
+                            <div class="social-graph-wrapper widget-linkedin">
+                                <span class="s-icon">
+                                    <i class="fa fa-map-marker"></i>
+                                    Rwamagana
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-1">-</h4>
+                                        <p class="m-0">Users</p>
+                                    </div>
+                                </div>
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-2">-</h4>
+                                        <p class="m-0">Drivers</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-3">-</h4>
+                                        <p class="m-0">Packages</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 count-districts" data-district="Karongi">
+                        <div class="card">
+                            <div class="social-graph-wrapper widget-linkedin">
+                                <span class="s-icon">
+                                    <i class="fa fa-map-marker"></i>
+                                    Karongi
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-1">-</h4>
+                                        <p class="m-0">Users</p>
+                                    </div>
+                                </div>
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-2">-</h4>
+                                        <p class="m-0">Drivers</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-3">-</h4>
+                                        <p class="m-0">Packages</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 count-districts" data-district="Ngororero">
+                        <div class="card">
+                            <div class="social-graph-wrapper widget-linkedin">
+                                <span class="s-icon">
+                                    <i class="fa fa-map-marker"></i>
+                                    Ngororero
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-1">-</h4>
+                                        <p class="m-0">Users</p>
+                                    </div>
+                                </div>
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-2">-</h4>
+                                        <p class="m-0">Drivers</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-3">-</h4>
+                                        <p class="m-0">Packages</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 count-districts" data-district="Nyabihu">
+                        <div class="card">
+                            <div class="social-graph-wrapper widget-linkedin">
+                                <span class="s-icon">
+                                    <i class="fa fa-map-marker"></i>
+                                    Nyabihu
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-1">-</h4>
+                                        <p class="m-0">Users</p>
+                                    </div>
+                                </div>
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-2">-</h4>
+                                        <p class="m-0">Drivers</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-3">-</h4>
+                                        <p class="m-0">Packages</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 count-districts" data-district="Nyamasheke">
+                        <div class="card">
+                            <div class="social-graph-wrapper widget-linkedin">
+                                <span class="s-icon">
+                                    <i class="fa fa-map-marker"></i>
+                                    Nyamasheke
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-1">-</h4>
+                                        <p class="m-0">Users</p>
+                                    </div>
+                                </div>
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-2">-</h4>
+                                        <p class="m-0">Drivers</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-3">-</h4>
+                                        <p class="m-0">Packages</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 count-districts" data-district="Rubavu">
+                        <div class="card">
+                            <div class="social-graph-wrapper widget-linkedin">
+                                <span class="s-icon">
+                                    <i class="fa fa-map-marker"></i>
+                                    Rubavu
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-1">-</h4>
+                                        <p class="m-0">Users</p>
+                                    </div>
+                                </div>
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-2">-</h4>
+                                        <p class="m-0">Drivers</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-3">-</h4>
+                                        <p class="m-0">Packages</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 count-districts" data-district="Rusizi">
+                        <div class="card">
+                            <div class="social-graph-wrapper widget-linkedin">
+                                <span class="s-icon">
+                                    <i class="fa fa-map-marker"></i>
+                                    Rusizi
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-1">-</h4>
+                                        <p class="m-0">Users</p>
+                                    </div>
+                                </div>
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-2">-</h4>
+                                        <p class="m-0">Drivers</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-3">-</h4>
+                                        <p class="m-0">Packages</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 count-districts" data-district="Rutsiro">
+                        <div class="card">
+                            <div class="social-graph-wrapper widget-linkedin">
+                                <span class="s-icon">
+                                    <i class="fa fa-map-marker"></i>
+                                    Rutsiro
+                                </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-1">-</h4>
+                                        <p class="m-0">Users</p>
+                                    </div>
+                                </div>
+                                <div class="col-4 border-right">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-2">-</h4>
+                                        <p class="m-0">Drivers</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                        <h4 class="m-1 count-3">-</h4>
+                                        <p class="m-0">Packages</p>
                                     </div>
                                 </div>
                             </div>

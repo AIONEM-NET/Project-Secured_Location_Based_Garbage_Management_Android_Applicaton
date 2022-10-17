@@ -32,11 +32,14 @@ fDatabase.ref('Drivers').on('value', (list) => {
                     ${data.phone ?? '-'}
                 </td>
                 <td class="text-center">
-                    ${data.district ?? '-'}
+                    ${data.district.split(",").length >= 30 ? "All" : (data.district ?? '-').replaceAll(",", ", ")}
                 </td>
-                <td class="text-center">
+                <td class="text-center" style="display: inline-flex; gap: 4px;">
                     <a class="btn btn-sm font-weight-medium text-white ${data.isApproved == true ? 'btn-success' : 'btn-danger' }" onclick="onDriverApproved('${id}', ${data.isApproved == true}, '${data.name}');" style="pointer: cursor;">
                         ${data.isApproved == true ? 'Approved' : 'Disabled'}
+                    </a>
+                    <a class="btn btn-sm font-weight-medium text-white btn-secondary" href="../driver-edit/?id=${id}" style="pointer: cursor;">
+                        <i class="fa fa-edit"></i> <span>Edit</span>
                     </a>
                 </td>
             </tr>

@@ -29,12 +29,15 @@ fDatabase.ref('Trashes').on('value', (list) => {
                     ${data.type ?? '-'}
                 </td>
                 <td class="text-center">
-                    ${data.district ?? '-'}
+                    ${data.district.split(",").length >= 30 ? "All" : (data.district ?? '-').replaceAll(",", ", ")}
                 </td>
                 <td class="text-center">
                     ${data.price ?? '-'}
                 </td>
-                <td class="text-center">
+                <td class="text-center" style="display: inline-flex; gap: 4px;">
+                    <a class="btn btn-sm font-weight-medium text-white btn-secondary" href="../trash-edit/?id=${id}" style="pointer: cursor;">
+                        <i class="fa fa-edit"></i> <span>Edit</span>
+                    </a>
                     <a class="btn btn-danger btn-sm font-weight-medium text-white"
                        onclick="onTrashDelete('${id}', '${data.name}');">
                         <i class="fa fa-trash"></i>

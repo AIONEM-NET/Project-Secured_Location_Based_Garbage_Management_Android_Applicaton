@@ -5,7 +5,7 @@ if(!userID) {
 
 let completedData = 0;
 
-document.querySelector(".dashboard").classList.add("loader");
+document.querySelector(".dashboard-loader").classList.add("loader");
 
 
 
@@ -48,8 +48,8 @@ fDatabase.ref('Users').on('value', (list) => {
 
         }
 
-        if(completedData >= 3) {
-            document.querySelector(".dashboard").classList.remove("loader");
+        if(completedData >= 5) {
+            document.querySelector(".dashboard-loader").classList.remove("loader");
         }
 
     });
@@ -77,10 +77,12 @@ fDatabase.ref('Drivers').on('value', (list) => {
 
         noDrivers++;
 
-        if(!arrayDriversDistrict[data.district]) {
-            arrayDriversDistrict[data.district] = 0;
+        for(let district of data.district.split(",")) {
+            if(!arrayDriversDistrict[district]) {
+                arrayDriversDistrict[district] = 0;
+            }
+            arrayDriversDistrict[district]++;
         }
-        arrayDriversDistrict[data.district]++;
 
         document.querySelector(".count-drivers").innerHTML = noDrivers;
 
@@ -97,8 +99,8 @@ fDatabase.ref('Drivers').on('value', (list) => {
 
         }
 
-        if(completedData >= 3) {
-            document.querySelector(".dashboard").classList.remove("loader");
+        if(completedData >= 5) {
+            document.querySelector(".dashboard-loader").classList.remove("loader");
         }
 
     });
@@ -128,10 +130,12 @@ fDatabase.ref('Trashes').on('value', (list) => {
 
         noTrashes++;
 
-        if(!arrayTrashesDistrict[data.district]) {
-            arrayTrashesDistrict[data.district] = 0;
+        for(let district of data.district.split(",")) {
+            if(!arrayTrashesDistrict[district]) {
+                arrayTrashesDistrict[district] = 0;
+            }
+            arrayTrashesDistrict[district]++;
         }
-        arrayTrashesDistrict[data.district]++;
 
         document.querySelector(".count-trashes").innerHTML = noTrashes;
 
@@ -142,19 +146,84 @@ fDatabase.ref('Trashes').on('value', (list) => {
 
                 let district = e.getAttribute("data-district");
 
-                e.querySelector(".count-3").innerHTML = arrayUsersDistrict[district] ?? 0;
+                // e.querySelector(".count-3").innerHTML = arrayTrashesDistrict[district] ?? 0;
 
             });
 
         }
 
-        if(completedData >= 3) {
-            document.querySelector(".dashboard").classList.remove("loader");
+        if(completedData >= 5) {
+            document.querySelector(".dashboard-loader").classList.remove("loader");
         }
 
     });
 
 });
+
+
+
+
+
+let noPackages = 0;
+let countPackages = 0;
+let arrayPackagesDistrict = [];
+let arrayPackagesCountDistrict = [];
+
+fDatabase.ref('Garbage').on('value', (list) => {
+
+    noPackages = 0;
+    countPackages = 0;
+    arrayPackagesDistrict = [];
+
+    let i = 0;
+    let counts = list.numChildren();
+    list.forEach((item) => {
+
+        i++;
+
+        const id = item.key;
+        const data = item.val();
+
+        noPackages++;
+
+        let packages = !isNaN(data.packages) ? parseInt(data.packages) : 0;
+
+        countPackages += packages;
+
+        for(let district of data.district.split(",")) {
+            if(!arrayPackagesDistrict[district]) {
+                arrayPackagesDistrict[district] = 0;
+            }
+            if(!arrayPackagesCountDistrict[district]) {
+                arrayPackagesCountDistrict[district] = 0;
+            }
+            arrayPackagesDistrict[district]++;
+            arrayPackagesCountDistrict[district] += packages;
+        }
+
+        document.querySelector(".count-packages").innerHTML = countPackages;
+
+        if(counts == i) {
+            completedData++;
+
+            document.querySelectorAll(".count-districts").forEach(function(e, key) {
+
+                let district = e.getAttribute("data-district");
+
+                e.querySelector(".count-3").innerHTML = arrayPackagesCountDistrict[district] ?? 0;
+
+            });
+
+        }
+
+        if(completedData >= 5) {
+            document.querySelector(".dashboard-loader").classList.remove("loader");
+        }
+
+    });
+
+});
+
 
 
 
@@ -164,7 +233,7 @@ let arrayPaymentsDistrict = [];
 
 fDatabase.ref('Payments').on('value', (list) => {
 
-    noTrashes = 0;
+    noPayments = 0;
     countPayments = 0;
     arrayPaymentsDistrict = [];
 
@@ -201,8 +270,8 @@ fDatabase.ref('Payments').on('value', (list) => {
 
         }
 
-        if(completedData >= 3) {
-            document.querySelector(".dashboard").classList.remove("loader");
+        if(completedData >= 5) {
+            document.querySelector(".dashboard-loader").classList.remove("loader");
         }
 
     });

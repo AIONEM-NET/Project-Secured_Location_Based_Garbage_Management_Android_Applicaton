@@ -6,8 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -53,6 +55,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -115,19 +118,29 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     CheckBox checkBoxMoMo;
     CheckBox checkBoxCard;
 
+
+    public static FirebaseUser firebaseUser;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
 
-        firebaseAuth = FirebaseAuth.getInstance();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();;
+
+        if(firebaseUser == null) {
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+            finish();
+            return;
+        }
 
         share = new UserSharedPreferences(DrawerActivity.this);
 
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -154,7 +167,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         NavigationView navigationView = findViewById(R.id.nav_view);
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_complaint, R.id.nav_closure, R.id.nav_feedback)
+                R.id.nav_home, R.id.nav_driver, R.id.nav_complaint)
                 .setDrawerLayout(drawer)
                 .build();
 
@@ -312,8 +325,11 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 mapDataGarbage.put("name", myName);
                 mapDataGarbage.put("district", myDistrict);
                 mapDataGarbage.put("houseNO", myHouseNO);
+                mapDataGarbage.put("time", System.currentTimeMillis());
 
-                FirebaseDatabase.getInstance().getReference("Garbage").push().setValue(mapDataGarbage).addOnCompleteListener(new OnCompleteListener<Void>() {
+                DatabaseReference databaseReferenceGarbage = FirebaseDatabase.getInstance().getReference("Garbage").push();
+                mapDataGarbage.put("uid", databaseReferenceGarbage.getKey());
+                databaseReferenceGarbage.setValue(mapDataGarbage).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
 
@@ -327,7 +343,11 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                         mapDataPayment.put("name", myName);
                         mapDataPayment.put("district", myDistrict);
                         mapDataPayment.put("houseNO", myHouseNO);
-                        FirebaseDatabase.getInstance().getReference("Payments").push().setValue(mapDataPayment);
+                        mapDataPayment.put("time", System.currentTimeMillis());
+
+                        DatabaseReference databaseReferencePayment = FirebaseDatabase.getInstance().getReference("Payments").push();
+                        mapDataPayment.put("uid", databaseReferencePayment.getKey());
+                        databaseReferencePayment.setValue(mapDataPayment);
 
                         edtPackages.setText("");
                         checkBoxMoMo.setChecked(false);
@@ -400,11 +420,14 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                             getSharedPreferences("Notifications", MODE_PRIVATE).edit().putInt("notified", 1).apply();
                         }
 
+                        Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
                         notificationManager = NotificationManagerCompat.from(DrawerActivity.this);
                         NotificationCompat.Builder builder = new NotificationCompat.Builder(DrawerActivity.this, CHANNEL_ID)
                                 .setSmallIcon(R.drawable.logo)
                                 .setContentTitle("Garbage Collected")
                                 .setContentText("Garbage is picked up from your house "+ myHouseNO)
+                                .setSound(soundUri)
                                 .setPriority(NotificationCompat.PRIORITY_HIGH);
 
                         notificationManager.notify(0, builder.build());
@@ -429,11 +452,14 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
             getSharedPreferences("Notifications", MODE_PRIVATE).edit().putInt("notified", 1).apply();
         }
 
+        Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
         notificationManager = NotificationManagerCompat.from(DrawerActivity.this);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(DrawerActivity.this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.logo)
                 .setContentTitle(title)
                 .setContentText(message)
+                .setSound(soundUri)
                 .setPriority(NotificationCompat.PRIORITY_HIGH);
 
         notificationManager.notify(0, builder.build());
@@ -495,7 +521,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                     double priceNo = !TextUtils.isEmpty(price) ? Double.parseDouble(price) : 0;
 
 
-                    if(TextUtils.isEmpty(myDistrict) || TextUtils.isEmpty(district) || district.equalsIgnoreCase(myDistrict) || district.equalsIgnoreCase("All")) {
+                    if(TextUtils.isEmpty(myDistrict) || TextUtils.isEmpty(district) || district.contains(myDistrict) || district.equalsIgnoreCase("All")) {
                         listTrashes.add(name);
                         listTrashesPrice.add(priceNo);
                     }
@@ -619,7 +645,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
     public void logout() {
         share.removeUser();
-        firebaseAuth.signOut();
+        FirebaseAuth.getInstance().signOut();
         Intent intent = new Intent(DrawerActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();

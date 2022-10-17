@@ -50,7 +50,7 @@ fDatabase.ref('Users').on('value', (list) => {
 
         }
 
-        if(completedData >= 4) {
+        if(completedData >= 5) {
 
             onDataReady();
 
@@ -84,11 +84,12 @@ fDatabase.ref('Drivers').on('value', (list) => {
 
         noDrivers++;
 
-        if(!arrayDriversDistrict[data.district]) {
-            arrayDriversDistrict[data.district] = 0;
+        for(let district of data.district.split(",")) {
+            if(!arrayDriversDistrict[district]) {
+                arrayDriversDistrict[district] = 0;
+            }
+            arrayDriversDistrict[district]++;
         }
-        arrayDriversDistrict[data.district]++;
-
 
         let day = new Date().getDay();
         if(!arrayDriversDays[day]) {
@@ -100,10 +101,9 @@ fDatabase.ref('Drivers').on('value', (list) => {
         if(counts == i) {
             completedData++;
 
-
         }
 
-        if(completedData >= 4) {
+        if(completedData >= 5) {
 
             onDataReady();
 
@@ -136,12 +136,14 @@ fDatabase.ref('Trashes').on('value', (list) => {
         const data = item.val();
 
         noTrashes++;
+        
 
-
-        if(!arrayTrashesDistrict[data.district]) {
-            arrayTrashesDistrict[data.district] = 0;
+        for(let district of data.district.split(",")) {
+            if(!arrayTrashesDistrict[district]) {
+                arrayTrashesDistrict[district] = 0;
+            }
+            arrayTrashesDistrict[district]++;
         }
-        arrayTrashesDistrict[data.district]++;
 
         
         let day = new Date().getDay();
@@ -153,14 +155,67 @@ fDatabase.ref('Trashes').on('value', (list) => {
 
         if(counts == i) {
             completedData++;
-
-            chartBarTrashes();
-
-            chartPieTrashes();
             
         }
 
-        if(completedData >= 4) {
+        if(completedData >= 5) {
+
+            onDataReady();
+
+        }
+
+    });
+
+});
+
+
+
+
+
+let noPackages = 0;
+let countPackages = 0;
+let arrayPackagesDistrict = [];
+let arrayPackagesCountDistrict = [];
+
+fDatabase.ref('Garbage').on('value', (list) => {
+
+    noPackages = 0;
+    countPackages = 0;
+    arrayPackagesDistrict = [];
+
+    let i = 0;
+    let counts = list.numChildren();
+    list.forEach((item) => {
+
+        i++;
+
+        const id = item.key;
+        const data = item.val();
+
+        noPackages++;
+
+        let packages = !isNaN(data.packages) ? parseInt(data.packages) : 0;
+
+        countPackages += packages;
+
+        for(let district of data.district.split(",")) {
+            if(!arrayPackagesDistrict[district]) {
+                arrayPackagesDistrict[district] = 0;
+            }
+            if(!arrayPackagesCountDistrict[district]) {
+                arrayPackagesCountDistrict[district] = 0;
+            }
+            arrayPackagesDistrict[district]++;
+            arrayPackagesCountDistrict[district] += packages;
+        }
+
+
+        if(counts == i) {
+            completedData++;
+
+        }
+
+        if(completedData >= 5) {
 
             onDataReady();
 
@@ -219,7 +274,7 @@ fDatabase.ref('Payments').on('value', (list) => {
 
         }
 
-        if(completedData >= 4) {
+        if(completedData >= 5) {
 
             onDataReady();
 
@@ -231,6 +286,10 @@ fDatabase.ref('Payments').on('value', (list) => {
 
 
 function onDataReady() {
+
+    chartBarTrashes();
+
+    chartPieTrashes();
 
     chartLinePayments();
 
@@ -245,9 +304,9 @@ function chartBarTrashes() {
     let values = [];
 
     let i = 0;
-    for(let key in arrayTrashesDistrict){
-        labels[i] = key;
-        values[i] = arrayTrashesDistrict[key];
+    for(let key in arrayPackagesCountDistrict){
+        labels[i] = key.substring(0, 4) +".";
+        values[i] = arrayPackagesCountDistrict[key];
         i++;
     }
 
@@ -258,11 +317,11 @@ function chartBarTrashes() {
             labels: labels,
             datasets: [
                 {
-                    label: "Trashes",
+                    label: "Packages",
                     data: values,
-                    borderColor: "rgba(117, 113, 249, 0.9)",
+                    borderColor: "#00bfa0",
                     borderWidth: "0",
-                    backgroundColor: "rgba(117, 113, 249, 0.5)"
+                    backgroundColor: "#00bfa050"
                 }
             ]
         },
@@ -299,16 +358,16 @@ function chartPieTrashes() {
             datasets: [{
                 data: values,
                 backgroundColor: [
-                    "rgba(117, 113, 249,0.9)",
-                    "rgba(117, 113, 249,0.7)",
-                    "rgba(117, 113, 249,0.5)",
-                    "rgba(144, 104,	190,0.7)"
+                    "#ea5545", "#f46a9b", "#ef9b20", "#edbf33", "#ede15b", "#bdcf32", "#87bc45", "#27aeef", "#b33dc6",
+                    "#e60049", "#0bb4ff", "#50e991", "#e6d800", "#9b19f5", "#ffa300", "#dc0ab4", "#b3d4ff", "#00bfa0",
+                    "#b30000", "#7c1158", "#4421af", "#1a53ff", "#0d88e6", "#00b7c7", "#5ad45a", "#8be04e", "#ebdc78",
+                    "#fd7f6f", "#7eb0d5", "#b2e061", "#bd7ebe", "#ffb55a", "#ffee65", "#beb9db", "#fdcce5", "#8bd3c7"
                 ],
                 hoverBackgroundColor: [
-                    "rgba(117, 113, 249,0.9)",
-                    "rgba(117, 113, 249,0.7)",
-                    "rgba(117, 113, 249,0.5)",
-                    "rgba(144, 104,	190,0.7)"
+                    "#ea5545", "#f46a9b", "#ef9b20", "#edbf33", "#ede15b", "#bdcf32", "#87bc45", "#27aeef", "#b33dc6",
+                    "#e60049", "#0bb4ff", "#50e991", "#e6d800", "#9b19f5", "#ffa300", "#dc0ab4", "#b3d4ff", "#00bfa0",
+                    "#b30000", "#7c1158", "#4421af", "#1a53ff", "#0d88e6", "#00b7c7", "#5ad45a", "#8be04e", "#ebdc78",
+                    "#fd7f6f", "#7eb0d5", "#b2e061", "#bd7ebe", "#ffb55a", "#ffee65", "#beb9db", "#fdcce5", "#8bd3c7"
                 ],
             }],
         },
@@ -325,11 +384,14 @@ function chartPieTrashes() {
 
 function chartLinePayments() {
 
+    let labels = [];
+
     let labels1 = [];
     let values1 = [];
     let i = 0;
     for(let key in arrayPaymentsDistrict){
-        labels1[i] = key;
+        labels[i] = key.substring(0, 4) +".";
+        labels1[i] = key.substring(0, 4) +".";
         values1[i] = arrayPaymentsDistrict[key];
         i++;
     }
@@ -338,7 +400,8 @@ function chartLinePayments() {
     let values2 = [];
     i = 0;
     for(let key in arrayTrashesDistrict){
-        labels2[i] = key;
+        labels[i] = key.substring(0, 4) +".";
+        labels2[i] = key.substring(0, 4) +".";
         values2[i] = arrayTrashesDistrict[key];
         i++;
     }
@@ -347,8 +410,29 @@ function chartLinePayments() {
     let values3 = [];
     i = 0;
     for(let key in arrayUsersDistrict){
-        labels3[i] = key;
+        labels[i] = key.substring(0, 4) +".";
+        labels3[i] = key.substring(0, 4) +".";
         values3[i] = arrayUsersDistrict[key];
+        i++;
+    }
+
+    let labels4 = [];
+    let values4 = [];
+    i = 0;
+    for(let key in arrayDriversDistrict){
+        labels[i] = key.substring(0, 4) +".";
+        labels4[i] = key.substring(0, 4) +".";
+        values4[i] = arrayDriversDistrict[key];
+        i++;
+    }
+
+    let labels5 = [];
+    let values5 = [];
+    i = 0;
+    for(let key in arrayPackagesDistrict){
+        labels[i] = key.substring(0, 4) +".";
+        labels5[i] = key.substring(0, 4) +".";
+        values5[i] = arrayPackagesDistrict[key];
         i++;
     }
     
@@ -357,41 +441,66 @@ function chartLinePayments() {
     var myChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ["May 2022", "Jun 2022", "Jul 2022", "Sept 2022", "Oct 2022", "Nov 2022", "Dec 2022"],
+            labels: labels,
             type: 'line',
             defaultFontFamily: 'Montserrat',
-            datasets: [{
-                label: "Payments",
-                data: values1,
-                backgroundColor: 'transparent',
-                borderColor: '#7571F9',
-                borderWidth: 3,
-                pointStyle: 'circle',
-                pointRadius: 5,
-                pointBorderColor: 'transparent',
-                pointBackgroundColor: '#7571F9',
-
-            }, {
-                label: "Trashes",
-                data: values2,
-                backgroundColor: 'transparent',
-                borderColor: '#4d7cff',
-                borderWidth: 3,
-                pointStyle: 'circle',
-                pointRadius: 5,
-                pointBorderColor: 'transparent',
-                pointBackgroundColor: '#4d7cff',
-            }, {
-                label: "Users",
-                data: values3,
-                backgroundColor: 'transparent',
-                borderColor: '#173e43',
-                borderWidth: 3,
-                pointStyle: 'circle',
-                pointRadius: 5,
-                pointBorderColor: 'transparent',
-                pointBackgroundColor: '#173e43',
-            }]
+            datasets: [
+                {
+                    label: "Users",
+                    data: values3,
+                    backgroundColor: 'transparent',
+                    borderColor: '#ffa300',
+                    borderWidth: 3,
+                    pointStyle: 'circle',
+                    pointRadius: 5,
+                    pointBorderColor: 'transparent',
+                    pointBackgroundColor: '#ffa300',
+                }, 
+                {
+                    label: "Drivers",
+                    data: values4,
+                    backgroundColor: 'transparent',
+                    borderColor: '#00bfa0',
+                    borderWidth: 3,
+                    pointStyle: 'circle',
+                    pointRadius: 5,
+                    pointBorderColor: 'transparent',
+                    pointBackgroundColor: '#00bfa0',
+                }, 
+                {
+                    label: "Trashes",
+                    data: values2,
+                    backgroundColor: 'transparent',
+                    borderColor: '#1a53ff',
+                    borderWidth: 3,
+                    pointStyle: 'circle',
+                    pointRadius: 5,
+                    pointBorderColor: 'transparent',
+                    pointBackgroundColor: '#1a53ff',
+                },
+                {
+                    label: "Payments",
+                    data: values1,
+                    backgroundColor: 'transparent',
+                    borderColor: '#e60049',
+                    borderWidth: 3,
+                    pointStyle: 'circle',
+                    pointRadius: 5,
+                    pointBorderColor: 'transparent',
+                    pointBackgroundColor: '#e60049',
+                },
+                {
+                    label: "Requests",
+                    data: values5,
+                    backgroundColor: 'transparent',
+                    borderColor: '#9b19f5',
+                    borderWidth: 3,
+                    pointStyle: 'circle',
+                    pointRadius: 5,
+                    pointBorderColor: 'transparent',
+                    pointBackgroundColor: '#9b19f5',
+                }
+            ]
         },
         options: {
             responsive: true,
@@ -434,6 +543,9 @@ function chartLinePayments() {
                     scaleLabel: {
                         display: true,
                         labelString: 'Value'
+                    },
+                    ticks: {
+                        beginAtZero: true
                     }
                 }]
             },

@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
     ImageView image;
@@ -56,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 phone = edtPhone.getEditText().getText().toString().trim();
                 Password = edtPassword.getEditText().getText().toString().trim();
-                
+
                 if(TextUtils.isEmpty(phone)){
                     Toast.makeText(LoginActivity.this,"Enter Mobile",Toast.LENGTH_LONG).show();
                     edtPhone.setError("Phone is required");
@@ -79,24 +80,43 @@ public class LoginActivity extends AppCompatActivity {
                 user_login.setEnabled(false);
                 progressBar.setVisibility(View.VISIBLE);
 
-                firebaseAuth.signInWithEmailAndPassword(email, Password)
-                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
+                firebaseAuth.signInWithEmailAndPassword(email, Password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
 
-                                    UserSharedPreferences share = new UserSharedPreferences(LoginActivity.this);
-                                    share.setFilename(phone);
-                                    startActivity(new Intent(getApplicationContext(), DrawerActivity.class));
-                                    finish();
+                        if (task.isSuccessful()) {
 
-                                } else {
-                                    user_login.setEnabled(true);
-                                    Toast.makeText(LoginActivity.this, "Login Failed, please try again", Toast.LENGTH_LONG).show();
-                                }
-                                progressBar.setVisibility(View.GONE);
+                            FirebaseUser firebaseUser = task.getResult().getUser();
+
+                            UserSharedPreferences share = new UserSharedPreferences(LoginActivity.this);
+                            share.setFilename(phone);
+
+                            if("Driver".equalsIgnoreCase(firebaseUser.getDisplayName())) {
+
+                                startActivity(new Intent(getApplicationContext(), DrawerActivity.class));
+
+                            }else {
+
+                                startActivity(new Intent(getApplicationContext(), DrawerActivity.class));
+
                             }
-                        });
+
+                            finish();
+
+                        } else {
+                            user_login.setEnabled(true);
+
+                            if(task.getException()  != null) {
+                                Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            }else {
+                                Toast.makeText(LoginActivity.this, "Login Failed, please try again", Toast.LENGTH_LONG).show();
+                            }
+
+                        }
+
+                        progressBar.setVisibility(View.GONE);
+                    }
+                });
             }
         });
 

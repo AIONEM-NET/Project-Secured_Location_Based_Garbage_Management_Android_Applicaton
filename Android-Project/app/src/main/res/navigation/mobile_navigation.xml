@@ -11,21 +11,15 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
+        android:id="@+id/nav_driver"
+        android:name="location.garbage.management.fragment.DriverFragment"
+        android:label="Driver"
+        tools:layout="@layout/fragment_driver" />
+
+    <fragment
         android:id="@+id/nav_complaint"
         android:name="location.garbage.management.fragment.ComplaintFragment"
         android:label="Complaint"
         tools:layout="@layout/fragment_complaint" />
-
-    <fragment
-        android:id="@+id/nav_feedback"
-        android:label="@string/menu_feedback"
-        android:name="location.garbage.management.fragment.FeedbackFragment"
-        tools:layout="@layout/fragment_feedback"/>
-
-    <fragment
-        android:id="@+id/nav_closure"
-        android:name="location.garbage.management.fragment.ClosureFragment"
-        android:label="Notify Closure"
-        tools:layout="@layout/fragment_notify_closure" />
 
 </navigation>

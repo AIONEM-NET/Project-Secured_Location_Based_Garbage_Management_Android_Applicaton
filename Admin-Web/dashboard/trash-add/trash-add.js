@@ -11,6 +11,19 @@ form.addEventListener("submit", async function(e) {
 
     form.classList.add("loader");
 
+    var districts = [];
+    let i = 0;
+    for(let option of document.querySelector("select[name='district']").options){
+        if(option.selected) {
+            let value = option.value;
+            if(value) {
+                districts.push(value);
+            }
+        }
+        i++;
+    }
+
+
     const id = fDatabase.ref('Trashes').push().key;
 
     await fDatabase.ref('Trashes/' + id).set({
@@ -18,7 +31,8 @@ form.addEventListener("submit", async function(e) {
         type: type,
         name : name,
         price: price,
-        district : district,
+        district : districts.toString(),
+        districts : districts,
     })
     .then(() => {
 

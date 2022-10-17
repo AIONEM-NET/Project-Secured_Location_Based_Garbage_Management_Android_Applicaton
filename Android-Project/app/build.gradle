@@ -8,6 +8,7 @@ android {
     buildToolsVersion "32.0.0"
     defaultConfig {
         applicationId "location.garbage.management"
+        // applicationId "location.garbage.management.driver"
         minSdkVersion 19
         targetSdkVersion 32
         versionCode 100

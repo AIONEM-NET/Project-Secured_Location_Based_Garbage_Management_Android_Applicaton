@@ -18,26 +18,29 @@ import location.garbage.management.activity.DrawerActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class ComplaintFragment extends Fragment implements View.OnClickListener {
-    DatabaseReference databaseReference;
-    private View view;
-    EditText feed;
 
-    @Nullable
+public class ComplaintFragment extends Fragment {
+
+    View view;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view =  inflater.inflate(R.layout.fragment_complaint, container, false);
-        Button submit = view.findViewById(R.id.submit);
-        feed = view.findViewById(R.id.feedback);
-        submit.setOnClickListener(this);
+        view = inflater.inflate(R.layout.fragment_complaint, container, false);
         return view;
     }
 
     @Override
-    public void onClick(View v) {
-        switch(v.getId()){
-            case R.id.submit:
-                databaseReference = FirebaseDatabase.getInstance().getReference().child("Complaint").child(DrawerActivity.myHouseNO);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        EditText feed = view.findViewById(R.id.feedback);
+        Button submit = view.findViewById(R.id.submit);
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Complaint").child(DrawerActivity.myHouseNO);
                 databaseReference.setValue(feed.getText().toString().trim());
                 new AlertDialog.Builder(getContext())
                         .setTitle("Complaint Registered")
@@ -48,10 +51,10 @@ public class ComplaintFragment extends Fragment implements View.OnClickListener 
                             }
                         }).setIcon(android.R.drawable.ic_dialog_alert)
                         .show();
-                break;
-        }
+
+            }
+        });
+
     }
-
-
 
 }

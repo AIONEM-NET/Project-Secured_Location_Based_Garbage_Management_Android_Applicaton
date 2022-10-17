@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Register - Secured Location Based Garbage Management</title>
+    <title>Edit Driver - Secured Location Based Garbage Management</title>
     <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/logo_garbage.jpg">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
@@ -117,20 +117,20 @@
                 <div class="row col-12 card">
                     <div class="card-body">
                         <div class="card-title">
-                            <h4>Register Driver</h4>
+                            <h4>Edit Driver</h4>
                         </div>
                     </div>
-                    <form class="forms-sample form-register" autocomplete="off">
+                    <form class="forms-sample form-register" autocomplete="off" style="padding-bottom: 20px;">
                         <div class="form-group row">
                             <label for="name" class="col-sm-3 col-form-label">Name</label>
                             <div class="col-sm-9">
                                 <input type="text" name="name" class="form-control" id="name" placeholder="Name" autocomplete="off" required>
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <div class="form-group row hidden">
                             <label for="email" class="col-sm-3 col-form-label">Email</label>
                             <div class="col-sm-9">
-                                <input type="email" name="email" class="form-control" id="email" placeholder="Email" autocomplete="off" required>
+                                <input type="email" name="email" class="form-control" id="email" placeholder="Email" autocomplete="off" disabled required>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -142,26 +142,39 @@
                         <div class="form-group row">
                             <label for="district" class="col-sm-3 col-form-label">Location</label>
                             <div class="col-sm-9">
-                                <select class="form-control" name="district" id="district" autocomplete="off" required>
-                                    <option value="">District</option>
+                                <select class="form-control" name="district" id="district" multiple autocomplete="off" required style="min-height: 200px;">
+                                    <option value=""></option>
                                     <option value="Gasabo">Gasabo</option>
                                     <option value="Kicukiro">Kicukiro</option>
                                     <option value="Nyarugenge">Nyarugenge</option>
-
+                                    <option value="Burera">Burera</option>
+                                    <option value="Gakenke">Gakenke</option>
+                                    <option value="Gicumbi">Gicumbi</option>
                                     <option value="Musanze">Musanze</option>
+                                    <option value="Rulindo">Rulindo</option>
+                                    <option value="Gisagara">Gisagara</option>
+                                    <option value="Huye">Huye</option>
+                                    <option value="Kamonyi">Kamonyi</option>
+                                    <option value="Muhanga">Muhanga</option>
+                                    <option value="Nyamagabe">Nyamagabe</option>
+                                    <option value="Nyanza">Nyanza</option>
+                                    <option value="Nyaruguru">Nyaruguru</option>
+                                    <option value="Ruhango">Ruhango</option>
+                                    <option value="Bugesera">Bugesera</option>
+                                    <option value="Gatsibo">Gatsibo</option>
+                                    <option value="Kayonza">Kayonza</option>
+                                    <option value="Kirehe">Kirehe</option>
+                                    <option value="Ngoma">Ngoma</option>
+                                    <option value="Nyagatare">Nyagatare</option>
+                                    <option value="Rwamagana">Rwamagana</option>
+                                    <option value="Karongi">Karongi</option>
+                                    <option value="Ngororero">Ngororero</option>
+                                    <option value="Nyabihu">Nyabihu</option>
+                                    <option value="Nyamasheke">Nyamasheke</option>
+                                    <option value="Rubavu">Rubavu</option>
+                                    <option value="Rusizi">Rusizi</option>
+                                    <option value="Rutsiro">Rutsiro</option>
                                 </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="password" class="col-sm-3 col-form-label">Password</label>
-                            <div class="col-sm-9">
-                                <input type="password" name="password" class="form-control" id="password" placeholder="Password" autocomplete="off" required>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="re-password" class="col-sm-3 col-form-label">Re Password</label>
-                            <div class="col-sm-9">
-                                <input type="password" name="re-password" class="form-control" id="re-password" placeholder="Repeat Password" autocomplete="off" required>
                             </div>
                         </div>
                         <div class="form-check form-check-flat form-check-primary hidden">
@@ -213,7 +226,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.0/firebase-storage.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.0/firebase-analytics.js"></script>
     <script src="../../database/database-config.js"></script>
-    <script src="register.js"></script>
+    <script src="driver-edit.js"></script>
     <script src="../security.js"></script>
 </body>
 </html>

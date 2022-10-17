@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo"
@@ -13,12 +15,10 @@
         android:roundIcon="@mipmap/logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-           <uses-library android:name="com.google.android.maps" />
-
+        <uses-library android:name="com.google.android.maps" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-
         <activity
             android:name="location.garbage.management.activity.MapsActivity"
             android:label="@string/title_activity_maps" />
@@ -33,7 +33,6 @@
             android:name="location.garbage.management.activity.FingerprintLock"
             android:label="Fingerprint Authentication"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="location.garbage.management.activity.TermsActivity" />
         <activity android:name="location.garbage.management.activity.SplashActivity"
             android:exported="true">
             <intent-filter>
@@ -42,11 +41,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
     </application>
 
 </manifest>

@@ -162,35 +162,40 @@ public class SignupActivity extends AppCompatActivity {
                 String email = phone + "@tel.phone";
 
                 progress.setVisibility(View.VISIBLE);
-                firebaseAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
+                firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
 
-                                if (task.isSuccessful()) {
+                        if (task.isSuccessful()) {
 
-                                    FirebaseUser firebaseUser = task.getResult().getUser();
+                            FirebaseUser firebaseUser = task.getResult().getUser();
 
-                                    databaseReference.child(firebaseUser.getUid()).child("name").setValue(name);
-                                    databaseReference.child(firebaseUser.getUid()).child("houseNo").setValue(houseNumber);
-                                    databaseReference.child(firebaseUser.getUid()).child("phone").setValue(phone);
-                                    databaseReference.child(firebaseUser.getUid()).child("password").setValue(password);
-                                    databaseReference.child(firebaseUser.getUid()).child("district").setValue(address);
-                                    databaseReference.child(firebaseUser.getUid()).child("email").setValue("");
-                                    databaseReference.child(firebaseUser.getUid()).child("isApproved").setValue(false);
+                            databaseReference.child(firebaseUser.getUid()).child("name").setValue(name);
+                            databaseReference.child(firebaseUser.getUid()).child("houseNo").setValue(houseNumber);
+                            databaseReference.child(firebaseUser.getUid()).child("phone").setValue(phone);
+                            databaseReference.child(firebaseUser.getUid()).child("password").setValue(password);
+                            databaseReference.child(firebaseUser.getUid()).child("district").setValue(address);
+                            databaseReference.child(firebaseUser.getUid()).child("email").setValue("");
+                            databaseReference.child(firebaseUser.getUid()).child("isApproved").setValue(false);
 
-                                    progress.setVisibility(View.GONE);
-                                    Toast.makeText(SignupActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
+                            progress.setVisibility(View.GONE);
+                            Toast.makeText(SignupActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
 
-                                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                                    finish();
+                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                            finish();
 
-                                } else {
-                                    progress.setVisibility(View.GONE);
-                                    Toast.makeText(SignupActivity.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
-                                }
+                        } else {
+                            progress.setVisibility(View.GONE);
+
+                            if(task.getException()  != null) {
+                                Toast.makeText(SignupActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            }else {
+                                Toast.makeText(SignupActivity.this, "Registration Failed, please try again", Toast.LENGTH_LONG).show();
                             }
-                        });
+
+                        }
+                    }
+                });
             }
         });
 
@@ -241,9 +246,7 @@ public class SignupActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == 1 && resultCode == RESULT_OK
-                && data != null && data.getData() != null){
-
+        if(requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null){
             filepath = data.getData();
             Bitmap bitmap;
             try {
@@ -277,5 +280,5 @@ public class SignupActivity extends AppCompatActivity {
             });
         }
     }
-    
+
 }

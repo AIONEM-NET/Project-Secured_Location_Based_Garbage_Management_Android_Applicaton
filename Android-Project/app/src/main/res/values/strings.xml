@@ -8,21 +8,69 @@
     <string name="title_activity_maps">Map</string>
 
     <array name="array_districts">
-        <item>Nyarugenge</item>
         <item>Gasabo</item>
         <item>Kicukiro</item>
-
+        <item>Nyarugenge</item>
+        <item>Burera</item>
+        <item>Gakenke</item>
+        <item>Gicumbi</item>
         <item>Musanze</item>
-
+        <item>Rulindo</item>
+        <item>Gisagara</item>
+        <item>Huye</item>
+        <item>Kamonyi</item>
+        <item>Muhanga</item>
+        <item>Nyamagabe</item>
+        <item>Nyanza</item>
+        <item>Nyaruguru</item>
+        <item>Ruhango</item>
+        <item>Bugesera</item>
+        <item>Gatsibo</item>
+        <item>Kayonza</item>
+        <item>Kirehe</item>
+        <item>Ngoma</item>
+        <item>Nyagatare</item>
+        <item>Rwamagana</item>
+        <item>Karongi</item>
+        <item>Ngororero</item>
+        <item>Nyabihu</item>
+        <item>Nyamasheke</item>
+        <item>Rubavu</item>
+        <item>Rusizi</item>
+        <item>Rutsiro</item>
     </array>
 
     <array name="array_districts_abbreviation">
-        <item>KN</item>
         <item>KG</item>
         <item>KK</item>
-
-        <item>MU</item>
-
+        <item>KN</item>
+        <item>BR</item>
+        <item>GK</item>
+        <item>GC</item>
+        <item>MS</item>
+        <item>RL</item>
+        <item>GS</item>
+        <item>HY</item>
+        <item>KM</item>
+        <item>HM</item>
+        <item>NG</item>
+        <item>NZ</item>
+        <item>NR</item>
+        <item>RH</item>
+        <item>BG</item>
+        <item>GB</item>
+        <item>KZ</item>
+        <item>KH</item>
+        <item>NG</item>
+        <item>NT</item>
+        <item>RW</item>
+        <item>KR</item>
+        <item>NG</item>
+        <item>NB</item>
+        <item>NS</item>
+        <item>RB</item>
+        <item>RS</item>
+        <item>RR</item>
     </array>
 
 

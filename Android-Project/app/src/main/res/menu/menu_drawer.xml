@@ -10,20 +10,15 @@
                 android:icon="@drawable/ic_home_black_24dp"
                 android:title="Home" />
             <item
+                android:id="@+id/nav_driver"
+                android:icon="@drawable/ic_close_black_24dp"
+                android:title="Driver"
+                android:visible="true" />
+            <item
                 android:id="@+id/nav_complaint"
                 android:icon="@drawable/ic_report_black_24dp"
                 android:title="File Complaint"
-                android:visible="false" />
-            <item
-                android:id="@+id/nav_closure"
-                android:icon="@drawable/ic_close_black_24dp"
-                android:title="Notify Closure"
-                android:visible="false" />
-            <item
-                android:id="@+id/nav_feedback"
-                android:icon="@drawable/ic_insert_comment_black_24dp"
-                android:title="Feedback"
-                android:visible="false" />
+                android:visible="true" />
             <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/shut"
