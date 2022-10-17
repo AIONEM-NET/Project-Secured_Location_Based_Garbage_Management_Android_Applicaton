@@ -41,7 +41,7 @@
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:background="@color/colorPrimaryDark"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:lines="2"
         android:maxLines="2"
         android:ellipsize="end"

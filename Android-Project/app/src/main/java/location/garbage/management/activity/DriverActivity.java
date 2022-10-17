@@ -38,7 +38,7 @@ import location.garbage.management.model.Garbage;
 
 public class DriverActivity extends Activity {
 
-    Driver driver = new Driver();
+    public static Driver driver = new Driver();
 
     ArrayList<Garbage> listGarbage = new ArrayList<>();
 
@@ -91,7 +91,7 @@ public class DriverActivity extends Activity {
 
                                     sendNotification(DriverActivity.this,
                                             (garbage.uid + garbage.phone).hashCode(),
-                                            "New "+ garbage.packages +" package "+(!garbage.packages.equals("1") ? "s" : "")+" to pick",
+                                            "New "+ garbage.packages +" package"+(!garbage.packages.equals("1") ? "s" : "")+" to pick",
                                             garbage.houseNO + ", " + garbage.district + " - " + garbage.phone + ""
                                     );
 

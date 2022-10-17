@@ -150,7 +150,7 @@
         android:ems="10"
         android:enabled="false"
         android:gravity="center_horizontal|center_vertical"
-        android:inputType="number"
+        android:inputType="textPostalAddress"
         android:text="Please Wait..."
         android:textColor="#000000"
         android:textSize="18sp"
