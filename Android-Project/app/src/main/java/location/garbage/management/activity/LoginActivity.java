@@ -68,17 +68,17 @@ public class LoginActivity extends AppCompatActivity {
 
                 if(TextUtils.isEmpty(email)){
                     Toast.makeText(LoginActivity.this,"Enter Email address",Toast.LENGTH_LONG).show();
-                    edtEmail.setError("Email is required");
+                    edtEmail.getEditText().setError("Email is required");
                     return;
                 }
                 edtEmail.setError(null);
 
                 if (TextUtils.isEmpty(Password)) {
                     Toast.makeText(LoginActivity.this, "Enter Password", Toast.LENGTH_LONG).show();
-                    edtPassword.setError("Password is required");
+                    edtPassword.getEditText().setError("Password is required");
                     return;
                 }
-                edtPassword.setError(null);
+                edtPassword.getEditText().setError(null);
 
                 btnLogin.setEnabled(false);
                 progressBar.setVisibility(View.VISIBLE);
@@ -86,6 +86,8 @@ public class LoginActivity extends AppCompatActivity {
                 firebaseAuth.signInWithEmailAndPassword(email, Password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+
+                        btnLogin.setEnabled(true);
 
                         FirebaseUser firebaseUser = task.getResult().getUser();
 
@@ -102,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                         Toast.makeText(getApplicationContext(), "Email is not verified", Toast.LENGTH_LONG).show();
                                         Toast.makeText(getApplicationContext(), "Check your email to verify your account first", Toast.LENGTH_LONG).show();
-                                        edtEmail.setError("Email is not verified");
+                                        edtEmail.getEditText().setError("Email is not verified");
 
                                     }
                                 });
@@ -128,7 +130,7 @@ public class LoginActivity extends AppCompatActivity {
                                     FirebaseAuth.getInstance().signOut();
 
                                     Toast.makeText(getApplicationContext(), "You don't have Driver's Access !!", Toast.LENGTH_LONG).show();
-                                    edtEmail.setError("Not a Driver's email");
+                                    edtEmail.getEditText().setError("Not a Driver's email");
 
                                 }
 

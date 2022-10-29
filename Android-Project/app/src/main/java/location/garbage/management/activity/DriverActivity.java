@@ -66,7 +66,7 @@ public class DriverActivity extends Activity {
         recyclerView.setAdapter(garbageAdapter);
 
 
-        Query databaseReference = FirebaseDatabase.getInstance().getReference("Garbage").orderByChild("isPicked").equalTo(false);
+        Query databaseReference = FirebaseDatabase.getInstance().getReference("Garbage").orderByChild("isPicked");
 
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override

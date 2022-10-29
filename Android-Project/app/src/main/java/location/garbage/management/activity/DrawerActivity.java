@@ -355,7 +355,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
                         progressBar.setVisibility(View.GONE);
 
-                        sendNotification("Garbage Payment: "+ amountNo +" Rwf", "You Garbage information is submitted");
+                        sendNotification(getApplicationContext(), "Garbage Payment: "+ amountNo +" Rwf", "You Garbage information is submitted");
 
                         Toast.makeText(getApplicationContext(), "Data submitted successfully", Toast.LENGTH_SHORT).show();
 
@@ -442,20 +442,20 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         });
     }
 
-    public void sendNotification(String title, String message) {
+    public static void sendNotification(Context context, String title, String message) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
             notificationChannel.setDescription(CHANNEL_DESC);
-            NotificationManager manager = getSystemService(NotificationManager.class);
+            NotificationManager manager = context.getSystemService(NotificationManager.class);
             manager.createNotificationChannel(notificationChannel);
-            getSharedPreferences("Notifications", MODE_PRIVATE).edit().putInt("notified", 1).apply();
+            context.getSharedPreferences("Notifications", MODE_PRIVATE).edit().putInt("notified", 1).apply();
         }
 
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-        notificationManager = NotificationManagerCompat.from(DrawerActivity.this);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(DrawerActivity.this, CHANNEL_ID)
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.logo)
                 .setContentTitle(title)
                 .setContentText(message)

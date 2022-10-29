@@ -68,7 +68,7 @@
             android:maxLines="1"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
-            android:text="Map"
+            android:text="Go Map"
             tools:text="Map" />
 
     </LinearLayout>
