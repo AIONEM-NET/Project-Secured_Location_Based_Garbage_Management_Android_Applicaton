@@ -81,7 +81,7 @@ public class GarbageAdapter extends RecyclerView.Adapter<GarbageViewHolder> {
                 @Override
                 public void onClick(View view) {
 
-                    Uri gmmIntentUri = Uri.parse("google.navigation:q="+ garbage.district);
+                    Uri gmmIntentUri = Uri.parse("google.navigation:q="+ garbage.district +" "+ garbage.houseNO);
                     Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                     mapIntent.setPackage("com.google.android.apps.maps");
                     context.startActivity(mapIntent);

@@ -29,6 +29,9 @@ fDatabase.ref('Users').on('value', (list) => {
                     ${data.name ?? '-'}
                 </td>
                 <td class="text-center">
+                    ${data.email ?? '-'}
+                </td>
+                <td class="text-center">
                     ${data.phone ?? '-'}
                 </td>
                 <td class="text-center">
