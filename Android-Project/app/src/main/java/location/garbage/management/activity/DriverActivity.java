@@ -123,7 +123,7 @@ public class DriverActivity extends Activity {
                 driver = snapshot.getValue(Driver.class);
 
                 if(driver == null) {
-                    driver = new Driver();
+                    // driver = new Driver();
                 }
 
                 databaseReference.removeEventListener(valueEventListener);
@@ -136,6 +136,8 @@ public class DriverActivity extends Activity {
 
                 }else {
                     txtDriverInfo.setText("Not Approved");
+                    txtDriverInfo.setText(driver.district);
+
                     txtDriverInfo.setBackgroundColor(Color.parseColor("#B10202"));
                 }
 
@@ -150,9 +152,9 @@ public class DriverActivity extends Activity {
     }
 
 
-    private static final String CHANNEL_ID = "CCTV Camera - Criminal Investigation";
-    private static final String CHANNEL_NAME = "CCTV Camera - Criminal Investigation";
-    private static final String CHANNEL_DESC = "CCTV Camera - Criminal Investigation";
+    private static final String CHANNEL_ID = "Secured Garbage Management";
+    private static final String CHANNEL_NAME = "Secured Garbage Management";
+    private static final String CHANNEL_DESC = "Secured Garbage Management";
 
     public static void sendNotification(Context context, int id, String title, String message) {
 
