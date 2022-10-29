@@ -51,6 +51,14 @@ public class LoginActivity extends AppCompatActivity {
         register_user = findViewById(R.id.doneButton);
         progressBar = findViewById(R.id.progress);
 
+        if(getPackageName().equals("location.garbage.management.driver")) {
+            ((TextView) findViewById(R.id.welcomeid)).setText("Driver APP");
+            findViewById(R.id.doneButton).setVisibility(View.GONE);
+        }else {
+            ((TextView) findViewById(R.id.welcomeid)).setText("USER APP");
+            findViewById(R.id.doneButton).setVisibility(View.VISIBLE);
+        }
+
         firebaseAuth = FirebaseAuth.getInstance();
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
