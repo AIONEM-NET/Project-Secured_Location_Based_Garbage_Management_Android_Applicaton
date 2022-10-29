@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 progressBar.setVisibility(View.GONE);
 
-                                if(true || "Driver".equalsIgnoreCase(firebaseUser.getDisplayName())) {
+                                if("Driver".equalsIgnoreCase(firebaseUser.getDisplayName())) {
 
                                     Toast.makeText(getApplicationContext(), "Login successfully", Toast.LENGTH_LONG).show();
 

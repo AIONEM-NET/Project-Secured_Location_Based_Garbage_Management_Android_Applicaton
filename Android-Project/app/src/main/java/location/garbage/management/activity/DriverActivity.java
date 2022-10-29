@@ -123,8 +123,10 @@ public class DriverActivity extends Activity {
                 driver = snapshot.getValue(Driver.class);
 
                 if(driver == null) {
-                    // driver = new Driver();
+                    driver = new Driver();
                 }
+
+                driver.uid = snapshot.getKey();
 
                 databaseReference.removeEventListener(valueEventListener);
 
@@ -136,8 +138,6 @@ public class DriverActivity extends Activity {
 
                 }else {
                     txtDriverInfo.setText("Not Approved");
-                    txtDriverInfo.setText(driver.district);
-
                     txtDriverInfo.setBackgroundColor(Color.parseColor("#B10202"));
                 }
 
