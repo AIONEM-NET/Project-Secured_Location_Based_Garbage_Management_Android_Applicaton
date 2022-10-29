@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import location.garbage.management.R;
+import location.garbage.management.activity.DrawerActivity;
 import location.garbage.management.activity.DriverActivity;
 import location.garbage.management.model.Garbage;
 import location.garbage.management.views.GarbageViewHolder;
@@ -71,6 +72,12 @@ public class GarbageAdapter extends RecyclerView.Adapter<GarbageViewHolder> {
                     FirebaseDatabase.getInstance().getReference("Garbage").child(garbage.uid).child("driver").setValue(DriverActivity.driver.uid);
                     FirebaseDatabase.getInstance().getReference("Garbage").child(garbage.uid).child("driverName").setValue(DriverActivity.driver.name);
                     FirebaseDatabase.getInstance().getReference("Garbage").child(garbage.uid).child("pickedDate").setValue(System.currentTimeMillis());
+
+                    DrawerActivity.sendNotification(context,
+                            (garbage.uid + garbage.phone).hashCode(),
+                            "Picked garbage of "+ garbage.packages +" package"+(!garbage.packages.equals("1") ? "s" : "")+" ",
+                            garbage.houseNO + ", " + garbage.district + " - " + garbage.phone + ""
+                    );
 
                 }
             });
