@@ -45,13 +45,13 @@ import java.util.ArrayList;
 public class SignupActivity extends AppCompatActivity {
 
     Spinner spinner1, spinner2;
-    String textDistrict, textHouse, name, houseNumber, address, phone, password;
-    TextInputLayout edtPhone, edtPassword, edtName;
-    Button register, login, file_upload;
+    String textDistrict, textHouse, name, houseNo, district, email, password;
+    TextInputLayout edtEmail, edtPassword, edtName;
+    Button register, btnLogin, file_upload;
     ImageButton select;
     ImageView image;
     TextView welcome;
-    ProgressBar progress;
+    ProgressBar progressBar;
 
     Uri filepath;
     FirebaseAuth firebaseAuth;
@@ -65,8 +65,7 @@ public class SignupActivity extends AppCompatActivity {
             String id = i < 10 ? "0"+i : ""+i;
             house.add(abbreviation +" "+ id);
         }
-        spinner2.setAdapter(new ArrayAdapter<>(SignupActivity.this,
-                android.R.layout.simple_spinner_dropdown_item, house));
+        spinner2.setAdapter(new ArrayAdapter<>(SignupActivity.this, android.R.layout.simple_spinner_dropdown_item, house));
     }
 
     @Override
@@ -78,14 +77,14 @@ public class SignupActivity extends AppCompatActivity {
         welcome = findViewById(R.id.welcomeid);
         spinner1 = findViewById(R.id.spinnerAddress);
         spinner2 = findViewById(R.id.houseid);
-        edtName = findViewById(R.id.nameid);
-        edtPhone = findViewById(R.id.emailid);
+        edtName = findViewById(R.id.edtName);
+        edtEmail = findViewById(R.id.edtEmail);
         edtPassword = findViewById(R.id.edtPassword);
         file_upload = findViewById(R.id.upload);
         select = findViewById(R.id.profilepic);
         register = findViewById(R.id.doneButton);
-        login = findViewById(R.id.loginButton);
-        progress = findViewById(R.id.progress);
+        btnLogin = findViewById(R.id.btnLogin);
+        progressBar = findViewById(R.id.progress);
 
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
@@ -123,45 +122,38 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 name = edtName.getEditText().getText().toString().trim();
-                houseNumber = spinner2.getSelectedItem().toString().trim();
-                address = spinner1.getSelectedItem().toString().trim();
-                phone = edtPhone.getEditText().getText().toString().trim();
+                houseNo = spinner2.getSelectedItem().toString().trim();
+                district = spinner1.getSelectedItem().toString().trim();
+                email = edtEmail.getEditText().getText().toString().trim();
                 password = edtPassword.getEditText().getText().toString().trim();
 
                 if(TextUtils.isEmpty(name)){
-                    Toast.makeText(SignupActivity.this,"Enter Name",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Enter Name",Toast.LENGTH_LONG).show();
                     edtName.setError("Name is required");
                     return;
                 }
                 edtName.setError(null);
 
-                if(TextUtils.isEmpty(phone)){
-                    Toast.makeText(SignupActivity.this,"Enter Mobile",Toast.LENGTH_LONG).show();
-                    edtPhone.setError("Phone is required");
+                if(TextUtils.isEmpty(email)){
+                    Toast.makeText(getApplicationContext(),"Enter Email",Toast.LENGTH_LONG).show();
+                    edtEmail.setError("Email required");
                     return;
                 }
-                if((phone.length() != 10 && (!phone.startsWith("078") && !phone.startsWith("079") && !phone.startsWith("072") && !phone.startsWith("073")))) {
-                    Toast.makeText(getApplicationContext(), "Phone number is invalid", Toast.LENGTH_SHORT).show();
-                    edtPhone.setError("Phone number is invalid");
-                    return;
-                }
-                edtPhone.setError(null);
+                edtEmail.setError(null);
 
                 if(TextUtils.isEmpty(password)){
-                    Toast.makeText(SignupActivity.this,"Enter Password",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Enter Password",Toast.LENGTH_LONG).show();
                     edtPassword.setError("Password is required");
                     return;
                 }
                 if(password.length() < 6){
-                    Toast.makeText(SignupActivity.this,"Password must have 6 characters minimum",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Password must have 6 characters minimum",Toast.LENGTH_LONG).show();
                     edtPassword.setError("Password is too short");
                     return;
                 }
                 edtPassword.setError(null);
 
-                String email = phone + "@tel.phone";
-
-                progress.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.VISIBLE);
                 firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -171,27 +163,37 @@ public class SignupActivity extends AppCompatActivity {
                             FirebaseUser firebaseUser = task.getResult().getUser();
 
                             databaseReference.child(firebaseUser.getUid()).child("name").setValue(name);
-                            databaseReference.child(firebaseUser.getUid()).child("houseNo").setValue(houseNumber);
-                            databaseReference.child(firebaseUser.getUid()).child("phone").setValue(phone);
-                            databaseReference.child(firebaseUser.getUid()).child("password").setValue(password);
+                            databaseReference.child(firebaseUser.getUid()).child("houseNo").setValue(houseNo);
+                            databaseReference.child(firebaseUser.getUid()).child("phone").setValue("");
                             databaseReference.child(firebaseUser.getUid()).child("pin").setValue(password);
-                            databaseReference.child(firebaseUser.getUid()).child("district").setValue(address);
-                            databaseReference.child(firebaseUser.getUid()).child("email").setValue("");
+                            databaseReference.child(firebaseUser.getUid()).child("district").setValue(district);
+                            databaseReference.child(firebaseUser.getUid()).child("email").setValue(email);
                             databaseReference.child(firebaseUser.getUid()).child("isApproved").setValue(false);
 
-                            progress.setVisibility(View.GONE);
-                            Toast.makeText(SignupActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
+                            firebaseUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
 
-                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                            finish();
+                                    FirebaseAuth.getInstance().signOut();
+
+                                    progressBar.setVisibility(View.GONE);
+
+                                    Toast.makeText(getApplicationContext(), "Registration Successful", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), "Check your email to verify your account", Toast.LENGTH_SHORT).show();
+
+                                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                                    finish();
+
+                                }
+                            });
 
                         } else {
-                            progress.setVisibility(View.GONE);
+                            progressBar.setVisibility(View.GONE);
 
                             if(task.getException()  != null) {
-                                Toast.makeText(SignupActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
                             }else {
-                                Toast.makeText(SignupActivity.this, "Registration Failed, please try again", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Registration Failed, please try again", Toast.LENGTH_LONG).show();
                             }
 
                         }
@@ -200,16 +202,16 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
-        login.setOnClickListener(new View.OnClickListener() {
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
                 Pair[] pairs = new Pair[6];
                 pairs[0] = new Pair<View, String>(image, "logo_trans");
                 pairs[1] = new Pair<View, String>(welcome, "welcome_trans");
-                pairs[2] = new Pair<View, String>(edtPhone, "email_trans");
+                pairs[2] = new Pair<View, String>(edtEmail, "email_trans");
                 pairs[3] = new Pair<View, String>(edtPassword, "pw_trans");
-                pairs[4] = new Pair<View, String>(login, "But_trans");
+                pairs[4] = new Pair<View, String>(btnLogin, "But_trans");
                 pairs[5] = new Pair<View, String>(register, "But2_trans");
 
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
@@ -270,7 +272,7 @@ public class SignupActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     progressDialog.dismiss();
-                    Toast.makeText(SignupActivity.this, "Image Uploaded", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Image Uploaded", Toast.LENGTH_SHORT).show();
                 }
             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                 @Override

@@ -51,7 +51,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map1);
         mapFragment.getMapAsync(this);
 
-        name = findViewById(R.id.nameid);
+        name = findViewById(R.id.edtName);
         phone = findViewById(R.id.phone);
         profile = findViewById(R.id.propic);
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Location").child(DrawerActivity.myDistrict);

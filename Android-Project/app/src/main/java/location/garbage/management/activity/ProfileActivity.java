@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,7 +37,8 @@ import com.google.firebase.storage.UploadTask;
 import java.io.IOException;
 
 public class ProfileActivity extends AppCompatActivity {
-    EditText name, edtPhone, houseNo, edtAddress, edtEmail;
+
+    EditText edtName, edtPhone, edtHouseNo, edtDistrict, edtEmail;
     ImageButton edit, choose;
     ImageView profile;
     Button done, upload;
@@ -50,10 +52,10 @@ public class ProfileActivity extends AppCompatActivity {
 
         edit = findViewById(R.id.edit);
         done = findViewById(R.id.doneButton);
-        name = findViewById(R.id.nameid);
+        edtName = findViewById(R.id.edtName);
         edtPhone = findViewById(R.id.phone);
-        houseNo = findViewById(R.id.houseid);
-        edtAddress = findViewById(R.id.spinnerAddress);
+        edtHouseNo = findViewById(R.id.houseid);
+        edtDistrict = findViewById(R.id.spinnerAddress);
         edtEmail = findViewById(R.id.edtEmail);
         profile = findViewById(R.id.propic);
         upload = findViewById(R.id.upload);
@@ -79,13 +81,13 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                edtAddress.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.grey));
-                houseNo.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.grey));
+                edtDistrict.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.grey));
+                edtHouseNo.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.grey));
 
-                name.setEnabled(true);
-                edtAddress.setEnabled(true);
-                houseNo.setEnabled(true);
-                edtEmail.setEnabled(true);
+                edtName.setEnabled(true);
+                edtDistrict.setEnabled(true);
+                edtHouseNo.setEnabled(true);
+                edtPhone.setEnabled(true);
 
                 done.setVisibility(View.VISIBLE);
                 edit.setVisibility(View.INVISIBLE);
@@ -97,9 +99,9 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         edtPhone.setText(DrawerActivity.myPhone);
-        name.setText(DrawerActivity.myName);
-        houseNo.setText(DrawerActivity.myHouseNO);
-        edtAddress.setText(DrawerActivity.myDistrict);
+        edtName.setText(DrawerActivity.myName);
+        edtHouseNo.setText(DrawerActivity.myHouseNO);
+        edtDistrict.setText(DrawerActivity.myDistrict);
         edtEmail.setText(DrawerActivity.myEmail);
 
         Bitmap bitmap = BitmapFactory.decodeFile(DrawerActivity.localFile.getAbsolutePath());
@@ -110,13 +112,53 @@ public class ProfileActivity extends AppCompatActivity {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                String phone = edtPhone.getText().toString().trim();
+                String name = edtName.getText().toString().trim();
+                String houseNo = edtHouseNo.getText().toString().trim();
+                String district = edtDistrict.getText().toString().trim();
+
+                if(TextUtils.isEmpty(name)){
+                    Toast.makeText(ProfileActivity.this,"Enter Name",Toast.LENGTH_LONG).show();
+                    edtName.setError("Name is required");
+                    return;
+                }
+                edtName.setError(null);
+
+                if(TextUtils.isEmpty(phone)){
+                    Toast.makeText(ProfileActivity.this,"Enter Phone number",Toast.LENGTH_LONG).show();
+                    edtPhone.setError("Phone is required");
+                    return;
+                }
+                if((phone.length() != 10 && (!phone.startsWith("078") && !phone.startsWith("079") && !phone.startsWith("072") && !phone.startsWith("073")))) {
+                    Toast.makeText(getApplicationContext(), "Phone number is invalid", Toast.LENGTH_SHORT).show();
+                    edtPhone.setError("Phone number is invalid");
+                    return;
+                }
+                edtPhone.setError(null);
+
+                if(TextUtils.isEmpty(district)){
+                    Toast.makeText(ProfileActivity.this,"Enter District",Toast.LENGTH_LONG).show();
+                    edtDistrict.setError("District is required");
+                    return;
+                }
+                edtDistrict.setError(null);
+
+                if(TextUtils.isEmpty(houseNo)){
+                    Toast.makeText(ProfileActivity.this,"Enter House No.",Toast.LENGTH_LONG).show();
+                    edtHouseNo.setError("House No. is required");
+                    return;
+                }
+                edtHouseNo.setError(null);
+
+
                 progressBar.setVisibility(View.VISIBLE);
 
-                databaseReference1.child("name").setValue(name.getText().toString().trim());
-                databaseReference1.child("houseNo").setValue(houseNo.getText().toString().trim());
+                databaseReference1.child("name").setValue(edtName.getText().toString().trim());
+                databaseReference1.child("houseNo").setValue(edtHouseNo.getText().toString().trim());
                 databaseReference1.child("phone").setValue(edtPhone.getText().toString().trim());
                 databaseReference1.child("email").setValue(edtEmail.getText().toString().trim());
-                databaseReference1.child("district").setValue(edtAddress.getText().toString().trim());
+                databaseReference1.child("district").setValue(edtDistrict.getText().toString().trim());
 
                 progressBar.setVisibility(View.GONE);
 
@@ -125,7 +167,6 @@ public class ProfileActivity extends AppCompatActivity {
                 finish();
             }
         });
-
 
     }
 

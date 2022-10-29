@@ -3,7 +3,6 @@ package location.garbage.management.activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.view.View;
@@ -28,9 +27,9 @@ import com.google.firebase.auth.FirebaseUser;
 public class LoginActivity extends AppCompatActivity {
     ImageView image;
     TextView welcome;
-    String phone, Password;
-    Button user_login, register_user;
-    TextInputLayout edtPhone, edtPassword;
+    String email, Password;
+    Button btnLogin, register_user;
+    TextInputLayout edtEmail, edtPassword;
     private FirebaseAuth firebaseAuth;
     private ProgressBar progressBar;
 
@@ -46,107 +45,106 @@ public class LoginActivity extends AppCompatActivity {
 
         image = findViewById(R.id.propic);
         welcome = findViewById(R.id.welcomeid);
-        edtPhone = findViewById(R.id.nameid);
+        edtEmail = findViewById(R.id.edtEmail);
         edtPassword = findViewById(R.id.edtPassword);
-        user_login = findViewById(R.id.loginButton);
+        btnLogin = findViewById(R.id.btnLogin);
         register_user = findViewById(R.id.doneButton);
         progressBar = findViewById(R.id.progress);
 
-        if(getPackageName().equals("location.garbage.management.driver")) {
-            ((TextView) findViewById(R.id.welcomeid)).setText("Driver Login");
-            findViewById(R.id.doneButton).setVisibility(View.GONE);
-
-            edtPhone.setHint("Email");
-            edtPhone.getEditText().setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-        }
-
         firebaseAuth = FirebaseAuth.getInstance();
-        user_login.setOnClickListener(new View.OnClickListener() {
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                phone = edtPhone.getEditText().getText().toString().trim();
+                email = edtEmail.getEditText().getText().toString().trim();
                 Password = edtPassword.getEditText().getText().toString().trim();
 
-                if(getPackageName().equals("location.garbage.management.driver")) {
-
-                    if(TextUtils.isEmpty(phone)){
-                        Toast.makeText(LoginActivity.this,"Enter Email address",Toast.LENGTH_LONG).show();
-                        edtPhone.setError("Email is required");
-                        return;
-                    }
-                    edtPhone.setError(null);
-
-                }else {
-
-                    if(TextUtils.isEmpty(phone)){
-                        Toast.makeText(LoginActivity.this,"Enter Phone number",Toast.LENGTH_LONG).show();
-                        edtPhone.setError("Phone is required");
-                        return;
-                    }
-                    if((phone.length() != 10 && (!phone.startsWith("078") && !phone.startsWith("079") && !phone.startsWith("072") && !phone.startsWith("073")))) {
-                        Toast.makeText(getApplicationContext(), "Phone number is invalid", Toast.LENGTH_SHORT).show();
-                        edtPhone.setError("Phone number is invalid");
-                        return;
-                    }
-                    edtPhone.setError(null);
+                if(TextUtils.isEmpty(email)){
+                    Toast.makeText(LoginActivity.this,"Enter Email address",Toast.LENGTH_LONG).show();
+                    edtEmail.setError("Email is required");
+                    return;
                 }
+                edtEmail.setError(null);
 
                 if (TextUtils.isEmpty(Password)) {
                     Toast.makeText(LoginActivity.this, "Enter Password", Toast.LENGTH_LONG).show();
+                    edtPassword.setError("Password is required");
                     return;
                 }
+                edtPassword.setError(null);
 
-                String email;
-                if(getPackageName().equals("location.garbage.management.driver")) {
-                    email = phone;
-                }else {
-                    email = phone + "@tel.phone";
-                }
-
-                user_login.setEnabled(false);
+                btnLogin.setEnabled(false);
                 progressBar.setVisibility(View.VISIBLE);
 
                 firebaseAuth.signInWithEmailAndPassword(email, Password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
-                        if (task.isSuccessful()) {
+                        FirebaseUser firebaseUser = task.getResult().getUser();
 
-                            FirebaseUser firebaseUser = task.getResult().getUser();
+                        if (task.isSuccessful() && firebaseUser != null) {
+
+                            if(!firebaseUser.isEmailVerified()) {
+                                firebaseUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+
+                                        FirebaseAuth.getInstance().signOut();
+
+                                        progressBar.setVisibility(View.GONE);
+
+                                        Toast.makeText(getApplicationContext(), "Email is not verified", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getApplicationContext(), "Check your email to verify your account first", Toast.LENGTH_LONG).show();
+                                        edtEmail.setError("Email is not verified");
+
+                                    }
+                                });
+                                return;
+                            }
 
                             UserSharedPreferences share = new UserSharedPreferences(LoginActivity.this);
-                            share.setFilename(phone);
+                            share.setFilename(email);
 
                             if(getPackageName().equals("location.garbage.management.driver")) {
 
+                                progressBar.setVisibility(View.GONE);
+
                                 if(true || "Driver".equalsIgnoreCase(firebaseUser.getDisplayName())) {
 
+                                    Toast.makeText(getApplicationContext(), "Login successfully", Toast.LENGTH_LONG).show();
+
                                     startActivity(new Intent(getApplicationContext(), DriverActivity.class));
+                                    finish();
 
                                 }else {
 
-                                    Toast.makeText(LoginActivity.this, "You don't have driver's Access !!", Toast.LENGTH_LONG).show();
+                                    FirebaseAuth.getInstance().signOut();
+
+                                    Toast.makeText(getApplicationContext(), "You don't have Driver's Access !!", Toast.LENGTH_LONG).show();
+                                    edtEmail.setError("Not a Driver's email");
+
                                 }
 
                             }else {
-                                startActivity(new Intent(getApplicationContext(), DrawerActivity.class));
+                                Toast.makeText(getApplicationContext(), "Login successfully", Toast.LENGTH_LONG).show();
 
+                                startActivity(new Intent(getApplicationContext(), DrawerActivity.class));
+                                finish();
                             }
 
-                            finish();
-
                         } else {
-                            user_login.setEnabled(true);
+
+                            progressBar.setVisibility(View.GONE);
+
+                            btnLogin.setEnabled(true);
 
                             if(task.getException()  != null) {
-                                Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
                             }else {
-                                Toast.makeText(LoginActivity.this, "Login Failed, please try again", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Login Failed, please try again", Toast.LENGTH_LONG).show();
                             }
 
                         }
 
-                        progressBar.setVisibility(View.GONE);
                     }
                 });
             }
@@ -160,9 +158,9 @@ public class LoginActivity extends AppCompatActivity {
                 Pair[] pairs = new Pair[6];
                 pairs[0] = new Pair<View, String>(image, "logo_trans");
                 pairs[1] = new Pair<View, String>(welcome, "welcome_trans");
-                pairs[2] = new Pair<View, String>(edtPhone, "email_trans");
+                pairs[2] = new Pair<View, String>(edtEmail, "email_trans");
                 pairs[3] = new Pair<View, String>(edtPassword, "pw_trans");
-                pairs[4] = new Pair<View, String>(user_login, "But_trans");
+                pairs[4] = new Pair<View, String>(btnLogin, "But_trans");
                 pairs[5] = new Pair<View, String>(register_user, "But2_trans");
 
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {

@@ -520,8 +520,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                     String price = String.valueOf(item.child("price").getValue());
                     double priceNo = !TextUtils.isEmpty(price) ? Double.parseDouble(price) : 0;
 
-
-                    if(TextUtils.isEmpty(myDistrict) || TextUtils.isEmpty(district) || district.contains(myDistrict) || district.equalsIgnoreCase("All")) {
+                    if(TextUtils.isEmpty(myDistrict) || TextUtils.isEmpty(district) || district.contains(myDistrict) || myDistrict.contains(district) || district.equalsIgnoreCase("All")) {
                         listTrashes.add(name);
                         listTrashesPrice.add(priceNo);
                     }

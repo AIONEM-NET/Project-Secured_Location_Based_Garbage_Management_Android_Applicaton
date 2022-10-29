@@ -70,7 +70,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/emailid"
+            android:id="@+id/edtEmail"
             android:layout_width="335dp"
             android:layout_height="54dp"
             android:layout_marginTop="100dp"
@@ -87,9 +87,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Phone No."
-                android:inputType="phone" />
+                android:hint="Email"
+                android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Spinner
@@ -101,7 +100,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.813"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/emailid" />
+            app:layout_constraintTop_toBottomOf="@+id/edtEmail" />
 
         <Spinner
             android:id="@+id/houseid"
@@ -113,7 +112,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.813"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/emailid"
+            app:layout_constraintTop_toBottomOf="@+id/edtEmail"
             app:layout_constraintVertical_bias="0.4" />
 
         <TextView
@@ -129,7 +128,7 @@
             app:layout_constraintEnd_toStartOf="@+id/spinnerAddress"
             app:layout_constraintHorizontal_bias="0.571"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/emailid" />
+            app:layout_constraintTop_toBottomOf="@+id/edtEmail" />
 
         <TextView
             android:layout_width="107dp"
@@ -186,7 +185,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/nameid"
+            android:id="@+id/edtName"
             android:layout_width="335dp"
             android:layout_height="54dp"
             android:layout_marginTop="28dp"
@@ -194,7 +193,7 @@
             android:focusableInTouchMode="true"
             android:transitionName="name_trans"
             app:fontFamily="@font/capriola"
-            app:layout_constraintBottom_toTopOf="@+id/emailid"
+            app:layout_constraintBottom_toTopOf="@+id/edtEmail"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
@@ -209,7 +208,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/loginButton"
+            android:id="@+id/btnLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="60dp"
@@ -230,7 +229,7 @@
             android:background="@drawable/propic"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/upload"
-            app:layout_constraintEnd_toStartOf="@+id/nameid"
+            app:layout_constraintEnd_toStartOf="@+id/edtName"
             app:layout_constraintHorizontal_bias="0.475"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
@@ -249,7 +248,7 @@
             android:visibility="gone"
             app:fontFamily="@font/capriola"
             app:layout_constraintBottom_toTopOf="@+id/wardNo"
-            app:layout_constraintEnd_toStartOf="@+id/emailid"
+            app:layout_constraintEnd_toStartOf="@+id/edtEmail"
             app:layout_constraintHorizontal_bias="0.475"
             app:layout_constraintStart_toStartOf="parent" />
 

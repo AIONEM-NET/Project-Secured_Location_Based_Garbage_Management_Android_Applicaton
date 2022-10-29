@@ -1,6 +1,8 @@
 package location.garbage.management.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +56,8 @@ public class GarbageAdapter extends RecyclerView.Adapter<GarbageViewHolder> {
             viewHolder.btnStatus.setText("Picked");
             viewHolder.btnStatus.setBackgroundResource(R.drawable.oval);
 
+            viewHolder.btnMap.setVisibility(View.GONE);
+
         }else {
 
             viewHolder.btnStatus.setText("Confirm ?");
@@ -67,6 +71,20 @@ public class GarbageAdapter extends RecyclerView.Adapter<GarbageViewHolder> {
                     FirebaseDatabase.getInstance().getReference("Garbage").child(garbage.uid).child("driver").setValue(DriverActivity.driver.uid);
                     FirebaseDatabase.getInstance().getReference("Garbage").child(garbage.uid).child("driverName").setValue(DriverActivity.driver.name);
                     FirebaseDatabase.getInstance().getReference("Garbage").child(garbage.uid).child("pickedDate").setValue(System.currentTimeMillis());
+
+                }
+            });
+
+            viewHolder.btnMap.setVisibility(View.VISIBLE);
+
+            viewHolder.btnMap.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Uri gmmIntentUri = Uri.parse("google.navigation:q="+ garbage.district);
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                    mapIntent.setPackage("com.google.android.apps.maps");
+                    context.startActivity(mapIntent);
 
                 }
             });

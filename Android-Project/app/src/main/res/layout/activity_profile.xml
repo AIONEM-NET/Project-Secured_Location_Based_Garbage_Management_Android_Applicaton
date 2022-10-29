@@ -29,7 +29,7 @@
         app:layout_constraintVertical_bias="0.0">
 
         <EditText
-            android:id="@+id/nameid"
+            android:id="@+id/edtName"
             android:layout_width="230dp"
             android:layout_height="62dp"
             android:enabled="false"

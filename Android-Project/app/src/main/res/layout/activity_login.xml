@@ -93,7 +93,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/loginButton"
+        android:id="@+id/btnLogin"
         android:layout_width="268dp"
         android:layout_height="46dp"
         android:background="@drawable/oval"
@@ -126,14 +126,14 @@
         app:layout_constraintVertical_bias="0.563" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/nameid"
+        android:id="@+id/edtEmail"
         android:layout_width="255dp"
         android:layout_height="57dp"
         android:layout_marginTop="36dp"
         android:focusableInTouchMode="true"
         android:transitionName="email_trans"
         app:fontFamily="@font/capriola"
-        app:layout_constraintBottom_toTopOf="@+id/emailid"
+        app:layout_constraintBottom_toTopOf="@+id/edtEmail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
@@ -143,9 +143,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Phone No."
-            android:inputType="phone" />
+            android:hint="Email"
+            android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,12 +18,14 @@ public class GarbageViewHolder extends RecyclerView.ViewHolder {
     public TextView txtName;
     public TextView txtDescription;
     public Button btnStatus;
+    public Button btnMap;
 
     public GarbageViewHolder(@NonNull View itemView) {
         super(itemView);
         txtName = (TextView) itemView.findViewById(R.id.txtName);
         txtDescription = (TextView) itemView.findViewById(R.id.txtDescription);
         btnStatus = (Button) itemView.findViewById(R.id.btnStatus);
+        btnMap = (Button) itemView.findViewById(R.id.btnMap);
     }
 
 }
