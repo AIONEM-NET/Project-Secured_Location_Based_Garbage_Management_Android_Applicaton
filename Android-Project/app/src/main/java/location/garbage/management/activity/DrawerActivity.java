@@ -3,8 +3,11 @@ package location.garbage.management.activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
@@ -13,6 +16,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Telephony;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -47,8 +51,12 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.airbnb.lottie.LottieAnimationView;
 import location.garbage.management.R;
+import location.garbage.management.services.PaymentReceiver;
+import location.garbage.management.services.PaymentResult;
 import location.garbage.management.storage.UserSharedPreferences;
 
+import com.flutterwave.raveandroid.RavePayActivity;
+import com.flutterwave.raveandroid.rave_java_commons.RaveConstants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -293,6 +301,11 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 }
                 edtPhone.setError(null);
 
+                if(checkBoxMoMo.isChecked()) {
+                    selectedPayment = "Mobile Money";
+                }else if(checkBoxCard.isChecked()) {
+                    selectedPayment = "Credit Card";
+                }
                 if(TextUtils.isEmpty(selectedPayment)) {
                     Toast.makeText(getApplicationContext(), "Payment method is required", Toast.LENGTH_SHORT).show();
                     return;
@@ -315,9 +328,6 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 double packagesNo = !TextUtils.isEmpty(packages) ? Double.parseDouble(packages) : 0;
                 double amountNo = packagesNo * selectedPrice;
 
-                progressBar.setVisibility(View.VISIBLE);
-
-                HashMap<String, Object> mapDataGarbage = new HashMap<>();
                 mapDataGarbage.put("garbage", selectedGarbage);
                 mapDataGarbage.put("packages", packages);
                 mapDataGarbage.put("price", selectedPrice);
@@ -328,40 +338,36 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 mapDataGarbage.put("houseNO", myHouseNO);
                 mapDataGarbage.put("time", System.currentTimeMillis());
 
-                DatabaseReference databaseReferenceGarbage = FirebaseDatabase.getInstance().getReference("Garbage").push();
-                mapDataGarbage.put("uid", databaseReferenceGarbage.getKey());
-                databaseReferenceGarbage.setValue(mapDataGarbage).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
+                mapDataPayment.put("garbage", selectedGarbage);
+                mapDataPayment.put("packages", packages);
+                mapDataPayment.put("price", selectedPrice);
+                mapDataPayment.put("amount", amountNo);
+                mapDataPayment.put("method", selectedPayment);
+                mapDataPayment.put("phone", phone);
+                mapDataPayment.put("name", myName);
+                mapDataPayment.put("district", myDistrict);
+                mapDataPayment.put("houseNO", myHouseNO);
+                mapDataPayment.put("time", System.currentTimeMillis());
 
-                        HashMap<String, Object> mapDataPayment = new HashMap<>();
-                        mapDataPayment.put("garbage", selectedGarbage);
-                        mapDataPayment.put("packages", packages);
-                        mapDataPayment.put("price", selectedPrice);
-                        mapDataPayment.put("amount", amountNo);
-                        mapDataPayment.put("method", selectedPayment);
-                        mapDataPayment.put("phone", phone);
-                        mapDataPayment.put("name", myName);
-                        mapDataPayment.put("district", myDistrict);
-                        mapDataPayment.put("houseNO", myHouseNO);
-                        mapDataPayment.put("time", System.currentTimeMillis());
+                phonePay = "*182*1*1*"+ Payment.COMPANY_MOMO_CODE +"*"+amountNo+"#";
 
-                        DatabaseReference databaseReferencePayment = FirebaseDatabase.getInstance().getReference("Payments").push();
-                        mapDataPayment.put("uid", databaseReferencePayment.getKey());
-                        databaseReferencePayment.setValue(mapDataPayment);
+                paying = 0;
 
-                        edtPackages.setText("");
-                        checkBoxMoMo.setChecked(false);
-                        checkBoxCard.setChecked(false);
+                boolean isPay = false;
 
-                        progressBar.setVisibility(View.GONE);
+                if(checkBoxCard.isChecked()) {
 
-                        sendNotification(getApplicationContext(), mapDataPayment.hashCode(), "Garbage Payment: "+ amountNo +" Rwf", "You Garbage information is submitted");
+                    Payment.payCreditCard(DrawerActivity.this, "123", amountNo, "RWF", phone, myEmail, myName, myDistrict);
 
-                        Toast.makeText(getApplicationContext(), "Data submitted successfully", Toast.LENGTH_SHORT).show();
+                }else {
 
-                    }
-                });
+                    isPay = Payment.payMoMo(DrawerActivity.this, phonePay, Payment.REQUEST_RESULT_PAY);
+
+                }
+
+                if(isPay) {
+                    progressBar.setVisibility(View.VISIBLE);
+                }
 
             }
         });
@@ -394,14 +400,64 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
             }
         });
 
-
         getUserData();
+
+
+        IntentFilter filter = new IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION);
+        registerReceiver(new PaymentReceiver(), filter);
+
+        paymentReceiver = new location.garbage.management.services.PaymentReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("android.provider.Telephony.SMS_RECEIVED");
+        registerReceiver(paymentReceiver, intentFilter);
+
+        startService(new Intent(getApplicationContext(), PaymentResult.class));
+
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context arg0, Intent arg1) {
+
+                paying = 0;
+
+                String ussd = arg1.getExtras().getString("ussd");
+
+                String message = (""+ ussd).toLowerCase();
+
+                boolean isPayed =
+                        message.contains("wohereje ") ||
+                                message.contains(" send") ||
+                                message.contains(" kuri") ||
+                                message.contains(" to") ||
+                                message.contains("usigaranye ") ||
+                                message.contains("left ") ||
+                                message.contains(Payment.COMPANY_MOMO_CODE)
+                        ;
+
+                if(isPayed) {
+
+                    completePayment();
+
+                }else {
+
+                    progressBar.setVisibility(View.GONE);
+
+                    sendNotification(getApplicationContext(), mapDataPayment.hashCode(), "Mobile Money Payment", ussd);
+
+                }
+
+            }
+        };
+
+        registerReceiver(receiver, new IntentFilter("com.times.ussd.action.REFRESH"));
 
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    public void onDestroy() {
+        super.onDestroy();
+
+        unregisterReceiver(receiver);
+
     }
 
     public void sendNotification(){
@@ -658,5 +714,95 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         startActivity(intent);
         finish();
     }
+
+
+    String phonePay = "";
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if(requestCode == Payment.REQUEST_PERMISSION_CODE_CALL_PHONE) {
+
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Payment.payMoMo(this, phonePay, Payment.REQUEST_RESULT_PAY);
+            }
+
+        }else {
+
+            IntentFilter filter = new IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION);
+            registerReceiver(new PaymentReceiver(), filter);
+
+        }
+
+    }
+
+
+    location.garbage.management.services.PaymentReceiver paymentReceiver;
+
+    int paying = 0;
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == RaveConstants.RAVE_REQUEST_CODE && data != null) {
+
+            String message = data.getStringExtra("response");
+
+            if (resultCode == RavePayActivity.RESULT_SUCCESS) {
+                System.out.println( "PAYMENT SUCCESS " + message);
+
+                completePayment();
+
+            } else if (resultCode == RavePayActivity.RESULT_ERROR) {
+                System.out.println( "PAYMENT ERROR " + message);
+
+            } else if (resultCode == RavePayActivity.RESULT_CANCELLED) {
+                System.out.println( "PAYMENT CANCELLED " + message);
+            }
+
+            progressBar.setVisibility(View.GONE);
+
+        }else if(requestCode == Payment.REQUEST_RESULT_PAY) {
+            paying++;
+
+        }else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+
+    }
+
+    HashMap<String, Object> mapDataGarbage = new HashMap<>();
+    HashMap<String, Object> mapDataPayment = new HashMap<>();
+
+    BroadcastReceiver receiver;
+
+    public void completePayment() {
+
+        DatabaseReference databaseReferenceGarbage = FirebaseDatabase.getInstance().getReference("Garbage").push();
+        mapDataGarbage.put("uid", databaseReferenceGarbage.getKey());
+        databaseReferenceGarbage.setValue(mapDataGarbage).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+
+                DatabaseReference databaseReferencePayment = FirebaseDatabase.getInstance().getReference("Payments").push();
+                mapDataPayment.put("uid", databaseReferencePayment.getKey());
+                databaseReferencePayment.setValue(mapDataPayment);
+
+                edtPackages.setText("");
+                checkBoxMoMo.setChecked(false);
+                checkBoxCard.setChecked(false);
+
+                progressBar.setVisibility(View.GONE);
+
+                sendNotification(getApplicationContext(), mapDataPayment.hashCode(), "Garbage Payment: "+ mapDataPayment.get("amount") +" Rwf", "You Garbage information is submitted");
+
+                Toast.makeText(getApplicationContext(), "Data submitted successfully", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+    }
+
 
 }

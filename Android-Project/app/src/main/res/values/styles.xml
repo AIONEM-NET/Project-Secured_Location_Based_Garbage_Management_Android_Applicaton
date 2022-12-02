@@ -21,4 +21,19 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="PaymentTheme" parent="RaveAppTheme.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="OTPButtonStyle">@color/colorPayment</item>
+        <item name="PayButtonStyle">@color/colorPayment</item>
+        <item name="PinButtonStyle">@color/colorPayment</item>
+        <item name="OTPHeaderStyle">@color/colorPayment</item>
+        <item name="TabLayoutStyle">@color/colorPayment</item>
+        <item name="PinHeaderStyle">@color/colorPayment</item>
+        <item name="PaymentTileStyle">@color/colorPayment</item>
+        <item name="PaymentTileTextStyle">@color/colorPayment</item>
+        <item name="PaymentTileDividerStyle">@color/colorPayment</item>
+    </style>
+
 </resources>

@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -180,5 +181,47 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+        findViewById(R.id.buttonForgetPassword).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                email = edtEmail.getEditText().getText().toString().trim();
+
+                String email = edtEmail.getEditText().getText().toString();
+
+                if(TextUtils.isEmpty(email)) {
+                    Toast.makeText(LoginActivity.this, "Enter Email", Toast.LENGTH_SHORT).show();
+                    edtEmail.getEditText().setError("Email is required");
+                    return;
+                }
+                if(!isValidEmail(email)) {
+                    Toast.makeText(LoginActivity.this, "Invalid Email", Toast.LENGTH_SHORT).show();
+                    edtEmail.getEditText().setError("Email is invalid");
+                    return;
+                }
+                edtEmail.getEditText().setError(null);
+
+                progressBar.setVisibility(View.VISIBLE);
+
+                FirebaseAuth.getInstance().sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+                        progressBar.setVisibility(View.INVISIBLE);
+
+                        Toast.makeText(getApplicationContext(), "We have sent you a link to reset your password", Toast.LENGTH_LONG).show();
+
+                    }
+                });
+
+            }
+        });
+
     }
+
+    public static boolean isValidEmail(String email) {
+        return (!TextUtils.isEmpty(email) && email.matches("[a-zA-Z0-9._-]+@[a-z]+\\.[a-z]+"));
+    }
+
 }

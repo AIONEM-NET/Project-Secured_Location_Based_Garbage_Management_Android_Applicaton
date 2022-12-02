@@ -139,6 +139,11 @@ public class SignupActivity extends AppCompatActivity {
                     edtEmail.setError("Email required");
                     return;
                 }
+                if(!LoginActivity.isValidEmail(email)) {
+                    Toast.makeText(getApplicationContext(), "Invalid Email", Toast.LENGTH_SHORT).show();
+                    edtEmail.setError("Email is invalid");
+                    return;
+                }
                 edtEmail.setError(null);
 
                 if(TextUtils.isEmpty(password)){
