@@ -11,10 +11,13 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,9 +37,10 @@ import location.garbage.management.R;
 import location.garbage.management.adapter.GarbageAdapter;
 import location.garbage.management.model.Driver;
 import location.garbage.management.model.Garbage;
+import location.garbage.management.storage.UserSharedPreferences;
 
 
-public class DriverActivity extends Activity {
+public class DriverActivity extends AppCompatActivity {
 
     public static Driver driver = new Driver();
 
@@ -47,7 +51,7 @@ public class DriverActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_driver);
+        setContentView(R.layout.activity_driver);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();;
 
@@ -56,6 +60,8 @@ public class DriverActivity extends Activity {
             finish();
             return;
         }
+
+        setSupportActionBar(findViewById(R.id.toolbar));
 
         TextView txtDriverInfo = (TextView) findViewById(R.id.txtDriverInfo);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -149,6 +155,31 @@ public class DriverActivity extends Activity {
             }
         });
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_toolbar_driver, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_logout) {
+            logout();
+            return false;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void logout() {
+        UserSharedPreferences share = new UserSharedPreferences(DriverActivity.this);
+        share.removeUser();
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(DriverActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 

@@ -38,7 +38,7 @@ public class DriverFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view =  inflater.inflate(R.layout.fragment_driver, container, false);
+        view =  inflater.inflate(R.layout.activity_driver, container, false);
         return view;
     }
 

@@ -701,7 +701,10 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if(id == R.id.nav_logout) {
+        if(id == R.id.nav_transactions) {
+            Intent intent = new Intent(DrawerActivity.this, TransactionActivity.class);
+            startActivity(intent);
+        }else if(id == R.id.nav_logout) {
             logout();
         }
         return false;

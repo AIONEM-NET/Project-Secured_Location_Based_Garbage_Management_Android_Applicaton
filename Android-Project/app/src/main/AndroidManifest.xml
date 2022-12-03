@@ -46,9 +46,13 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:launchMode="singleInstance"/>
         <activity
+            android:name="location.garbage.management.activity.TransactionActivity"
+            android:label="My Transactions"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
             android:name="location.garbage.management.activity.DriverActivity"
             android:label="Driver App"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name="location.garbage.management.activity.FingerprintLock"
             android:label="Fingerprint Authentication"
