@@ -228,7 +228,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 selectedPrice = price;
                 selectedGarbage = garbage;
 
-                double amount = packagesNo * selectedPrice;
+                int amount = (int) (packagesNo * selectedPrice);
 
                 edtAmount.setText(amount + " Rwf");
 
@@ -326,7 +326,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
 
                 double packagesNo = !TextUtils.isEmpty(packages) ? Double.parseDouble(packages) : 0;
-                double amountNo = packagesNo * selectedPrice;
+                int amountNo = (int) (packagesNo * selectedPrice);
 
                 mapDataGarbage.put("garbage", selectedGarbage);
                 mapDataGarbage.put("packages", packages);
@@ -657,6 +657,15 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         flag = 1;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(FingerprintLock.isVerified && btnSubmit != null) {
+            btnSubmit.setText("CONTINUE TO PAY");
+        }
+
+    }
 
     @Override
     public void onBackPressed() {
