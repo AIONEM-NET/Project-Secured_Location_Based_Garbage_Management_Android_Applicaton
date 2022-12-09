@@ -419,8 +419,6 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
             @Override
             public void onReceive(Context arg0, Intent arg1) {
 
-                paying = 0;
-
                 String ussd = arg1.getExtras().getString("ussd");
 
                 String message = (""+ ussd).toLowerCase();
@@ -436,6 +434,8 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 if(isPayed) {
 
                     completePayment();
+
+                    paying = 0;
 
                 }else {
 
@@ -790,6 +790,8 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     BroadcastReceiver receiver;
 
     public void completePayment() {
+
+        if(paying == 0) return;
 
         DatabaseReference databaseReferenceGarbage = FirebaseDatabase.getInstance().getReference("Garbage").push();
         mapDataGarbage.put("uid", databaseReferenceGarbage.getKey());
