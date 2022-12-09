@@ -40,7 +40,7 @@ fDatabase.ref('Payments').on('value', (list) => {
                     ${data.amount ?? '-'} Rwf
                 </td>
                 <td class="text-center">
-                    ${data.method ?? '-'} Rwf
+                    ${data.method ?? '-'}
                 </td>
                 <td class="text-center">
                     <i class="fa fa-circle-o mr-2 ${data.isPaid ? 'text-success' : 'text-danger'}"></i>

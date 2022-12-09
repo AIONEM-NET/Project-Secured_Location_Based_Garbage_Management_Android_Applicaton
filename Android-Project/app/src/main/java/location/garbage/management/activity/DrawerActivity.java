@@ -793,7 +793,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
         DatabaseReference databaseReferenceGarbage = FirebaseDatabase.getInstance().getReference("Garbage").push();
         mapDataGarbage.put("uid", databaseReferenceGarbage.getKey());
-        mapDataPayment.put("paid", true);
+        mapDataPayment.put("isPaid", true);
 
         databaseReferenceGarbage.setValue(mapDataGarbage).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
