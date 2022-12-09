@@ -141,6 +141,8 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();;
 
+        FingerprintLock.isVerified = false;
+
         if(firebaseUser == null) {
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             finish();
@@ -423,14 +425,12 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
                 String message = (""+ ussd).toLowerCase();
 
+                if(message.contains("washyizeho:")) return;
+
                 boolean isPayed =
                         message.contains("wohereje ") ||
-                                message.contains(" send") ||
-                                message.contains(" kuri") ||
-                                message.contains(" to") ||
                                 message.contains("usigaranye ") ||
-                                message.contains("left ") ||
-                                message.contains(Payment.COMPANY_MOMO_CODE)
+                                message.contains("murakoze gukoresha mtn mobile money")
                         ;
 
                 if(isPayed) {
