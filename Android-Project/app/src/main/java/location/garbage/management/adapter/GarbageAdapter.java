@@ -3,6 +3,7 @@ package location.garbage.management.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,22 +45,35 @@ public class GarbageAdapter extends RecyclerView.Adapter<GarbageViewHolder> {
         Garbage garbage = listGarbage.get(position);
 
         viewHolder.txtName.setText(garbage.name);
-        viewHolder.txtDescription.setText(
-                ""+
-                        "Location: "+ garbage.houseNO +", "+ garbage.district
-                        +"\nPackages: "+ garbage.packages
-                        +"\nPhone: "+ garbage.phone
-                        +"\n"+ new Date(garbage.time).toLocaleString()
-        );
 
         if(garbage.isPicked) {
+
+            viewHolder.txtDescription.setText(Html.fromHtml(
+                    (""+
+                            "➤ <b>Location</b>: "+ garbage.houseNO +", "+ garbage.district
+                            +"\n➤ <b>Packages</b>: "+ garbage.packages
+                            +"\n➤ <b>Phone</b>: "+ garbage.phone
+                            +"\n➤ <b>Driver</b>: "+ garbage.driverName
+                            +"\n➤ "+ new Date(garbage.time).toLocaleString()
+                    ).replace("\n", "<br>")
+            ));
 
             viewHolder.btnStatus.setText("Picked");
             viewHolder.btnStatus.setBackgroundResource(R.drawable.oval);
 
             viewHolder.btnMap.setVisibility(View.GONE);
+            viewHolder.btnStatus.setVisibility(View.GONE);
 
         }else {
+
+            viewHolder.txtDescription.setText(Html.fromHtml(
+                    (""+
+                            "➤ <b>Location</b>: "+ garbage.houseNO +", "+ garbage.district
+                            +"\n➤ <b>Packages</b>: "+ garbage.packages
+                            +"\n➤ <b>Phone</b>: "+ garbage.phone
+                            +"\n➤ "+ new Date(garbage.time).toLocaleString()
+                    ).replace("\n", "<br>")
+            ));
 
             viewHolder.btnStatus.setText("Confirm ?");
             viewHolder.btnStatus.setBackgroundResource(R.drawable.oval_yellow);

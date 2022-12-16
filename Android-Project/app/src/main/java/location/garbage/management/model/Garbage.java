@@ -10,6 +10,7 @@ public class Garbage {
     public String packages;
     public String garbage;
     public String phone;
+    public String driverName;
     public long time = System.currentTimeMillis();
     public boolean isPicked;
     public double price;

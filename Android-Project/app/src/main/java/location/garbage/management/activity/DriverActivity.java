@@ -1,11 +1,12 @@
 package location.garbage.management.activity;
 
-import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
@@ -13,6 +14,9 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -44,6 +48,8 @@ public class DriverActivity extends AppCompatActivity {
 
     public static Driver driver = new Driver();
 
+    boolean isPicked = false;
+
     ArrayList<Garbage> listGarbage = new ArrayList<>();
 
     FirebaseUser firebaseUser;
@@ -64,13 +70,15 @@ public class DriverActivity extends AppCompatActivity {
         setSupportActionBar(findViewById(R.id.toolbar));
 
         TextView txtDriverInfo = (TextView) findViewById(R.id.txtDriverInfo);
+        Button btnPending = (Button) findViewById(R.id.btnPending);
+        Button btnCompleted = (Button) findViewById(R.id.btnCompleted);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         GarbageAdapter garbageAdapter = new GarbageAdapter(this, listGarbage);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(garbageAdapter);
-
 
         Query databaseReference = FirebaseDatabase.getInstance().getReference("Garbage").orderByChild("isPicked");
 
@@ -84,7 +92,7 @@ public class DriverActivity extends AppCompatActivity {
 
                     Garbage garbage = item.getValue(Garbage.class);
 
-                    if(garbage != null) {
+                    if(garbage != null && garbage.isPicked == isPicked) {
 
                         if(TextUtils.isEmpty(driver.district) || TextUtils.isEmpty(garbage.district) || driver.district.contains(garbage.district)) {
                             listGarbage.add(garbage);
@@ -114,6 +122,8 @@ public class DriverActivity extends AppCompatActivity {
                 garbageAdapter.setListGarbage(listGarbage);
                 garbageAdapter.notifyDataSetChanged();
 
+                progressBar.setVisibility(View.GONE);
+
             }
 
             @Override
@@ -137,6 +147,9 @@ public class DriverActivity extends AppCompatActivity {
                 databaseReference.removeEventListener(valueEventListener);
 
                 if(driver.isApproved) {
+
+                    progressBar.setVisibility(View.VISIBLE);
+
                     databaseReference.addValueEventListener(valueEventListener);
 
                     txtDriverInfo.setText(driver.district);
@@ -145,12 +158,73 @@ public class DriverActivity extends AppCompatActivity {
                 }else {
                     txtDriverInfo.setText("Not Approved");
                     txtDriverInfo.setBackgroundColor(Color.parseColor("#B10202"));
+
+                    progressBar.setVisibility(View.GONE);
+
                 }
 
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        btnPending.setBackgroundResource(R.drawable.button_active);
+        btnPending.setPaintFlags(btnPending.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        btnPending.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+
+        btnPending.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                databaseReference.removeEventListener(valueEventListener);
+
+                listGarbage.clear();
+                garbageAdapter.setListGarbage(listGarbage);
+                garbageAdapter.notifyDataSetChanged();
+
+                progressBar.setVisibility(View.VISIBLE);
+
+                isPicked = false;
+
+                databaseReference.addValueEventListener(valueEventListener);
+
+                btnPending.setBackgroundResource(R.drawable.button_active);
+                btnPending.setPaintFlags(btnPending.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                btnPending.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+
+                btnCompleted.setBackgroundResource(R.drawable.button);
+                btnCompleted.setPaintFlags(0);
+                btnCompleted.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+
+            }
+        });
+
+        btnCompleted.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                databaseReference.removeEventListener(valueEventListener);
+
+                listGarbage.clear();
+                garbageAdapter.setListGarbage(listGarbage);
+                garbageAdapter.notifyDataSetChanged();
+
+                progressBar.setVisibility(View.VISIBLE);
+
+                isPicked = true;
+
+                databaseReference.addValueEventListener(valueEventListener);
+
+                btnCompleted.setBackgroundResource(R.drawable.button_active);
+                btnCompleted.setPaintFlags(btnCompleted.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                btnCompleted.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+
+                btnPending.setBackgroundResource(R.drawable.button);
+                btnPending.setPaintFlags(0);
+                btnPending.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
 
             }
         });

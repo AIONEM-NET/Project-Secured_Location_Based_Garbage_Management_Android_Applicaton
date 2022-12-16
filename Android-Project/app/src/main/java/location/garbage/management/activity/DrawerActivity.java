@@ -217,7 +217,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         checkBoxMoMo = (CheckBox) findViewById(R.id.checkBoxMoMo);
         checkBoxCard = (CheckBox) findViewById(R.id.checkBoxVisa);
 
-        spinnerGarbage.setAdapter(new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, listTrashes));
+        spinnerGarbage.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.spinner, listTrashes));
 
         spinnerGarbage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
