@@ -375,6 +375,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 double packagesNo = !TextUtils.isEmpty(packages) ? Double.parseDouble(packages) : 0;
                 int amountNo = (int) (packagesNo * selectedPrice);
 
+                mapDataGarbage.put("user", firebaseUser.getUid());
                 mapDataGarbage.put("garbage", selectedGarbage);
                 mapDataGarbage.put("packages", packages);
                 mapDataGarbage.put("price", selectedPrice);
@@ -385,6 +386,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 mapDataGarbage.put("houseNO", myHouseNO);
                 mapDataGarbage.put("time", System.currentTimeMillis());
 
+                mapDataPayment.put("user", firebaseUser.getUid());
                 mapDataPayment.put("garbage", selectedGarbage);
                 mapDataPayment.put("packages", packages);
                 mapDataPayment.put("price", selectedPrice);

@@ -5,6 +5,7 @@ public class Transaction {
 
     public String uid;
     public String name;
+    public String user;
     public String district;
     public String houseNO;
     public String packages;

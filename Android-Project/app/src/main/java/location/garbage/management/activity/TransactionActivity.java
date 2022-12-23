@@ -71,7 +71,7 @@ public class TransactionActivity extends AppCompatActivity {
 
                     if(transaction != null) {
 
-                        if(firebaseUser.getUid().equals(transaction.uid)) {
+                        if(firebaseUser.getUid().equals(transaction.user)) {
                             listTransactions.add(transaction);
                         }
 
