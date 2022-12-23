@@ -1,6 +1,7 @@
 package location.garbage.management.activity;
 
 import static location.garbage.management.activity.DrawerActivity.databaseReference1;
+import static location.garbage.management.activity.DrawerActivity.firebaseUser;
 import static location.garbage.management.activity.DrawerActivity.storageReference;
 
 import android.app.ProgressDialog;
@@ -174,6 +175,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                 progressBar.setVisibility(View.VISIBLE);
 
+                databaseReference1.child("email").setValue(firebaseUser.getEmail());
                 databaseReference1.child("name").setValue(edtName.getText().toString().trim());
                 databaseReference1.child("houseNo").setValue(edtHouseNo.getText().toString().trim());
                 databaseReference1.child("phone").setValue(edtPhone.getText().toString().trim());
