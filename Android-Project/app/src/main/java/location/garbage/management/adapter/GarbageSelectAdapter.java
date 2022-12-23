@@ -23,6 +23,10 @@ public class GarbageSelectAdapter extends ArrayAdapter<String> {
 
     HashMap<Integer, View> views = new HashMap<>();
 
+    public GarbageSelectAdapter(@NonNull Context context, int resource, @NonNull List<String> objects) {
+        super(context, resource, objects);
+    }
+
     public GarbageSelectAdapter(@NonNull Context context, int resource, int textViewResourceId, @NonNull List<String> objects) {
         super(context, resource, textViewResourceId, objects);
     }

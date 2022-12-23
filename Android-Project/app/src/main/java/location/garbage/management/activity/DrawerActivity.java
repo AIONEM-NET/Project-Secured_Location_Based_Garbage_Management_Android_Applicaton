@@ -241,7 +241,8 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         checkBoxMoMoAirTel = (CheckBox) findViewById(R.id.checkBoxMoMoAirTel);
         checkBoxCard = (CheckBox) findViewById(R.id.checkBoxVisa);
 
-        garbageSelectAdapter = new GarbageSelectAdapter(this, R.layout.spinner, R.id.textView, listTrashes);
+        // garbageSelectAdapter = new GarbageSelectAdapter(this, R.layout.spinner, R.id.textView, listTrashes);
+        garbageSelectAdapter = new GarbageSelectAdapter(this, android.R.layout.simple_spinner_dropdown_item, listTrashes);
 
         spinnerGarbage.setAdapter(garbageSelectAdapter);
 
@@ -345,6 +346,13 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 }else if(checkBoxCard.isChecked()) {
                     selectedPayment = "Credit Card";
                 }
+
+                if(!findViewById(R.id.lLayoutPayment).isShown()) {
+                    btnSubmit.setText("VERIFY CREDENTIALS");
+                    findViewById(R.id.lLayoutPayment).setVisibility(View.VISIBLE);
+                    return;
+                }
+
                 if(TextUtils.isEmpty(selectedPayment)) {
                     Toast.makeText(getApplicationContext(), "Payment method is required", Toast.LENGTH_SHORT).show();
                     return;
@@ -722,7 +730,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         super.onResume();
 
         if(FingerprintLock.isVerified && btnSubmit != null) {
-            btnSubmit.setText("CONTINUE TO PAY");
+            btnSubmit.setText("PAY NOW");
         }
 
     }

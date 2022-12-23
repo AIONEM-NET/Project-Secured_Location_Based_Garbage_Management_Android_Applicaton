@@ -164,11 +164,6 @@ public class FingerprintLock extends AppCompatActivity {
                     edtPin.setError("Pin is required");
                     return;
                 }
-                if(pin.length() < 6){
-                    Toast.makeText(getApplicationContext(),"Pin must have 6 numbers minimum",Toast.LENGTH_LONG).show();
-                    edtPin.setError("Pin is too short");
-                    return;
-                }
                 if(!pin.equals(DrawerActivity.user.pin)){
                     Toast.makeText(getApplicationContext(),"Enter valid Pin",Toast.LENGTH_LONG).show();
                     edtPin.setError("Pin doesn't match");
@@ -180,7 +175,7 @@ public class FingerprintLock extends AppCompatActivity {
                 isVerified = true;
 
                 imgFingerPrint.setImageResource(R.drawable.icon_core_white_fingerprint_success);
-                txtInfo.setText("Fingerprint matched");
+                txtInfo.setText("Pin matched");
                 txtInfo.setTextColor(getResources().getColor(R.color.AlnGreen));
 
                 makeWait(3000, new MakeWait() {
