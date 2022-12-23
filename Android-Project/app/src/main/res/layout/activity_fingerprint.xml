@@ -102,6 +102,42 @@
             android:textColor="@color/AlnGrey"
             android:textSize="16sp" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="15dp"
+            android:padding="8dp"
+            android:background="#FFFFFF"
+            android:text="OR"
+            android:textColor="@color/AlnGrey"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/edtPin"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:textColor="@color/black"
+            android:hint="Enter your PIN"
+            android:inputType="numberPassword"
+            android:background="#FFFFFF"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"/>
+
+        <Button
+            android:id="@+id/btnVerify"
+            android:layout_width="315dp"
+            android:layout_height="44dp"
+            android:background="@drawable/oval_blue"
+            android:text="Verify"
+            app:fontFamily="@font/capriola"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"/>
+
     </LinearLayout>
 
     <TextView
@@ -115,7 +151,8 @@
         android:text="For Security purpose and Confidentiality, please verify your Fingerprint to continue"
         android:textColor="#9E0101"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:layout_width="wrap_content"

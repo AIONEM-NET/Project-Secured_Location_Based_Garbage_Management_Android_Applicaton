@@ -38,7 +38,7 @@ import java.io.IOException;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    EditText edtName, edtPhone, edtHouseNo, edtDistrict, edtEmail;
+    EditText edtName, edtPhone, edtHouseNo, edtDistrict, edtPin;
     ImageButton edit, choose;
     ImageView profile;
     Button done, upload;
@@ -56,7 +56,7 @@ public class ProfileActivity extends AppCompatActivity {
         edtPhone = findViewById(R.id.phone);
         edtHouseNo = findViewById(R.id.houseid);
         edtDistrict = findViewById(R.id.spinnerAddress);
-        edtEmail = findViewById(R.id.edtEmail);
+        edtPin = findViewById(R.id.edtPin);
         profile = findViewById(R.id.propic);
         upload = findViewById(R.id.upload);
         choose = findViewById(R.id.choose);
@@ -102,7 +102,7 @@ public class ProfileActivity extends AppCompatActivity {
         edtName.setText(DrawerActivity.myName);
         edtHouseNo.setText(DrawerActivity.myHouseNO);
         edtDistrict.setText(DrawerActivity.myDistrict);
-        edtEmail.setText(DrawerActivity.myEmail);
+        edtPin.setText(DrawerActivity.user.pin);
 
         Bitmap bitmap = BitmapFactory.decodeFile(DrawerActivity.localFile.getAbsolutePath());
         if(bitmap!=null) {
@@ -117,6 +117,7 @@ public class ProfileActivity extends AppCompatActivity {
                 String name = edtName.getText().toString().trim();
                 String houseNo = edtHouseNo.getText().toString().trim();
                 String district = edtDistrict.getText().toString().trim();
+                String pin = edtPin.getText().toString().trim();
 
                 if(TextUtils.isEmpty(name)){
                     Toast.makeText(ProfileActivity.this,"Enter Name",Toast.LENGTH_LONG).show();
@@ -151,14 +152,26 @@ public class ProfileActivity extends AppCompatActivity {
                 }
                 edtHouseNo.setError(null);
 
+                if(TextUtils.isEmpty(pin)){
+                    Toast.makeText(getApplicationContext(),"Enter Pin",Toast.LENGTH_LONG).show();
+                    edtPin.setError("Pin is required");
+                    return;
+                }
+                if(pin.length() < 6){
+                    Toast.makeText(getApplicationContext(),"Pin must have 6 numbers minimum",Toast.LENGTH_LONG).show();
+                    edtPin.setError("Pin is too short");
+                    return;
+                }
+                edtPin.setError(null);
 
                 progressBar.setVisibility(View.VISIBLE);
 
                 databaseReference1.child("name").setValue(edtName.getText().toString().trim());
                 databaseReference1.child("houseNo").setValue(edtHouseNo.getText().toString().trim());
                 databaseReference1.child("phone").setValue(edtPhone.getText().toString().trim());
-                databaseReference1.child("email").setValue(edtEmail.getText().toString().trim());
+                databaseReference1.child("email").setValue(edtPin.getText().toString().trim());
                 databaseReference1.child("district").setValue(edtDistrict.getText().toString().trim());
+                databaseReference1.child("pin").setValue(edtPin.getText().toString().trim());
 
                 progressBar.setVisibility(View.GONE);
 

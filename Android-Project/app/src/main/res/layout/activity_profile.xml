@@ -212,13 +212,13 @@
         app:layout_constraintTop_toBottomOf="@+id/Ward" />
 
     <EditText
-        android:id="@+id/edtEmail"
+        android:id="@+id/edtPin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="26dp"
         android:ems="10"
         android:gravity="center_horizontal"
-        android:inputType="textEmailAddress"
+        android:inputType="numberPassword"
         android:text="Please Wait..."
         android:textColor="#000000"
         android:enabled="false"
@@ -244,7 +244,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtEmail"
+        app:layout_constraintTop_toBottomOf="@+id/edtPin"
         app:layout_constraintVertical_bias="0.434"
         tools:visibility="visible"/>
 
@@ -269,7 +269,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="48dp"
-        android:text="Email :"
+        android:text="Pin :"
         android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"

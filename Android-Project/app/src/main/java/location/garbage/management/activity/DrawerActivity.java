@@ -26,7 +26,6 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -39,6 +38,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -51,6 +51,8 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.airbnb.lottie.LottieAnimationView;
 import location.garbage.management.R;
+import location.garbage.management.adapter.GarbageSelectAdapter;
+import location.garbage.management.model.User;
 import location.garbage.management.services.PaymentReceiver;
 import location.garbage.management.services.PaymentResult;
 import location.garbage.management.storage.UserSharedPreferences;
@@ -121,13 +123,16 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     EditText edtPackages;
     EditText edtPhone;
     EditText edtAmount;
-    Spinner spinnerGarbage;
+    AppCompatSpinner spinnerGarbage;
     Button btnSubmit;
     ProgressBar progressBar;
-    CheckBox checkBoxMoMo;
+    CheckBox checkBoxMoMoMTN;
+    CheckBox checkBoxMoMoAirTel;
     CheckBox checkBoxCard;
 
+    GarbageSelectAdapter garbageSelectAdapter;
 
+    public static User user = new User();
     public static FirebaseUser firebaseUser;
 
 
@@ -148,6 +153,24 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
             finish();
             return;
         }
+
+        FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                user = snapshot.getValue(User.class);
+
+                if(user == null) {
+                    user = new User();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         share = new UserSharedPreferences(DrawerActivity.this);
 
@@ -211,17 +234,20 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         edtPackages = (EditText) findViewById(R.id.edtPackages);
         edtPhone = (EditText) findViewById(R.id.edtPhone);
         edtAmount = (EditText) findViewById(R.id.edtAmount);
-        spinnerGarbage = (Spinner) findViewById(R.id.spinnerGarbage);
+        spinnerGarbage = (AppCompatSpinner) findViewById(R.id.spinnerGarbage);
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        checkBoxMoMo = (CheckBox) findViewById(R.id.checkBoxMoMo);
+        checkBoxMoMoMTN = (CheckBox) findViewById(R.id.checkBoxMoMoMTN);
+        checkBoxMoMoAirTel = (CheckBox) findViewById(R.id.checkBoxMoMoAirTel);
         checkBoxCard = (CheckBox) findViewById(R.id.checkBoxVisa);
 
-        spinnerGarbage.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.spinner, listTrashes));
+        garbageSelectAdapter = new GarbageSelectAdapter(this, R.layout.spinner, R.id.textView, listTrashes);
+
+        spinnerGarbage.setAdapter(garbageSelectAdapter);
 
         spinnerGarbage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 String garbage = listTrashes.get(position);
                 double price = listTrashesPrice.get(position);
                 String packages = edtPackages.getText().toString();
@@ -240,6 +266,15 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        garbageSelectAdapter.setOnGarbageListener(new GarbageSelectAdapter.OnGarbageClickListener() {
+            @Override
+            public void onGarbageClick(int position, View view, String item) {
+
+                Toast.makeText(DrawerActivity.this, item, Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -303,8 +338,10 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 }
                 edtPhone.setError(null);
 
-                if(checkBoxMoMo.isChecked()) {
-                    selectedPayment = "Mobile Money";
+                if(checkBoxMoMoMTN.isChecked()) {
+                    selectedPayment = "MTN Mobile Money";
+                }else if(checkBoxMoMoAirTel.isChecked()) {
+                    selectedPayment = "AirTel Money";
                 }else if(checkBoxCard.isChecked()) {
                     selectedPayment = "Credit Card";
                 }
@@ -351,7 +388,11 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 mapDataPayment.put("houseNO", myHouseNO);
                 mapDataPayment.put("time", System.currentTimeMillis());
 
-                phonePay = "*182*1*1*"+ Payment.COMPANY_MOMO_CODE +"*"+amountNo+"#";
+                if(checkBoxMoMoAirTel.isChecked()) {
+                    phonePay = "*182*1*2*" + Payment.COMPANY_MOMO_CODE + "*" + amountNo + "#";
+                }else {
+                    phonePay = "*182*1*1*" + Payment.COMPANY_MOMO_CODE + "*" + amountNo + "#";
+                }
 
                 paying = 0;
 
@@ -374,12 +415,28 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
             }
         });
 
-        checkBoxMoMo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        checkBoxMoMoMTN.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
 
                 if(isChecked) {
-                    selectedPayment = "Mobile Money";
+                    selectedPayment = "MTN Mobile Money";
+                    checkBoxMoMoAirTel.setChecked(false);
+                    checkBoxCard.setChecked(false);
+                }else {
+                    selectedPayment = "";
+                }
+
+            }
+        });
+
+        checkBoxMoMoAirTel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+
+                if(isChecked) {
+                    selectedPayment = "AirTel Money";
+                    checkBoxMoMoMTN.setChecked(false);
                     checkBoxCard.setChecked(false);
                 }else {
                     selectedPayment = "";
@@ -394,7 +451,8 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
                 if(isChecked) {
                     selectedPayment = "Credit Card";
-                    checkBoxMoMo.setChecked(false);
+                    checkBoxMoMoMTN.setChecked(false);
+                    checkBoxMoMoAirTel.setChecked(false);
                 }else {
                     selectedPayment = "";
                 }
@@ -589,7 +647,9 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
                 }
 
-                spinnerGarbage.setAdapter(new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, listTrashes));
+                garbageSelectAdapter.notifyDataSetChanged();
+
+                // System.out.println("SpinnerView: "+ view.);
 
             }
 
@@ -806,7 +866,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 databaseReferencePayment.setValue(mapDataPayment);
 
                 edtPackages.setText("");
-                checkBoxMoMo.setChecked(false);
+                checkBoxMoMoMTN.setChecked(false);
                 checkBoxCard.setChecked(false);
 
                 progressBar.setVisibility(View.GONE);

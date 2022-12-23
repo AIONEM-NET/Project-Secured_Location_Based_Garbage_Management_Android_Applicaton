@@ -14,8 +14,11 @@ import android.os.CountDownTimer;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
+import android.text.TextUtils;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -67,11 +70,11 @@ public class FingerprintLock extends AppCompatActivity {
 
         isVerified = false;
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        ImageView imgFingerPrint = (ImageView) findViewById(R.id.ALnCore_ScreenLock_FingerPrint_ImgFingerPrint);
+        TextView txtInfo = (TextView) findViewById(R.id.ALnCore_ScreenLock_FingerPrint_TxtInfo);
+        CheckBox checkBoxOnOff = (CheckBox) findViewById(R.id.ALnCore_ScreenLock_FingerPrint_CheckBoxOnOff);
 
-            ImageView imgFingerPrint = (ImageView) findViewById(R.id.ALnCore_ScreenLock_FingerPrint_ImgFingerPrint);
-            TextView txtInfo = (TextView) findViewById(R.id.ALnCore_ScreenLock_FingerPrint_TxtInfo);
-            CheckBox checkBoxOnOff = (CheckBox) findViewById(R.id.ALnCore_ScreenLock_FingerPrint_CheckBoxOnOff);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
 
             new FingerprintHandler(getContext(), new FingerprintHandler.AuthenticationListener() {
@@ -147,6 +150,50 @@ public class FingerprintLock extends AppCompatActivity {
 
             finish();
         }
+
+        EditText edtPin = findViewById(R.id.edtPin);
+
+        findViewById(R.id.btnVerify).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String pin = edtPin.getText().toString();
+
+                if(TextUtils.isEmpty(pin)){
+                    Toast.makeText(getApplicationContext(),"Enter Pin",Toast.LENGTH_LONG).show();
+                    edtPin.setError("Pin is required");
+                    return;
+                }
+                if(pin.length() < 6){
+                    Toast.makeText(getApplicationContext(),"Pin must have 6 numbers minimum",Toast.LENGTH_LONG).show();
+                    edtPin.setError("Pin is too short");
+                    return;
+                }
+                if(!pin.equals(DrawerActivity.user.pin)){
+                    Toast.makeText(getApplicationContext(),"Enter valid Pin",Toast.LENGTH_LONG).show();
+                    edtPin.setError("Pin doesn't match");
+                    return;
+                }
+                edtPin.setError(null);
+
+
+                isVerified = true;
+
+                imgFingerPrint.setImageResource(R.drawable.icon_core_white_fingerprint_success);
+                txtInfo.setText("Fingerprint matched");
+                txtInfo.setTextColor(getResources().getColor(R.color.AlnGreen));
+
+                makeWait(3000, new MakeWait() {
+                    @Override
+                    public void onWaitDone() {
+
+                        finish();
+
+                    }
+                });
+
+            }
+        });
 
     }
 
@@ -244,8 +291,6 @@ public class FingerprintLock extends AppCompatActivity {
                     if (!fingerprintManager.isHardwareDetected()) {
 
                         Toast.makeText(context, R.string.fingerprint_initialization_failed_hardware, Toast.LENGTH_LONG).show();
-
-                        isVerified = true;
 
                     } else if (ContextCompat.checkSelfPermission(context, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
 

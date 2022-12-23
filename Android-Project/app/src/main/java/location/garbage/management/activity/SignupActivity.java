@@ -45,8 +45,8 @@ import java.util.ArrayList;
 public class SignupActivity extends AppCompatActivity {
 
     Spinner spinner1, spinner2;
-    String textDistrict, textHouse, name, houseNo, district, email, password;
-    TextInputLayout edtEmail, edtPassword, edtName;
+    String textDistrict, textHouse, name, houseNo, district, email, password, pin;
+    TextInputLayout edtEmail, edtPassword, edtName, edtPin;
     Button register, btnLogin, file_upload;
     ImageButton select;
     ImageView image;
@@ -80,6 +80,7 @@ public class SignupActivity extends AppCompatActivity {
         edtName = findViewById(R.id.edtName);
         edtEmail = findViewById(R.id.edtEmail);
         edtPassword = findViewById(R.id.edtPassword);
+        edtPin = findViewById(R.id.edtPin);
         file_upload = findViewById(R.id.upload);
         select = findViewById(R.id.profilepic);
         register = findViewById(R.id.doneButton);
@@ -126,6 +127,7 @@ public class SignupActivity extends AppCompatActivity {
                 district = spinner1.getSelectedItem().toString().trim();
                 email = edtEmail.getEditText().getText().toString().trim();
                 password = edtPassword.getEditText().getText().toString().trim();
+                pin = edtPin.getEditText().getText().toString().trim();
 
                 if(TextUtils.isEmpty(name)){
                     Toast.makeText(getApplicationContext(),"Enter Name",Toast.LENGTH_LONG).show();
@@ -158,6 +160,18 @@ public class SignupActivity extends AppCompatActivity {
                 }
                 edtPassword.setError(null);
 
+                if(TextUtils.isEmpty(pin)){
+                    Toast.makeText(getApplicationContext(),"Enter Pin",Toast.LENGTH_LONG).show();
+                    edtPin.setError("Pin is required");
+                    return;
+                }
+                if(pin.length() < 6){
+                    Toast.makeText(getApplicationContext(),"Pin must have 6 numbers minimum",Toast.LENGTH_LONG).show();
+                    edtPin.setError("Pin is too short");
+                    return;
+                }
+                edtPin.setError(null);
+
                 progressBar.setVisibility(View.VISIBLE);
                 firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -170,9 +184,9 @@ public class SignupActivity extends AppCompatActivity {
                             databaseReference.child(firebaseUser.getUid()).child("name").setValue(name);
                             databaseReference.child(firebaseUser.getUid()).child("houseNo").setValue(houseNo);
                             databaseReference.child(firebaseUser.getUid()).child("phone").setValue("");
-                            databaseReference.child(firebaseUser.getUid()).child("pin").setValue(password);
                             databaseReference.child(firebaseUser.getUid()).child("district").setValue(district);
                             databaseReference.child(firebaseUser.getUid()).child("email").setValue(email);
+                            databaseReference.child(firebaseUser.getUid()).child("pin").setValue(pin);
                             databaseReference.child(firebaseUser.getUid()).child("isApproved").setValue(false);
 
                             firebaseUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {

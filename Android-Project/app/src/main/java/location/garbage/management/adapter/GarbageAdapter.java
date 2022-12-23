@@ -77,6 +77,7 @@ public class GarbageAdapter extends RecyclerView.Adapter<GarbageViewHolder> {
 
             viewHolder.btnStatus.setText("Confirm ?");
             viewHolder.btnStatus.setBackgroundResource(R.drawable.oval_yellow);
+            viewHolder.btnStatus.setVisibility(View.VISIBLE);
 
             viewHolder.btnStatus.setOnClickListener(new View.OnClickListener() {
                 @Override
