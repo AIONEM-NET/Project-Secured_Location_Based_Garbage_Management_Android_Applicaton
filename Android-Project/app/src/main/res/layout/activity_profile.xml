@@ -221,6 +221,7 @@
         android:inputType="numberPassword"
         android:text="Please Wait..."
         android:textColor="#000000"
+        android:enabled="false"
         app:fontFamily="@font/capriola"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.717"

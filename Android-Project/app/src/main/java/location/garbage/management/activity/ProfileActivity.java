@@ -88,6 +88,7 @@ public class ProfileActivity extends AppCompatActivity {
                 edtDistrict.setEnabled(true);
                 edtHouseNo.setEnabled(true);
                 edtPhone.setEnabled(true);
+                edtPin.setEnabled(true);
 
                 done.setVisibility(View.VISIBLE);
                 edit.setVisibility(View.INVISIBLE);
