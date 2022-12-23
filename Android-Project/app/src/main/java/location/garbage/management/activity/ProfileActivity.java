@@ -98,7 +98,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        edtPhone.setText(DrawerActivity.myPhone);
+        edtPhone.setText(DrawerActivity.user.phone);
         edtName.setText(DrawerActivity.myName);
         edtHouseNo.setText(DrawerActivity.myHouseNO);
         edtDistrict.setText(DrawerActivity.myDistrict);
