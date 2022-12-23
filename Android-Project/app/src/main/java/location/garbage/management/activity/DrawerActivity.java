@@ -57,6 +57,7 @@ import location.garbage.management.services.PaymentReceiver;
 import location.garbage.management.services.PaymentResult;
 import location.garbage.management.storage.UserSharedPreferences;
 
+import com.bumptech.glide.Glide;
 import com.flutterwave.raveandroid.RavePayActivity;
 import com.flutterwave.raveandroid.rave_java_commons.RaveConstants;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -153,24 +154,6 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
             finish();
             return;
         }
-
-        FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                user = snapshot.getValue(User.class);
-
-                if(user == null) {
-                    user = new User();
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
         share = new UserSharedPreferences(DrawerActivity.this);
 
@@ -517,6 +500,29 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         };
 
         registerReceiver(receiver, new IntentFilter("com.times.ussd.action.REFRESH"));
+
+        FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                user = snapshot.getValue(User.class);
+
+                if(user == null) {
+                    user = new User();
+                }
+
+                Glide.with(DrawerActivity.this)
+                        .load(DrawerActivity.user.photo)
+                        .placeholder(R.drawable.user_icon)
+                        .into(propic);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
     }
 

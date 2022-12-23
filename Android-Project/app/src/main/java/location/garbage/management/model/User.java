@@ -10,6 +10,7 @@ public class User {
     public String district = "";
     public String houseNo = "";
     public String pin = "";
+    public String photo = "";
     public boolean isApproved = false;
 
     public User() {

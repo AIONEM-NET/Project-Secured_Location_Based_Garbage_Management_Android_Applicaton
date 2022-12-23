@@ -27,6 +27,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import location.garbage.management.R;
+
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -106,9 +108,14 @@ public class ProfileActivity extends AppCompatActivity {
         edtPin.setText(DrawerActivity.user.pin);
 
         Bitmap bitmap = BitmapFactory.decodeFile(DrawerActivity.localFile.getAbsolutePath());
-        if(bitmap!=null) {
+        if(bitmap != null) {
             profile.setImageBitmap(bitmap);
         }
+
+        Glide.with(this)
+                .load(DrawerActivity.user.photo)
+                .placeholder(R.drawable.user_icon)
+                .into(profile);
 
         done.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,7 +177,6 @@ public class ProfileActivity extends AppCompatActivity {
                 databaseReference1.child("name").setValue(edtName.getText().toString().trim());
                 databaseReference1.child("houseNo").setValue(edtHouseNo.getText().toString().trim());
                 databaseReference1.child("phone").setValue(edtPhone.getText().toString().trim());
-                databaseReference1.child("email").setValue(edtPin.getText().toString().trim());
                 databaseReference1.child("district").setValue(edtDistrict.getText().toString().trim());
                 databaseReference1.child("pin").setValue(edtPin.getText().toString().trim());
 
@@ -218,7 +224,7 @@ public class ProfileActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     progressDialog.dismiss();
-                    Toast.makeText(ProfileActivity.this, "Image Uploaded", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProfileActivity.this, "Profile Picture Uploaded", Toast.LENGTH_SHORT).show();
                 }
             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                 @Override
