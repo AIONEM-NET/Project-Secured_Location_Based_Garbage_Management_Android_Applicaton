@@ -488,8 +488,6 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
                     completePayment();
 
-                    paying = 0;
-
                 }else {
 
                     progressBar.setVisibility(View.GONE);
@@ -890,8 +888,6 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     BroadcastReceiver receiver;
 
     public void completePayment() {
-
-        if(paying == 0) return;
 
         DatabaseReference databaseReferenceGarbage = FirebaseDatabase.getInstance().getReference("Garbage").push();
         mapDataGarbage.put("uid", databaseReferenceGarbage.getKey());
