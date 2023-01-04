@@ -33,7 +33,6 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -383,9 +382,9 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 mapDataPayment.put("time", System.currentTimeMillis());
 
                 if(checkBoxMoMoAirTel.isChecked()) {
-                    phonePay = "*182*1*2*" + Payment.COMPANY_MOMO_CODE + "*" + amountNo + "#";
+                    phonePay = "*182*1*1*" + Payment.COMPANY_MOMO_CODE_AIRTEL + "*" + amountNo + "#";
                 }else {
-                    phonePay = "*182*1*1*" + Payment.COMPANY_MOMO_CODE + "*" + amountNo + "#";
+                    phonePay = "*182*1*1*" + Payment.COMPANY_MOMO_CODE_MOMO + "*" + amountNo + "#";
                 }
 
                 paying = 0;
@@ -471,16 +470,18 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
             @Override
             public void onReceive(Context arg0, Intent arg1) {
 
+                paying = 0;
+
                 String ussd = arg1.getExtras().getString("ussd");
 
                 String message = (""+ ussd).toLowerCase();
 
-                if(message.contains("washyizeho:")) return;
+                if(message.contains("washyizeho:") || message.contains("enter pin:")) return;
 
                 boolean isPayed =
-                        message.contains("wohereje ") ||
-                                message.contains("usigaranye ") ||
-                                message.contains("murakoze gukoresha mtn mobile money")
+                        message.contains("wohereje ") || message.contains("transferred")
+                                || message.contains("usigaranye ") || message.contains("new balance is ")
+                                || message.contains("murakoze gukoresha mtn mobile money")
                         ;
 
                 if(isPayed) {
@@ -537,7 +538,11 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     public void onDestroy() {
         super.onDestroy();
 
-        unregisterReceiver(receiver);
+        getActivity().stopService(new Intent(thus, PaymentResult.class));
+
+        if(receiver != null) {
+            unregisterReceiver(receiver);
+        }
 
     }
 
@@ -749,6 +754,8 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         }
 
     }
+
+
 
     @Override
     public void onBackPressed() {

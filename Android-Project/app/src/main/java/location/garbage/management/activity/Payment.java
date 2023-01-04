@@ -21,7 +21,8 @@ import location.garbage.management.R;
 
 public class Payment {
 
-    public static String COMPANY_MOMO_CODE = "0780256982";
+    public static String COMPANY_MOMO_CODE_MOMO = "0780256982";
+    public static String COMPANY_MOMO_CODE_AIRTEL = "0726989377";
 
     public static final int REQUEST_RESULT_PAY = 203;
     public static final int REQUEST_PERMISSION_CODE_CALL_PHONE = 67;
