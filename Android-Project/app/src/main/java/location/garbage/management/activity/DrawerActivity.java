@@ -538,7 +538,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     public void onDestroy() {
         super.onDestroy();
 
-        getActivity().stopService(new Intent(thus, PaymentResult.class));
+        stopService(new Intent(this, PaymentResult.class));
 
         if(receiver != null) {
             unregisterReceiver(receiver);
