@@ -526,6 +526,11 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         });
 
         closeKeyboard();
+        closeKeyboard(edtGarbage);
+        closeKeyboard(edtPackages);
+        closeKeyboard(edtAmount);
+        closeKeyboard(edtPhone);
+
     }
 
     @Override
@@ -806,10 +811,13 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     }
 
     private void closeKeyboard() {
-        View view = this.getCurrentFocus();
+        closeKeyboard(this.getCurrentFocus());
+    }
+    private void closeKeyboard(View view) {
         if (view != null) {
-            InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            manager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
+            inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
 
