@@ -2,6 +2,7 @@ package location.garbage.management.activity;
 
 import android.app.ActivityOptions;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -10,6 +11,7 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -122,6 +124,9 @@ public class SignupActivity extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+
+                closeKeyboard();
+
                 name = edtName.getEditText().getText().toString().trim();
                 houseNo = spinner2.getSelectedItem().toString().trim();
                 district = spinner1.getSelectedItem().toString().trim();
@@ -255,6 +260,8 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
+        closeKeyboard();
+
     }
 
     private void chooseImage() {
@@ -300,6 +307,14 @@ public class SignupActivity extends AppCompatActivity {
                     progressDialog.setMessage("Uploaded "+ (int)progress+"%");
                 }
             });
+        }
+    }
+
+    private void closeKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            manager.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
 

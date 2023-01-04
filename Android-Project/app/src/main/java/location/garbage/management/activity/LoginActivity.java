@@ -1,11 +1,13 @@
 package location.garbage.management.activity;
 
 import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -64,6 +66,9 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                closeKeyboard();
+
                 email = edtEmail.getEditText().getText().toString().trim();
                 Password = edtPassword.getEditText().getText().toString().trim();
 
@@ -218,10 +223,20 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        closeKeyboard();
+
     }
 
     public static boolean isValidEmail(String email) {
         return (!TextUtils.isEmpty(email) && email.matches("[a-zA-Z0-9._-]+@[a-z]+\\.[a-z]+"));
+    }
+
+    private void closeKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            manager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
 }
