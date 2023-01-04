@@ -44,7 +44,8 @@
             android:name="location.garbage.management.activity.DrawerActivity"
             android:label="@string/title_activity_drawer"
             android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleInstance"/>
+            android:launchMode="singleInstance"
+            android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name="location.garbage.management.activity.TransactionActivity"
             android:label="My Transactions"
