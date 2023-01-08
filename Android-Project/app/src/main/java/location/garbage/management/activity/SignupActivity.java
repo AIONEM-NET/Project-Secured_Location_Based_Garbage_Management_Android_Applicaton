@@ -15,6 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -50,6 +51,7 @@ public class SignupActivity extends AppCompatActivity {
     String textDistrict, textHouse, name, houseNo, district, email, password, pin;
     TextInputLayout edtEmail, edtPassword, edtName, edtPin;
     Button register, btnLogin, file_upload;
+    CheckBox checkBoxTermsConditions;
     ImageButton select;
     ImageView image;
     TextView welcome;
@@ -87,6 +89,7 @@ public class SignupActivity extends AppCompatActivity {
         select = findViewById(R.id.profilepic);
         register = findViewById(R.id.doneButton);
         btnLogin = findViewById(R.id.btnLogin);
+        checkBoxTermsConditions = findViewById(R.id.checkBoxTermsConditions);
         progressBar = findViewById(R.id.progress);
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -176,6 +179,13 @@ public class SignupActivity extends AppCompatActivity {
                     return;
                 }
                 edtPin.setError(null);
+
+                if(!checkBoxTermsConditions.isChecked()){
+                    Toast.makeText(getApplicationContext(),"Accept terms and conditions first",Toast.LENGTH_LONG).show();
+                    checkBoxTermsConditions.setError("Accept terms and conditions");
+                    return;
+                }
+                checkBoxTermsConditions.setError(null);
 
                 progressBar.setVisibility(View.VISIBLE);
                 firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {

@@ -246,6 +246,23 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <CheckBox
+            android:id="@+id/checkBoxTermsConditions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="60dp"
+            android:background="#00000000"
+            android:text="Accept terms and conditions?"
+            android:textColor="#000000"
+            android:transitionName="But2_trans"
+            app:fontFamily="@font/capriola"
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="20dp"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/btnLogin"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <ImageButton
             android:id="@+id/profilepic"
             android:layout_width="107dp"
