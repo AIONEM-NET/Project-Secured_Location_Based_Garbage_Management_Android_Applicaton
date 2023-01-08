@@ -16,6 +16,10 @@ fDatabase.ref('Users').on('value', (list) => {
         const id = item.key;
         const data = item.val();
 
+        if(userDistrict && !(""+data.district).includes(userDistrict)) {
+            return;
+        }
+
         i++;
         let html1 = `
             <tr>
