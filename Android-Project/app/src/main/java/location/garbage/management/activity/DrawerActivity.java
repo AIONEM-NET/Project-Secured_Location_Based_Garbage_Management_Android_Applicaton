@@ -387,7 +387,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                     phonePay = "*182*1*1*" + Payment.COMPANY_MOMO_CODE_MOMO + "*" + amountNo + "#";
                 }
 
-                paying = 0;
+                paying = 1;
 
                 boolean isPay = false;
 
@@ -470,13 +470,18 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
             @Override
             public void onReceive(Context arg0, Intent arg1) {
 
-                paying = 0;
-
                 String ussd = arg1.getExtras().getString("ussd");
 
                 String message = (""+ ussd).toLowerCase();
 
-                if(message.contains("washyizeho:") || message.contains("enter pin:")) return;
+
+                if(message.contains("washyizeho:")
+                        || message.contains("enter pin")
+                        || message.contains("iki gikorwa")
+                ) {
+                    paying++;
+                    return;
+                }
 
                 boolean isPayed =
                         message.contains("wohereje ") || message.contains("transferred")
@@ -889,6 +894,8 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
     public void completePayment() {
 
+        if(paying == 0) return;
+
         DatabaseReference databaseReferenceGarbage = FirebaseDatabase.getInstance().getReference("Garbage").push();
         mapDataGarbage.put("uid", databaseReferenceGarbage.getKey());
         mapDataPayment.put("isPaid", true);
@@ -913,6 +920,8 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
             }
         });
+
+        paying = 0;
 
     }
 
