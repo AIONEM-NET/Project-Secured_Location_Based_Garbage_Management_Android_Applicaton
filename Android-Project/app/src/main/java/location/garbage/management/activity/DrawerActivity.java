@@ -1,5 +1,6 @@
 package location.garbage.management.activity;
 
+import android.app.Dialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -20,6 +21,7 @@ import android.provider.Telephony;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,6 +34,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -131,6 +134,12 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     CheckBox checkBoxMoMoAirTel;
     CheckBox checkBoxCard;
 
+    Dialog dialog;
+    LinearLayout lLayoutGarbageList;
+    int amountTotal = 0;
+    int packagesTotal = 0;
+    List<String> listTrashesPay = new ArrayList<>();;
+    List<Integer> listTrashesPricePay = new ArrayList<>();
     GarbageSelectAdapter garbageSelectAdapter;
 
     public static User user = new User();
@@ -224,10 +233,84 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         checkBoxMoMoAirTel = (CheckBox) findViewById(R.id.checkBoxMoMoAirTel);
         checkBoxCard = (CheckBox) findViewById(R.id.checkBoxVisa);
 
-        // garbageSelectAdapter = new GarbageSelectAdapter(this, R.layout.spinner, R.id.textView, listTrashes);
+        dialog = new Dialog(this);
+        dialog.setTitle("Select Garbage");
+        dialog.setContentView(R.layout.dialog_garbage);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+
+        lLayoutGarbageList = dialog.findViewById(R.id.lLayoutGarbageList);
+
+        dialog.findViewById(R.id.btnDone).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                amountTotal = 0;
+                packagesTotal = 0;
+                selectedGarbage = "";
+
+                boolean isValid = true;
+
+                int garbageNo = 0;
+                for(int i=0; i<lLayoutGarbageList.getChildCount(); i++) {
+
+                    View viewGarbage = lLayoutGarbageList.getChildAt(i);
+
+                    EditText edtPackage = (EditText) viewGarbage.findViewById(R.id.edtPackages);
+
+                    if(((CheckBox) viewGarbage.findViewById(R.id.checkBox)).isChecked()) {
+
+                        garbageNo++;
+
+                        String garbage = (((TextView) viewGarbage.findViewById(R.id.txtGarbage)).getText().toString());
+                        String amount = (((TextView) viewGarbage.findViewById(R.id.txtAmount)).getText().toString());
+                        String packages = edtPackage.getText().toString();
+
+                        int packagesNo = Integer.parseInt(TextUtils.isEmpty(packages) ? "0" : packages);
+                        int amountNo = Integer.parseInt(amount.replace(" Rwf", ""));
+
+                        if(packagesNo <= 0) {
+                            isValid = false;
+                            edtPackage.setError("Enter No. of packages");
+                        }
+
+                        selectedGarbage += (garbageNo > 0 ? ", " : "") + garbage;
+
+                        listTrashesPay.add(garbage);
+                        listTrashesPricePay.add(amountNo);
+
+                        packagesTotal += packagesNo;
+                        amountTotal += amountNo;
+
+                        edtGarbage.setText(garbageNo +" Garbage");
+                        edtPackages.setText(""+ packagesTotal);
+                        edtAmount.setText(amountTotal + " Rwf");
+
+                    }else {
+                        edtPackage.setError(null);
+                    }
+
+                }
+
+                if(isValid) {
+                    dialog.dismiss();
+                }
+
+            }
+        });
+
+        findViewById(R.id.viewGarbage).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                dialog.show();
+
+            }
+        });
+
         garbageSelectAdapter = new GarbageSelectAdapter(this, android.R.layout.simple_spinner_dropdown_item, listTrashes);
 
-        spinnerGarbage.setAdapter(garbageSelectAdapter);
+        // spinnerGarbage.setAdapter(garbageSelectAdapter);
 
         spinnerGarbage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -259,30 +342,6 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
             public void onGarbageClick(int position, View view, String item) {
 
                 Toast.makeText(DrawerActivity.this, item, Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-        edtPackages.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-                String packages = edtPackages.getText().toString();
-
-                double packagesNo = !TextUtils.isEmpty(packages) ? Double.parseDouble(packages) : 0;
-                double amount = packagesNo * selectedPrice;
-
-                edtAmount.setText(amount + " Rwf");
 
             }
         });
@@ -356,13 +415,13 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
 
                 double packagesNo = !TextUtils.isEmpty(packages) ? Double.parseDouble(packages) : 0;
-                int amountNo = (int) (packagesNo * selectedPrice);
+                // int amountTotal = (int) (packagesNo * selectedPrice);
 
                 mapDataGarbage.put("user", firebaseUser.getUid());
                 mapDataGarbage.put("garbage", selectedGarbage);
-                mapDataGarbage.put("packages", packages);
+                mapDataGarbage.put("packages", packagesTotal);
                 mapDataGarbage.put("price", selectedPrice);
-                mapDataGarbage.put("amount", amountNo);
+                mapDataGarbage.put("amount", DrawerActivity.this.amountTotal);
                 mapDataGarbage.put("phone", phone);
                 mapDataGarbage.put("name", myName);
                 mapDataGarbage.put("district", myDistrict);
@@ -371,9 +430,9 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
                 mapDataPayment.put("user", firebaseUser.getUid());
                 mapDataPayment.put("garbage", selectedGarbage);
-                mapDataPayment.put("packages", packages);
+                mapDataPayment.put("packages", packagesTotal);
                 mapDataPayment.put("price", selectedPrice);
-                mapDataPayment.put("amount", amountNo);
+                mapDataPayment.put("amount", amountTotal);
                 mapDataPayment.put("method", selectedPayment);
                 mapDataPayment.put("phone", phone);
                 mapDataPayment.put("name", myName);
@@ -382,9 +441,9 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 mapDataPayment.put("time", System.currentTimeMillis());
 
                 if(checkBoxMoMoAirTel.isChecked()) {
-                    phonePay = "*182*1*1*" + Payment.COMPANY_MOMO_CODE_AIRTEL + "*" + amountNo + "#";
+                    phonePay = "*182*1*1*" + Payment.COMPANY_MOMO_CODE_AIRTEL + "*" + amountTotal + "#";
                 }else {
-                    phonePay = "*182*1*1*" + Payment.COMPANY_MOMO_CODE_MOMO + "*" + amountNo + "#";
+                    phonePay = "*182*1*1*" + Payment.COMPANY_MOMO_CODE_MOMO + "*" + amountTotal + "#";
                 }
 
                 paying = 1;
@@ -393,7 +452,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
                 if(checkBoxCard.isChecked()) {
 
-                    Payment.payCreditCard(DrawerActivity.this, "123", amountNo, "RWF", phone, myEmail, myName, myDistrict);
+                    Payment.payCreditCard(DrawerActivity.this, "123", amountTotal, "RWF", phone, myEmail, myName, myDistrict);
 
                 }else {
 
@@ -516,7 +575,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                     user = new User();
                 }
 
-                Glide.with(DrawerActivity.this)
+                 Glide.with(DrawerActivity.this)
                         .load(DrawerActivity.user.photo)
                         .placeholder(R.drawable.user_icon)
                         .into(propic);
@@ -534,6 +593,84 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         closeKeyboard(edtPackages);
         closeKeyboard(edtAmount);
         closeKeyboard(edtPhone);
+
+    }
+    public void getTrashData() {
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+
+        FirebaseDatabase.getInstance().getReference("Trashes").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot list) {
+
+                listTrashes.clear();
+                listTrashesPrice.clear();
+
+                packagesTotal = 0;
+                amountTotal = 0;
+                lLayoutGarbageList.removeAllViews();
+                edtPackages.setText(""+ packagesTotal);
+                edtAmount.setText(amountTotal + " Rwf");
+
+                int i = 0;
+                for(DataSnapshot item : list.getChildren()) {
+
+                    String name = String.valueOf(item.child("name").getValue());
+                    String district = String.valueOf(item.child("district").getValue());
+                    String type = String.valueOf(item.child("type").getValue());
+                    String price = String.valueOf(item.child("price").getValue());
+                    double priceNo = !TextUtils.isEmpty(price) ? Double.parseDouble(price) : 0;
+
+                    if(TextUtils.isEmpty(myDistrict) || TextUtils.isEmpty(district) || district.contains(myDistrict) || myDistrict.contains(district) || district.equalsIgnoreCase("All")) {
+                        i++;
+
+                        listTrashes.add(name);
+                        listTrashesPrice.add(priceNo);
+
+                        View viewGarbage = inflater.inflate(R.layout.spinner, lLayoutGarbageList, false);
+                        ((TextView) viewGarbage.findViewById(R.id.txtGarbage)).setText(name);
+                        ((TextView) viewGarbage.findViewById(R.id.txtAmount)).setText((0 + " Rwf").replace(".0", ""));
+                        TextView txtAmount = (TextView) viewGarbage.findViewById(R.id.txtAmount);
+                        EditText edtPackages = (EditText) viewGarbage.findViewById(R.id.edtPackages);
+
+                        edtPackages.addTextChangedListener(new TextWatcher() {
+                            @Override
+                            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                            }
+
+                            @Override
+                            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                            }
+
+                            @Override
+                            public void afterTextChanged(Editable editable) {
+
+                                String packages = edtPackages.getText().toString();
+
+                                double packagesNo = !TextUtils.isEmpty(packages) ? Double.parseDouble(packages) : 0;
+                                double amount = packagesNo * priceNo;
+
+                                txtAmount.setText((amount + " Rwf").replace(".0", ""));
+
+                            }
+                        });
+
+                        lLayoutGarbageList.addView(viewGarbage);
+                    }
+
+                }
+
+                garbageSelectAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
     }
 
@@ -653,45 +790,6 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         });
 
     }
-
-    public void getTrashData() {
-
-        FirebaseDatabase.getInstance().getReference("Trashes").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot list) {
-
-                listTrashes.clear();
-                listTrashesPrice.clear();
-
-                for(DataSnapshot item : list.getChildren()) {
-
-                    String name = String.valueOf(item.child("name").getValue());
-                    String district = String.valueOf(item.child("district").getValue());
-                    String type = String.valueOf(item.child("type").getValue());
-                    String price = String.valueOf(item.child("price").getValue());
-                    double priceNo = !TextUtils.isEmpty(price) ? Double.parseDouble(price) : 0;
-
-                    if(TextUtils.isEmpty(myDistrict) || TextUtils.isEmpty(district) || district.contains(myDistrict) || myDistrict.contains(district) || district.equalsIgnoreCase("All")) {
-                        listTrashes.add(name);
-                        listTrashesPrice.add(priceNo);
-                    }
-
-                }
-
-                garbageSelectAdapter.notifyDataSetChanged();
-
-                // System.out.println("SpinnerView: "+ view.);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-    }
-
 
     public void getData(){
         String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();

@@ -38,7 +38,7 @@ public class GarbageSelectAdapter extends ArrayAdapter<String> {
         LayoutInflater inflater = ((Activity) getContext()).getLayoutInflater();
         View view = inflater.inflate(R.layout.spinner, null, true);
 
-        TextView textView = (TextView) view.findViewById(R.id.textView);
+        TextView textView = (TextView) view.findViewById(R.id.txtGarbage);
         CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkBox);
 
         textView.setText((position + 1) +"."+ getItem(position));

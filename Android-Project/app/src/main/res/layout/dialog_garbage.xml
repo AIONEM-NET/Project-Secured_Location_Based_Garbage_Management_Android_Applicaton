@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="400dp"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:id="@+id/lLayoutTop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Garbage"
+            android:textColor="#000000"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/lLayoutTop"
+        android:layout_above="@id/btnDone"
+        android:background="#DFDEDE">
+        <LinearLayout
+            android:id="@+id/lLayoutGarbageList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="4dp">
+
+            <include layout="@layout/spinner"/>
+            <include layout="@layout/spinner"/>
+            <include layout="@layout/spinner"/>
+            <include layout="@layout/spinner"/>
+            <include layout="@layout/spinner"/>
+            <include layout="@layout/spinner"/>
+            <include layout="@layout/spinner"/>
+            <include layout="@layout/spinner"/>
+            <include layout="@layout/spinner"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btnDone"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="DONE"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/capriola"
+        android:background="@drawable/oval_blue"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

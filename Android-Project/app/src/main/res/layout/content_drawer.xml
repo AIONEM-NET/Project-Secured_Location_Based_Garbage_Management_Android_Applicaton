@@ -37,38 +37,45 @@
                 android:textStyle="bold"
                 android:layout_marginTop="10dp"/>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spinnerGarbage"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentRight="true"/>
+
                 <EditText
                     android:id="@+id/edtGarbage"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:hint="Garbage"
+                    android:gravity="center"
                     android:textSize="16sp"
                     android:textColor="#000000"
                     android:textStyle="bold"
                     android:inputType="textCapSentences"
-                    android:background="@drawable/edit_text"
+                    android:background="@drawable/edit_text_transparent"
                     android:enabled="false"
                     android:paddingLeft="10dp"
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="10dp"/>
 
-                <androidx.appcompat.widget.AppCompatSpinner
-                    android:id="@+id/spinnerGarbage"
-                    android:layout_width="50dp"
+                <View
+                    android:id="@+id/viewGarbage"
+                    android:layout_width="match_parent"
                     android:layout_height="50dp"/>
 
-            </LinearLayout>
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Enter Number of Packages:"
+                android:text="Number of Packages:"
                 android:textColor="#059768"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -80,6 +87,7 @@
                 android:layout_height="50dp"
                 android:hint="Packages"
                 android:inputType="number"
+                android:enabled="false"
                 android:textColor="@color/black"
                 android:background="@drawable/edit_text"
                 android:paddingStart="16dp"
