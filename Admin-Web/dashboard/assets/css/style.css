@@ -14720,7 +14720,7 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
 }
 
 .garbage-title h3 {
-  text-transform: uppercase;
+  text-transform: none;
   text-decoration: underline;
   font-weight: bold;
 }
@@ -14790,4 +14790,18 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
 		border: 3px solid #009688;
 		border-left-color: transparent;
 	}
+}
+
+.fuser-name {
+  text-transform: capitalize;
+  margin-right: 25px;
+}
+
+
+.facc-admin {
+  display: block;
+}
+
+.facc-superadmin {
+  display: none;
 }

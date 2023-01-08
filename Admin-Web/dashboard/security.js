@@ -6,6 +6,9 @@ if(!userID) {
 
 document.querySelector(".fuser-name").innerHTML = userName;
 
+if(document.querySelector(".facc-table-district")) {
+    document.querySelector(".facc-table-district").innerHTML = (userAccount != "Admin" ? "All" : userDistrict) +" ";
+}
 
 if(userAccount == "SuperAdmin") {
 

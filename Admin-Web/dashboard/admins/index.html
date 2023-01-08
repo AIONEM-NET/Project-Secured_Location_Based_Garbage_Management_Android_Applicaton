@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Payments - eGarbage Management System</title>
+    <title>Admins - eGarbage Management System</title>
     <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/logo_garbage.jpg">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
@@ -46,7 +46,9 @@
                         <li class="icons dropdown">
                             <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
                                 <span class="activity fuser-name"></span>
-                                <img src="../assets/images/user.png" height="40" width="40" alt="">
+                                <span>
+                                    <img src="../assets/images/user.png" height="40" width="40" alt="">
+                                </span>
                             </div>
                             <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
                                 <div class="dropdown-content-body">
@@ -71,7 +73,7 @@
                             <span class="nav-text">Dashboard</span>
                         </a>
                     </li>
-                    <li class="facc-superadmin">
+                    <li class="facc-superadmin active">
                         <a href="../admins/">
                             <i class="fa fa-user menu-icon"></i>
                             <span class="nav-text">Admins</span>
@@ -95,7 +97,7 @@
                             <span class="nav-text">Trashes</span>
                         </a>
                     </li>
-                    <li class="active">
+                    <li class="">
                         <a href="../payments/">
                             <i class="icon-credit-card menu-icon"></i>
                             <span class="nav-text">Payments</span>
@@ -125,7 +127,13 @@
                         <div class="card card-list" style="min-height: 500px;">
                             <div class="card-body">
                                 <div class="card-title">
-                                    <h4><span class="facc-table-district"></span> Payments</h4>
+                                    <h4><span class="facc-table-district"></span> Admins</h4>
+                                </div>
+                                <div class="float-right" style="margin-top: -40px; margin-bottom: 30px;">
+                                  <a href="../admin-register/" class="btn btn-primary btn-sm font-weight-medium">
+                                      <i class="mdi mdi-account-plus"></i>
+                                      Add New Admin
+                                  </a>
                                 </div>
                                 <div class="active-member">
                                     <div class="table-responsive">
@@ -133,13 +141,11 @@
                                             <thead>
                                                 <tr>
                                                     <th>NO</th>
-                                                    <th>PAYER</th>
-                                                    <th class="text-center">GARBAGE</th>
-                                                    <th class="text-center">UNIT</th>
-                                                    <th class="text-center">PACKAGES</th>
-                                                    <th class="text-center">AMOUNT</th>
-                                                    <th class="text-center">METHOD</th>
-                                                    <th class="text-center">STATUS</th>
+                                                    <th>NAME</th>
+                                                    <th class="text-center">EMAIL</th>
+                                                    <th class="text-center">PHONE</th>
+                                                    <th class="text-center">LOCATION</th>
+                                                    <th class="text-center">ACTION</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -172,9 +178,6 @@
     <script src="../assets/plugins/raphael/raphael.min.js"></script>
     <script src="../assets/plugins/morris/morris.min.js"></script>
     <script src="../assets/plugins/moment/moment.min.js"></script>
-    <script src="../assets/plugins/pg-calendar/js/pignose.calendar.min.js"></script>
-    <script src="../assets/plugins/chartist/js/chartist.min.js"></script>
-    <script src="../assets/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
@@ -189,7 +192,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.0/firebase-storage.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.0/firebase-analytics.js"></script>
     <script src="../../database/database-config.js"></script>
-    <script src="payments.js"></script>
+    <script src="admins.js"></script>
     <script src="../security.js"></script>
 </body>
 </html>

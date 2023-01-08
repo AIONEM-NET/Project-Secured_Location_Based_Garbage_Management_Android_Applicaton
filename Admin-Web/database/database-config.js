@@ -22,3 +22,5 @@ const userID = window.localStorage.getItem("userID");
 const userEmail = window.localStorage.getItem("userEmail");
 const userName = window.localStorage.getItem("userName");
 const userAccount = window.localStorage.getItem("userAccount");
+const userDistrict = window.localStorage.getItem("userDistrict");
+const userDistricts = window.localStorage.getItem("userDistricts");

@@ -135,6 +135,18 @@ fDatabase.ref('Trashes').on('value', (list) => {
         const id = item.key;
         const data = item.val();
 
+        if(userDistrict && !(""+data.district).includes(userDistrict)) {
+
+            if(counts == i) {
+                completedData++;
+            }
+            if(completedData >= 5) {
+                onDataReady();
+            }
+
+            return;
+        }
+
         noTrashes++;
         
 
@@ -155,13 +167,9 @@ fDatabase.ref('Trashes').on('value', (list) => {
 
         if(counts == i) {
             completedData++;
-            
         }
-
         if(completedData >= 5) {
-
             onDataReady();
-
         }
 
     });
@@ -191,6 +199,18 @@ fDatabase.ref('Garbage').on('value', (list) => {
 
         const id = item.key;
         const data = item.val();
+
+        if(userDistrict && !(""+data.district).includes(userDistrict)) {
+
+            if(counts == i) {
+                completedData++;
+            }
+            if(completedData >= 5) {
+                onDataReady();
+            }
+            
+            return;
+        }
 
         noPackages++;
 
@@ -250,6 +270,18 @@ fDatabase.ref('Payments').on('value', (list) => {
         const id = item.key;
         const data = item.val();
 
+        if(userDistrict && !(""+data.district).includes(userDistrict)) {
+
+            if(counts == i) {
+                completedData++;
+            }
+            if(completedData >= 5) {
+                onDataReady();
+            }
+            
+            return;
+        }
+
         noPayments++;
 
         countPayments += !isNaN(data.amount) ? parseInt(data.amount) : 0;
@@ -270,14 +302,9 @@ fDatabase.ref('Payments').on('value', (list) => {
         
         if(counts == i) {
             completedData++;
-
-
         }
-
         if(completedData >= 5) {
-
             onDataReady();
-
         }
 
     });

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Payments - eGarbage Management System</title>
+    <title>Register Admin - eGarbage Management System</title>
     <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/logo_garbage.jpg">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
@@ -95,7 +95,7 @@
                             <span class="nav-text">Trashes</span>
                         </a>
                     </li>
-                    <li class="active">
+                    <li class="">
                         <a href="../payments/">
                             <i class="icon-credit-card menu-icon"></i>
                             <span class="nav-text">Payments</span>
@@ -120,37 +120,95 @@
 
             <div class="container-fluid mt-3">
 
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card card-list" style="min-height: 500px;">
-                            <div class="card-body">
-                                <div class="card-title">
-                                    <h4><span class="facc-table-district"></span> Payments</h4>
-                                </div>
-                                <div class="active-member">
-                                    <div class="table-responsive">
-                                        <table class="table table-xs mb-0">
-                                            <thead>
-                                                <tr>
-                                                    <th>NO</th>
-                                                    <th>PAYER</th>
-                                                    <th class="text-center">GARBAGE</th>
-                                                    <th class="text-center">UNIT</th>
-                                                    <th class="text-center">PACKAGES</th>
-                                                    <th class="text-center">AMOUNT</th>
-                                                    <th class="text-center">METHOD</th>
-                                                    <th class="text-center">STATUS</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>                        
+                <div class="row col-12 card">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h4>Register Admin</h4>
+                        </div>
                     </div>
+                    <form class="forms-sample form-register" autocomplete="off">
+                        <div class="form-group row">
+                            <label for="name" class="col-sm-3 col-form-label">Name</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="name" class="form-control" id="name" placeholder="Name" autocomplete="off" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="email" class="col-sm-3 col-form-label">Email</label>
+                            <div class="col-sm-9">
+                                <input type="email" name="email" class="form-control" id="email" placeholder="Email" autocomplete="off" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="phone" class="col-sm-3 col-form-label">Phone</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="phone" class="form-control" id="phone" placeholder="Phone number" autocomplete="off" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="district" class="col-sm-3 col-form-label">Location</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" name="district" id="district" multiple1 autocomplete="off" required style="min-height: 200px;">
+                                    <option value=""></option>
+                                    <option value="Gasabo">Gasabo</option>
+                                    <option value="Kicukiro">Kicukiro</option>
+                                    <option value="Nyarugenge">Nyarugenge</option>
+                                    <option value="Burera">Burera</option>
+                                    <option value="Gakenke">Gakenke</option>
+                                    <option value="Gicumbi">Gicumbi</option>
+                                    <option value="Musanze">Musanze</option>
+                                    <option value="Rulindo">Rulindo</option>
+                                    <option value="Gisagara">Gisagara</option>
+                                    <option value="Huye">Huye</option>
+                                    <option value="Kamonyi">Kamonyi</option>
+                                    <option value="Muhanga">Muhanga</option>
+                                    <option value="Nyamagabe">Nyamagabe</option>
+                                    <option value="Nyanza">Nyanza</option>
+                                    <option value="Nyaruguru">Nyaruguru</option>
+                                    <option value="Ruhango">Ruhango</option>
+                                    <option value="Bugesera">Bugesera</option>
+                                    <option value="Gatsibo">Gatsibo</option>
+                                    <option value="Kayonza">Kayonza</option>
+                                    <option value="Kirehe">Kirehe</option>
+                                    <option value="Ngoma">Ngoma</option>
+                                    <option value="Nyagatare">Nyagatare</option>
+                                    <option value="Rwamagana">Rwamagana</option>
+                                    <option value="Karongi">Karongi</option>
+                                    <option value="Ngororero">Ngororero</option>
+                                    <option value="Nyabihu">Nyabihu</option>
+                                    <option value="Nyamasheke">Nyamasheke</option>
+                                    <option value="Rubavu">Rubavu</option>
+                                    <option value="Rusizi">Rusizi</option>
+                                    <option value="Rutsiro">Rutsiro</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="password" class="col-sm-3 col-form-label">Password</label>
+                            <div class="col-sm-9">
+                                <input type="password" name="password" class="form-control" id="password" placeholder="Password" autocomplete="off" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="re-password" class="col-sm-3 col-form-label">Re Password</label>
+                            <div class="col-sm-9">
+                                <input type="password" name="re-password" class="form-control" id="re-password" placeholder="Repeat Password" autocomplete="off" required>
+                            </div>
+                        </div>
+                        <div class="form-check form-check-flat form-check-primary hidden">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" autocomplete="off" required1>
+                                Check
+                            </label>
+                        </div>
+                        <div class="row">
+                            <div class="col-3"></div>
+                            <button type="submit" class="col-4 btn btn-success mr-2">Submit</button>
+                            <button class="col-4 btn btn-warning" onclick="window.history.back();">Cancel</button>
+                        </div>
+                    </form>
                 </div>
+
             </div>
         </div>
         <div class="footer">
@@ -172,9 +230,6 @@
     <script src="../assets/plugins/raphael/raphael.min.js"></script>
     <script src="../assets/plugins/morris/morris.min.js"></script>
     <script src="../assets/plugins/moment/moment.min.js"></script>
-    <script src="../assets/plugins/pg-calendar/js/pignose.calendar.min.js"></script>
-    <script src="../assets/plugins/chartist/js/chartist.min.js"></script>
-    <script src="../assets/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
@@ -189,7 +244,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.0/firebase-storage.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.0/firebase-analytics.js"></script>
     <script src="../../database/database-config.js"></script>
-    <script src="payments.js"></script>
+    <script src="admin-register.js"></script>
     <script src="../security.js"></script>
 </body>
 </html>

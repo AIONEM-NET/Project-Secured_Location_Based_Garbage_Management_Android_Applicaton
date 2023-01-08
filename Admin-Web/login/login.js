@@ -44,9 +44,35 @@ form.addEventListener("submit", async function(e) {
                     return;
                 }
         
-                alert("Login Successfully");
+                let isApproved = true;
 
-                window.location.replace("../dashboard/");
+                if(user.displayName == "Admin") {
+
+                    await fDatabase.ref('Admins/' + user.uid).once('value', (item) => {
+
+                        const id = item.key;
+                        const data = item.val();
+
+                        if(!data.isApproved) {
+                            isApproved = false;
+
+                            alert("You are not activated");
+                        }else {
+
+                            window.localStorage.setItem("userDistrict", data.district);
+                            window.localStorage.setItem("userDistricts", data.districts);
+
+                        }
+
+                    });
+
+                }
+        
+                if(isApproved) {
+                    alert("Login Successfully");
+
+                    window.location.replace("../dashboard/");
+                }
             }
 
         }else {

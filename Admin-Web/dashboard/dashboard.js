@@ -3,6 +3,8 @@ if(!userID) {
     window.location.replace("../login/");
 }
 
+document.querySelector(".facc-dashboard-title").innerHTML = (userAccount != "Admin" ? "System" : userDistrict) +" Analytics";
+
 let completedData = 0;
 
 document.querySelector(".dashboard-loader").classList.add("loader");
@@ -25,6 +27,28 @@ fDatabase.ref('Users').on('value', (list) => {
 
         const id = item.key;
         const data = item.val();
+        
+        if(userDistrict && !(""+data.district).includes(userDistrict)) {
+    
+            if(counts == i) {
+                completedData++;
+
+                document.querySelectorAll(".count-districts").forEach(function(e, key) {
+
+                    let district = e.getAttribute("data-district");
+
+                    e.querySelector(".count-1").innerHTML = arrayUsersDistrict[district] ?? 0;
+
+                });
+
+            }
+
+            if(completedData >= 5) {
+                document.querySelector(".dashboard-loader").classList.remove("loader");
+            }
+            
+            return;
+        }
 
         noUsers++;
 
@@ -74,6 +98,28 @@ fDatabase.ref('Drivers').on('value', (list) => {
 
         const id = item.key;
         const data = item.val();
+        
+        if(userDistrict && !(""+data.district).includes(userDistrict)) {
+            
+            if(counts == i) {
+                completedData++;
+
+                document.querySelectorAll(".count-districts").forEach(function(e, key) {
+
+                    let district = e.getAttribute("data-district");
+
+                    e.querySelector(".count-2").innerHTML = arrayDriversDistrict[district] ?? 0;
+
+                });
+
+            }
+
+            if(completedData >= 5) {
+                document.querySelector(".dashboard-loader").classList.remove("loader");
+            }
+            
+            return;
+        }
 
         noDrivers++;
 
@@ -127,6 +173,28 @@ fDatabase.ref('Trashes').on('value', (list) => {
 
         const id = item.key;
         const data = item.val();
+        
+        if(userDistrict && !(""+data.district).includes(userDistrict)) {
+
+            if(counts == i) {
+                completedData++;
+    
+                document.querySelectorAll(".count-districts").forEach(function(e, key) {
+    
+                    let district = e.getAttribute("data-district");
+    
+                    // e.querySelector(".count-3").innerHTML = arrayTrashesDistrict[district] ?? 0;
+    
+                });
+    
+            }
+
+            if(completedData >= 5) {
+                document.querySelector(".dashboard-loader").classList.remove("loader");
+            }
+            
+            return;
+        }
 
         noTrashes++;
 
@@ -183,6 +251,28 @@ fDatabase.ref('Garbage').on('value', (list) => {
 
         const id = item.key;
         const data = item.val();
+        
+        if(userDistrict && !(""+data.district).includes(userDistrict)) {
+
+            if(counts == i) {
+                completedData++;
+    
+                document.querySelectorAll(".count-districts").forEach(function(e, key) {
+    
+                    let district = e.getAttribute("data-district");
+    
+                    e.querySelector(".count-3").innerHTML = arrayPackagesCountDistrict[district] ?? 0;
+    
+                });
+    
+            }
+
+            if(completedData >= 5) {
+                document.querySelector(".dashboard-loader").classList.remove("loader");
+            }
+            
+            return;
+        }
 
         noPackages++;
 
@@ -245,6 +335,28 @@ fDatabase.ref('Payments').on('value', (list) => {
 
         const id = item.key;
         const data = item.val();
+        
+        if(userDistrict && !(""+data.district).includes(userDistrict)) {
+
+            if(counts == i) {
+                completedData++;
+    
+                document.querySelectorAll(".count-districts").forEach(function(e, key) {
+    
+                    let district = e.getAttribute("data-district");
+    
+                    
+    
+                });
+    
+            }
+
+            if(completedData >= 5) {
+                document.querySelector(".dashboard-loader").classList.remove("loader");
+            }
+            
+            return;
+        }
 
         noPayments++;
 
@@ -278,6 +390,15 @@ fDatabase.ref('Payments').on('value', (list) => {
 
 });
 
+document.querySelectorAll(".count-districts").forEach(function(e, key) {
+    
+    let district = e.getAttribute("data-district");
+
+    if(userDistrict && userDistrict != district) {
+        e.style.display = "none";
+    }
+
+});
 
 window.addEventListener('popstate', (event) => {
     history.go(1);

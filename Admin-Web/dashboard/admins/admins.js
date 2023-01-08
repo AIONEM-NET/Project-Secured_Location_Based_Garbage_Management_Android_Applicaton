@@ -7,7 +7,7 @@ document.querySelector("tbody").innerHTML = "";
 document.querySelector(".card-list").classList.add("loader");
 
 let isDataTable = true;
-fDatabase.ref('Drivers').on('value', (list) => {
+fDatabase.ref('Admins').on('value', (list) => {
 
     let html = "";
     let i = 0;
@@ -39,10 +39,10 @@ fDatabase.ref('Drivers').on('value', (list) => {
                     ${data.district.split(",").length >= 30 ? "All" : (data.district ?? '-').replaceAll(",", ", ")}
                 </td>
                 <td class="text-center" style="display: inline-flex; gap: 4px;">
-                    <a class="btn btn-sm font-weight-medium text-white ${data.isApproved == true ? 'btn-success' : 'btn-danger' }" onclick="onDriverApproved('${id}', ${data.isApproved == true}, '${data.name}');" style="pointer: cursor;">
+                    <a class="btn btn-sm font-weight-medium text-white ${data.isApproved == true ? 'btn-success' : 'btn-danger' }" onclick="onAdminApproved('${id}', ${data.isApproved == true}, '${data.name}');" style="pointer: cursor;">
                         ${data.isApproved == true ? 'Approved' : 'Disabled'}
                     </a>
-                    <a class="btn btn-sm font-weight-medium text-white btn-secondary" href="../driver-edit/?id=${id}" style="pointer: cursor;">
+                    <a class="btn btn-sm font-weight-medium text-white btn-secondary" href="../admin-edit/?id=${id}" style="pointer: cursor;">
                         <i class="fa fa-edit"></i> <span>Edit</span>
                     </a>
                 </td>
@@ -90,13 +90,13 @@ fDatabase.ref('Drivers').on('value', (list) => {
 });
 
 
-function onDriverApproved(id, isApproved, name) {
+function onAdminApproved(id, isApproved, name) {
 
     const isYes = confirm(`Do you want to ${isApproved == true ? 'DISABLE' : 'APPROVE'} "${name}" ?`);
 
     if(isYes) {
     
-        fDatabase.ref('Drivers/'+ id +'/isApproved').set(!(isApproved == true));
+        fDatabase.ref('Admins/'+ id +'/isApproved').set(!(isApproved == true));
 
     }
 
