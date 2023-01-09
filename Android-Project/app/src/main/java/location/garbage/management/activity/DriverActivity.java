@@ -90,31 +90,35 @@ public class DriverActivity extends AppCompatActivity {
 
                 for(DataSnapshot item : list.getChildren()) {
 
-                    Garbage garbage = item.getValue(Garbage.class);
+                    try {
+                        Garbage garbage = item.getValue(Garbage.class);
 
-                    if(garbage != null && garbage.isPicked == isPicked) {
+                        if(garbage != null && garbage.isPicked == isPicked) {
 
-                        if(TextUtils.isEmpty(driver.district) || TextUtils.isEmpty(garbage.district) || driver.district.contains(garbage.district)) {
-                            listGarbage.add(garbage);
+                            if(TextUtils.isEmpty(driver.district) || TextUtils.isEmpty(garbage.district) || driver.district.contains(garbage.district)) {
+                                listGarbage.add(garbage);
 
-                            if(!garbage.isPicked) {
+                                if(!garbage.isPicked) {
 
-                                long timeInterval = System.currentTimeMillis() - garbage.time;
+                                    long timeInterval = System.currentTimeMillis() - garbage.time;
 
-                                if(timeInterval < 1*60*1000) {
+                                    if(timeInterval < 1*60*1000) {
 
-                                    sendNotification(DriverActivity.this,
-                                            (garbage.uid + garbage.phone).hashCode(),
-                                            "New "+ garbage.packages +" package"+(!garbage.packages.equals("1") ? "s" : "")+" to pick",
-                                            garbage.houseNO + ", " + garbage.district + " - " + garbage.phone + ""
-                                    );
+                                        sendNotification(DriverActivity.this,
+                                                (garbage.uid + garbage.phone).hashCode(),
+                                                "New "+ garbage.packages +" package"+(!garbage.packages.equals("1") ? "s" : "")+" to pick",
+                                                garbage.houseNO + ", " + garbage.district + " - " + garbage.phone + ""
+                                        );
+
+                                    }
 
                                 }
 
                             }
 
                         }
-
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
 
                 }
