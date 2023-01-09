@@ -55,6 +55,10 @@
             android:label="Driver App"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
+            android:name="location.garbage.management.activity.CreditCardPay"
+            android:label="Credit Card"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
             android:name="location.garbage.management.activity.FingerprintLock"
             android:label="Fingerprint Authentication"
             android:theme="@style/AppTheme.NoActionBar" />

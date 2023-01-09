@@ -419,7 +419,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
                 mapDataGarbage.put("user", firebaseUser.getUid());
                 mapDataGarbage.put("garbage", selectedGarbage);
-                mapDataGarbage.put("packages", packagesTotal);
+                mapDataGarbage.put("packages", ""+ packagesTotal);
                 mapDataGarbage.put("price", selectedPrice);
                 mapDataGarbage.put("amount", DrawerActivity.this.amountTotal);
                 mapDataGarbage.put("phone", phone);
@@ -430,7 +430,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
                 mapDataPayment.put("user", firebaseUser.getUid());
                 mapDataPayment.put("garbage", selectedGarbage);
-                mapDataPayment.put("packages", packagesTotal);
+                mapDataPayment.put("packages", ""+ packagesTotal);
                 mapDataPayment.put("price", selectedPrice);
                 mapDataPayment.put("amount", amountTotal);
                 mapDataPayment.put("method", selectedPayment);
@@ -452,7 +452,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
                 if(checkBoxCard.isChecked()) {
 
-                    Payment.payCreditCard(DrawerActivity.this, "123", amountTotal, "RWF", phone, myEmail, myName, myDistrict);
+                    CreditCardPay.payCreditCard(DrawerActivity.this, "123", amountTotal, "RWF", phone, myEmail, myName, myDistrict);
 
                 }else {
 
@@ -978,6 +978,14 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
         }else if(requestCode == Payment.REQUEST_RESULT_PAY) {
             paying++;
+
+        }else if(requestCode == 198) {
+
+            if (resultCode == 199) {
+                completePayment();
+            }
+
+            progressBar.setVisibility(View.GONE);
 
         }else {
             super.onActivityResult(requestCode, resultCode, data);
