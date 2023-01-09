@@ -274,7 +274,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                             edtPackage.setError("Enter No. of packages");
                         }
 
-                        selectedGarbage += (garbageNo > 0 ? ", " : "") + garbage;
+                        selectedGarbage += (garbageNo > 1 ? ", " : "") + garbage;
 
                         listTrashesPay.add(garbage);
                         listTrashesPricePay.add(amountNo);
@@ -1017,6 +1017,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 edtGarbage.setText("");
                 edtPackages.setText("");
                 edtAmount.setText("");
+
                 checkBoxMoMoMTN.setChecked(false);
                 checkBoxMoMoAirTel.setChecked(false);
                 checkBoxCard.setChecked(false);
@@ -1027,7 +1028,6 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
                 Toast.makeText(getApplicationContext(), "Data submitted successfully", Toast.LENGTH_SHORT).show();
 
-                int garbageNo = 0;
                 for(int i=0; i<lLayoutGarbageList.getChildCount(); i++) {
 
                     View viewGarbage = lLayoutGarbageList.getChildAt(i);
@@ -1037,9 +1037,8 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
                     edtPackage.setText("");
                     checkBox.setChecked(false);
-                    
-                    edtPackage.setError(null);
 
+                    edtPackage.setError(null);
                 }
 
             }

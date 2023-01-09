@@ -33,9 +33,6 @@ fDatabase.ref('Payments').on('value', (list) => {
                     ${data.garbage ?? '-'}
                 </td>
                 <td class="text-center">
-                    ${data.price ?? '-'} Rwf
-                </td>
-                <td class="text-center">
                     <span class="label gradient-4 btn-rounded">
                         ${data.packages ?? '1'}
                     </span>
