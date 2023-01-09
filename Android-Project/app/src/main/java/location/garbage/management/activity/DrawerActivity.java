@@ -1014,8 +1014,11 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 mapDataPayment.put("uid", databaseReferencePayment.getKey());
                 databaseReferencePayment.setValue(mapDataPayment);
 
+                edtGarbage.setText("");
                 edtPackages.setText("");
+                edtAmount.setText("");
                 checkBoxMoMoMTN.setChecked(false);
+                checkBoxMoMoAirTel.setChecked(false);
                 checkBoxCard.setChecked(false);
 
                 progressBar.setVisibility(View.GONE);
@@ -1023,6 +1026,21 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 sendNotification(getApplicationContext(), mapDataPayment.hashCode(), "Garbage Payment: "+ mapDataPayment.get("amount") +" Rwf", "You Garbage information is submitted");
 
                 Toast.makeText(getApplicationContext(), "Data submitted successfully", Toast.LENGTH_SHORT).show();
+
+                int garbageNo = 0;
+                for(int i=0; i<lLayoutGarbageList.getChildCount(); i++) {
+
+                    View viewGarbage = lLayoutGarbageList.getChildAt(i);
+
+                    EditText edtPackage = (EditText) viewGarbage.findViewById(R.id.edtPackages);
+                    CheckBox checkBox = (CheckBox) viewGarbage.findViewById(R.id.checkBox);
+
+                    edtPackage.setText("");
+                    checkBox.setChecked(false);
+                    
+                    edtPackage.setError(null);
+
+                }
 
             }
         });

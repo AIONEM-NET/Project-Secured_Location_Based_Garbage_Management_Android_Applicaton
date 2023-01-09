@@ -67,14 +67,18 @@ public class TransactionActivity extends AppCompatActivity {
 
                 for(DataSnapshot item : list.getChildren()) {
 
-                    Transaction transaction = item.getValue(Transaction.class);
+                    try {
+                        Transaction transaction = item.getValue(Transaction.class);
 
-                    if(transaction != null) {
+                        if(transaction != null) {
 
-                        if(firebaseUser.getUid().equals(transaction.user)) {
-                            listTransactions.add(transaction);
+                            if(firebaseUser.getUid().equals(transaction.user)) {
+                                listTransactions.add(transaction);
+                            }
+
                         }
-
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
 
                 }
