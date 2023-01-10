@@ -1,0 +1,11 @@
+{
+  "hosting": {
+    "site": "e-garbage-management",
+    "public": "Admin-Web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
